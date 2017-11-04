@@ -67,7 +67,7 @@ $$(document).on('pageInit',function(e){
 	   
 	   
    });
-   
+  /* 
    var getHotelLists = myApp.formGetData('HotelLists'); 
    alert(JSON.stringify(getHotelLists));
    
@@ -75,7 +75,7 @@ $$(document).on('pageInit',function(e){
 	  html += '<li><div class="item-content"><div class="item-media"><img src="//images.trvl-media.com/'+ getHotelLists[i].thumbNailUrl +'" width="100" class="lazy"></div><div class="item-inner"><div class="item-title">' + getHotelLists[i].name +'</div><div class="item-after">' + getHotelLists[i].lowRate +'</div></div></div></li>';
 	}
    $$('.list-block ul').html(html);
-   /*
+   
    var loading = false;
    var lastIndex = $$('.list-block li').length;
    
