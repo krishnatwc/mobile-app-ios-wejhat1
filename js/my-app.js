@@ -47,6 +47,7 @@ $$(document).on('pageInit',function(e){
      myApp.showIndicator(); // show Loading Spinner
     var param ='action=Upldate_Rates';
     $$.get('http://twc5.com/demo/MobAppRequest/update_rates.php',{action:'Upldate_Rates'}, function (response,status) {
+	    alert(JSON.stringify(response));
          myApp.hideIndicator(); 
 		 if(status==200){
 		   var myData =JSON.parse(response);
