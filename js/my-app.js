@@ -46,6 +46,7 @@ $$(document).on('pageInit',function(e){
    $$('.get-hotel-results').on('click', function() {
      myApp.showIndicator(); // show Loading Spinner
     var param ='action=Upldate_Rates';
+	   alert(param);
     $$.get('http://twc5.com/demo/MobAppRequest/update_rates.php',{action:'Upldate_Rates'}, function (response,status) {
 	    alert(JSON.stringify(response));
          myApp.hideIndicator(); 
