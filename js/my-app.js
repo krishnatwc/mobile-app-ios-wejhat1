@@ -51,7 +51,7 @@ $$(document).on('pageInit',function(e){
     url: "http://twc5.com/demo/MobAppRequest/update_rates.php?action=Upldate_Rates",
     dataType: "json",
     success: function(data) { alert('End');
-		 JSON.parse(data);
+		alert(JSON.stringify(data));
             //onDataReceived(data); //this is a function that contains the flot code
 		}
 	 });
