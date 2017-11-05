@@ -46,15 +46,16 @@ $$(document).on('pageInit',function(e){
    $$('.get-hotel-results').on('click', function() {
      myApp.showIndicator(); // show Loading Spinner
     var param ='action=Upldate_Rates';
-	alert('New STart');
-    $$.get('http://twc5.com/demo/MobAppRequest/update_rates.php',{action:'Upldate_Rates'}, function (response,status) {
-		alert(JSON.stringify(response));
-         myApp.hideIndicator(); 
-		 if(status==200){
-		   var myData =JSON.parse(response);
-		   myApp.formStoreData('HotelLists',myData.HotelListResponse.HotelList.HotelSummary);
-		 } 
-    });
+	   alert('nnn');
+	$$.ajax({
+		url: "http://twc5.com/demo/MobAppRequest/update_rates.php/?"+param,
+		success: function(response){
+			alert('got the response');
+		},
+		error: function(){
+			alert('got an error');
+		}
+	});
   /*	  
     $$.get('http://twc5.com/demo/MobAppRequest/update_rates.php',{action:'Upldate_Rates'}, function (response,status) {
 	    alert(JSON.stringify(response));
