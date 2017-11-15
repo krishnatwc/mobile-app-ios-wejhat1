@@ -1,0 +1,99 @@
+.top_banner{margin:0px;}
+.top_banner{
+	background: url(../img/mountains.jpg) no-repeat center;
+   background-color: transparent;
+  -webkit-background-size: cover;
+  background-size: cover;
+  -webkit-transform: translate3d(0, 0, 0) scale(1);
+  -moz-transform: translate3d(0, 0, 0) scale(1);
+  -ms-transform: translate3d(0, 0, 0) scale(1);
+  -o-transform: translate3d(0, 0, 0) scale(1);
+  transform: translate3d(0, 0, 0) scale(1);
+  -webkit-transition-duration: 400ms;
+  -moz-transition-duration: 400ms;
+  -ms-transition-duration: 400ms;
+  -o-transition-duration: 400ms;
+  transition-duration: 400ms;
+  height: 300px;
+  position: relative;
+}
+.top_banner:before{content: '';
+    position: absolute;
+    bottom: -8px;
+    top: inherit;
+    font-size: 50px;
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
+    width: 0;
+    height: 0;
+    border-top: 8px solid #f44336;
+    left: 9%;}
+.top_banner:after{}
+.top_bannerRow{margin: 0em 0;position: absolute;bottom: 2em;left: 0px;right: 0px;}
+.top_bannerRow .row .col-50{text-align: center;}
+.top_bannerRow .row .col-50 .icon{height: 50px;width: 46px;}
+.top_bannerRow .row .col-50 p{margin: 0em 0em 0em 0em;font-size: 20px;color: #fff;font-weight: 100;}
+.text-centerBy{text-align:center;color:#2c095b;font-size: 20px;}
+.TopMargin{margin: 0px;}
+.page-contentHome{padding-top: 0px !important;}
+.top_bannerRow .col-50 .md-70{font-size: 45px;}
+.AccountIoncs{position: absolute;right: 3%;top: 0px;}
+.AccountIoncs i{font-size: 35px;}
+.homeMioncs{position: absolute;left: 3%;top: 0px;}
+.homeMioncs i{font-size: 35px;}
+
+.GpsHome{text-align: center;display: inherit;font-size: 20px;color: #fff !important;}
+.top_bannerRowtw{position: relative;top: 1em;}
+.progressbarDiv:after{height: 0px;}
+.date-calendar{}
+.date-calendar .content-block-title{margin: 0px 16px 16px;text-align: center;font-size: 15px;font-weight: 600;padding: 0px;}
+
+.date-calendar .list-block ul:before{height: 0px;}
+.date-calendar .list-block ul:after{height: 0px;}
+.date-calendar .list-block ul li{border-radius: 50px;border: 1px solid #f44336;}
+.date-calendar {padding: 0% 5%;}
+.date-calendar .list-block ul li .item-input {text-align: center;    margin: 0px;}
+.date-calendar .list-block ul li .item-input input{text-align: center;    margin: 0px;}
+.page-contentTab{}
+.page-contentTab .buttons-row{/*display: inherit;clear: both;overflow: hidden;*/} 
+.page-contentTab .buttons-row .active{color: #080808;}
+.page-contentTab .buttons-row a{    height: 100%;/*display: inherit;float: left;width: 31%;height: inherit;*/}
+.page-contentTab .buttons-row a p{    margin: 0px; padding: 0px;    position: relative;top: -14px;}
+.page-contentTab .swiper-3 {padding:17px 0px;}
+.page-contentTab .swiper-3 .swiper-wrapper{}
+.page-contentTab .swiper-3 .swiper-wrapper .swiper-slide{max-width: 20%;}
+.page-contentTab .swiper-3 .swiper-wrapper .swiper-slide span{box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);border-radius: 50%;border: 1px solid #f44336;padding: 10px;}
+.page-contentTab .content-block{margin: 0px;padding: 0px;}
+
+.page-contentTab .swiper-slide-active span{background-color:#f44336; color:#fff;}
+.checkboxDiv .list-block ul:before{height:0px;}
+.checkboxDiv .list-block ul:after{height:0px;}
+.progressbarDiv{width: 90%;margin: 0 auto;}
+.date-calendar{}
+.page-contentTab{padding: 0% 5%;}
+.checkboxDiv{padding: 0% 5%;}
+.checkboxDiv .buttons-row .button-raised{border-radius: 50px;}
+.progressbarDiv .buttons-row a{    margin: 0px;}
+.progressbarDiv:before{    height: 0px;}
+
+.inputPlaceholder{border-radius: 50px;border: 0px solid #ccc;padding: 12px;width: 60%;    box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);}
+.inputPlaceholderIons{position: absolute;left: 75%;color: #777;top: 7px;}
+.page-content-search .top_banner{height: 230px;}
+.page-content-search .top_banner
+.content-block-title-available{text-align: center;font-weight: 600;font-size: 16px;}
+.page-content-search .top_bannerRow  {   bottom: 5em;}
+.serDistance{}
+.serDistance a{text-align: center;color: #fff;font-size: 15px;font-weight: 300;display: inherit;}
+.serDistance{position: absolute;bottom: 18px;left: 0px;right: 0px;}
+.media-list-adblock{}
+.media-list-adblock .item-title-row .item-title{    font-size: 23px;
+    border-bottom: 1px solid #ccc;width: 100%;padding: 0px 0px 2px 0px;}
+
+.media-list-adblock .item-title-row .item-title i{}
+.materialIconsse{color: #f44336;font-size: 17px;float: left;padding: 0px 10px 0px 0px;}
+.subtitleRowtie{padding: 12px 0px;}
+.item-subtitleadCss{font-size: 18px;font-weight: 500;color: #424242;}
+.picker-header{display:none;}
+
+
+
