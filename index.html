@@ -36,8 +36,11 @@
         * Enable eval(): add 'unsafe-eval' to default-src
     * Create your own at http://cspisawesome.com
     -->
-	
+	<!--
     <meta http-equiv="Content-Security-Policy" content="default-src *  data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src * 'unsafe-inline'; media-src *; script-src * 'unsafe-inline' " />
+	-->
+	<!--
+	<meta http-equiv="Content-Security-Policy" content="img-src * 'self'; default-src *;  style-src * 'self' 'unsafe-inline' 'unsafe-eval';  script-src * 'self' 'unsafe-inline' 'unsafe-eval';"> -->
 	
 	
 	<meta http-equiv="Content-Security-Policy"  />
@@ -64,7 +67,7 @@
 			 <div class="toolbar toolbar-bottom">
 			   <div class="toolbar-inner">
 			     <a href="#products" class="link">Products</a>
-				 <a href="search-results.html" class="link">Search Results</a>
+				 <a href="search-hotels.html" class="link">Search Hotels</a>
 				 <a href="about.html?count=5" class="link">About</a>
 				 <a href="#" class="link">Link 3</a>
 			   </div>
