@@ -98,7 +98,7 @@ $$(document).on('pageInit',function(e){
         }
         autocomplete.showPreloader();
         $$.ajax({
-            url: '//yasen.hotellook.com/autocomplete',
+            url: 'http://yasen.hotellook.com/autocomplete',
             method: 'GET',
             dataType: 'json',
             data: {
@@ -154,7 +154,6 @@ $$(document).on('pageInit',function(e){
 	            };
 	 
 	 myApp.showIndicator();
-	 /*
      $$.get('http://twc5.com/demo/MobAppRequest/update_rates.php',param, function (response,status) {
          myApp.hideIndicator(); 
 		 if(status==200){ alert(response);
@@ -162,7 +161,7 @@ $$(document).on('pageInit',function(e){
 		   myApp.formStoreData('HotelLists',myData.HotelListResponse.HotelList.HotelSummary);
 		   listHotelResults();
 		 } 
-     });*/
+     });
    }
    
    $$('.sortingHotels').on('click', function (e) {
