@@ -174,18 +174,36 @@ if(page.name=='search-hotels'){
 		 var myData =JSON.parse(response);
 		 var search_Session_Id =myData.search_session;
 		 var exist =myData.exist;
-		 
-		 alert(search_Session_Id+''+exist);
-		 
 		 $$('#search_Session_Id').val(search_Session_Id);
 		 if(exist=='Yes'){
-			//Searched_Hotels(); 
+			Searched_Hotels(); 
 		 }
 		 else{
-			//Upldate_Rates(); 
+			Upldate_Rates(); 
 		 }
 	  });
+	  
+	 function Searched_Hotels(){
+	  var search_Session_Id = $$('#search_Session_Id').val();
+      var sortField =$$('#sortField').val(sortField);
+      var sortby = $$('#sortby').val(sortby);  	  
+	  
+	   var param ={actionType:'Searched_Hotels',search_Session_Id:search_Session_Id,lat:latitude,lon:longitude, checkIn:checkIn,checkOut:checkOut, rooms:rooms,adults:adults,childs:childs,childAge:childAge,page:1,orderby_fild:sortField,orderby_val:sortby};
+	   $$.get('http://twc5.com/demo/MobAppRequest/update_rates.php',param, function (response,status) {
+		 if(status==200){
+		   var myData =JSON.parse(response);
+		   var totalrecords =myData.totalrecords;
+		   alert(totalrecords);
+		   var getHotelLists=myData.result;
+		    $$('#totalrecords').val(totalrecords);
+			$$('#counthotel').html(totalrecords);
+		   //listHotelResults(getHotelLists);	  
+		 } 
+	    });
+	  } 
+	  
    }
+   
  }
 
 });
