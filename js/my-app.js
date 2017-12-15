@@ -428,7 +428,7 @@ if(page.name=='search-hotels'){
 					'<a href="detailsPage.html?destination='+destination+'&hotel_id='+getHotelLists[i].hotelId+'&checkIn='+checkIn+'&checkOut='+checkOut+'&Cri_currency='+Cri_currency+'&Cri_language='+Cri_language+'&rooms='+rooms+'&adults='+adults+'&childs='+childs+'&childAge='+childAge+'" >'+
 					'<li class="item-content">'+
 					 '<div class="item-media ResultsPagehover">'+
-						'<div class="ResultsPageMaxWidth" style="background: url(//images.trvl-media.com/'+ getHotelLists[i].thumbNailUrl +') no-repeat center;">'+
+						'<div class="ResultsPageMaxWidth" style="background: url(http://images.trvl-media.com'+ getHotelLists[i].thumbNailUrl +') no-repeat center;">'+
 								'<i class="material-icons Resultsfavorite">favorite</i>'+
 							'</div>'+
 						    '</div>'+
