@@ -231,7 +231,7 @@ if(page.name=='search-hotels'){
 	  
    }//end condition
    
-   function listHotelResults(getHotelLists,page=0){
+   function listHotelResults(getHotelLists){
      if(getHotelLists.length>0){
 		 var html=''; 
 		for (var i = 0; i < getHotelLists.length; i++) {
