@@ -38,10 +38,11 @@ $$(document).on('pageInit',function(e){
  if(page.name=='products'){
 	alert('Helow Product'); 
  }
- 
- /*=== Hotel Search Box page ====*/  
+
+ /*=== Hotel Search Box page ====*/ 
 if(page.name=='search-hotels'){
-	var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  /* ===== Calendar ===== */
+    var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 	var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   
     var today =new Date();
@@ -71,8 +72,170 @@ if(page.name=='search-hotels'){
 		$$('#endDate_txt').html(endDate_txt);
 	    }
     });
+
+   
+   var glob =0;
+   $$('.addMoreRooms').on('click', function () {
+	  var numRooms = $$('.roomListcls').length;
+	  var n =parseInt(numRooms)+1;
+	  $$('#number_of_rooms').val(n);
+	  glob++;
+	  var pacHtml='';
+      pacHtml+='<div class="card ks-facebook-card roomListcls">'+
+	            '<input type="hidden" name="adults[]" id="adults_'+glob+'" value="1"><input type="hidden" name="childs[]" id="childs_'+glob+'" value="0">'+
+			'<div class="card-footer no-border"><a href="#" class="link rooming">Room '+n+'</a><a href="#" class="link deleteRooms" ><i class="material-icons">delete</i></a></div>'+
+				'<div class="card-content">'+
+				 '<div class="content-block">'+ 
+					'<div class="roomPagePadding">'+ 
+						'<div class="row">'+
+							'<div class="col-60">'+ 
+								'<div class="roomPageTitle">Adults</div>'+
+								'<div class="roomPageTitleBottom">Above 12 yrs</div>'+
+							'</div>'+
+							'<div class="col-40">'+
+								'<div class="row roomPagePaddingBottom">'+
+									'<div class="col-33">'+
+										'<a href="#" class="link left minusAdults" rel="'+glob+'"><i class="material-icons">remove</i></a>'+
+									'</div>'+
+									'<div class="col-33">'+
+										'<a href="#" class="link center" id="countAdults_'+glob+'">1</a>'+ 
+									'</div>'+
+									'<div class="col-33">'+
+										'<a href="#" class="link right plusAduls" rel="'+glob+'"><i class="material-icons">add</i></a>'+
+									'</div>'+
+								'</div>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+					'<div class="roomPagePadding">'+
+						'<div class="row">'+
+							'<div class="col-60"> '+
+								'<div class="roomPageTitle">Children</div>'+
+								'<div class="roomPageTitleBottom">0-12 yrs</div>'+
+							'</div>'+
+							'<div class="col-40">'+
+								'<div class="row roomPagePaddingBottom">'+
+									'<div class="col-33">'+
+										'<a href="#" class="link left minusChilds" rel="'+glob+'"><i class="material-icons">remove</i></a>'+
+									'</div>'+
+									'<div class="col-33">'+
+										'<a href="#" class="link center" id="countChilds_'+glob+'">0</a>'+
+									'</div>'+
+									'<div class="col-33">'+
+										'<a href="#" class="link right plusChilds" rel="'+glob+'"><i class="material-icons">add</i></a>'+
+									'</div>'+
+								'</div>'+
+							'</div>'+
+						'</div>'+
+						'<div class="row childAgeCls" id="childAgeList_'+glob+'"></div>'+
+					'</div>'+
+				'</div>'+
+			'</div>'+
+		'</div>';	 
+	 $$('#roomspacksDetails').append(pacHtml);
+	 
+	 if(n==3){ $$('.addMoreRooms').hide();}
+	 else{$$('.addMoreRooms').show();}
+	  
+	 deleteRooms();
+	 roomAndGuestCount();
+	});
+  
+  function deleteRooms(){
+	$$('.deleteRooms').on('click',function(e){
+	  e.preventDefault();
+	  $$(this).closest('.roomListcls').remove();
+	  var numRooms = $$('.roomListcls').length;
+	  $$('#number_of_rooms').val(numRooms);
+	  $$('.addMoreRooms').show();
+	  
+	  var v=1;
+	  $$(".rooming").each(function() {
+		  $$(this).html('Room '+v);
+		  v++;
+	   });
+    })  
+  }
+  
+  
+  $$("body").on("click", ".plusAduls", function(e){
+	 e.preventDefault(); 
+     var rel = $$(this).attr('rel');
+	 var adt =$$('#countAdults_'+rel).html();
+	 var adult= parseInt(adt)+1;
+	 if(adult<=4){
+	  $$('#countAdults_'+rel).html(adult);
+	  $$('#adults_'+rel).val(adult);
+	  roomAndGuestCount();
+	 }
+  });
+  $$("body").on('click','.minusAdults',function(e){
+	e.preventDefault();	
+	var rel = $$(this).attr('rel');
+	var adt =$$('#countAdults_'+rel).html();
+	var adult= parseInt(adt)-1;
+	if(adult>=1){
+	 $$('#countAdults_'+rel).html(adult);
+	 $$('#adults_'+rel).val(adult);
+	 roomAndGuestCount();
+	}
+  });
+  
+  $$("body").on('click','.plusChilds',function(e){
+	e.preventDefault();	
+	var rel = $$(this).attr('rel');
+	var adt =$$('#countChilds_'+rel).html();
+	var child= parseInt(adt)+1;
+	if(child<=3){
+	$$('#countChilds_'+rel).html(child);
+	$$('#childs_'+rel).val(child);
+	 manageChildAge(child,rel);
+	 roomAndGuestCount();
+	}
+  });
+  
+  $$("body").on('click','.minusChilds',function(e){
+	e.preventDefault();	
+	var rel = $$(this).attr('rel');
+	var adt =$$('#countChilds_'+rel).html();
+	var child= parseInt(adt)-1;
+	if(child>=0){
+	$$('#countChilds_'+rel).html(child);
+	$$('#childs_'+rel).val(child);
+	manageChildAge(child,rel);
+	roomAndGuestCount();
+	}
+  });
+  
+  function manageChildAge(child,rel){
+	 var ageHtml ='';
+	 for(var i=0;i<child;i++){
+	   ageHtml+='<select name="childAge['+rel+'][]" relKey='+rel+'><option value="0"> < 1 </option><option value="1"> 1 </option><option value="2"> 2 </option></select>';	 
+	 }
+	 $$("#childAgeList_"+rel).html(ageHtml);
+  }
+  
+  function roomAndGuestCount(){
+	var adts  = document.getElementsByName('adults[]');
+	var chds  = document.getElementsByName('childs[]');
+	var guest=0;
+    for (var i = 0; i <adts.length; i++) {
+	  var adt=adts[i].value;
+	  guest =parseInt(guest)+parseInt(adt);
+	}
 	
+	for (var c = 0; c <chds.length; c++) {
+	  var chd=chds[c].value;
+	  guest =parseInt(guest)+parseInt(chd);
+	}
+	
+	var rooms =$$('#number_of_rooms').val();
+   	$$('#roomGuestTxt').html(rooms+' Rooms, '+guest+' Guests ');
+  }
+  
+  
   /*=== Auto suggetion ===*/
+  
   var autocompleteDropdownAjax = myApp.autocomplete({
 	opener: $$('#autocomplete-standalone-popup'),
     openIn: 'popup',
@@ -118,9 +281,10 @@ if(page.name=='search-hotels'){
      $$('#longitude').val(dataObj.location.lon);
 
 	}
-   });	
-   
-  $$('.findHotelResults').on('click', function(e){
+	
+   });
+  
+   $$('.findHotelResults').on('click', function(e){
 	   e.preventDefault();	
 	   var formData = myApp.formToData('#searchHotel_frm');
 	   myApp.formStoreData('HotelRequestData',formData);
@@ -147,8 +311,10 @@ if(page.name=='search-hotels'){
 		
 	   var url ='search-results.html?destination='+$$('#destination').val()+'&latitude='+$$('#latitude').val()+'&longitude='+$$('#longitude').val()+'&checkIn='+$$('#startDate').val()+'&checkOut='+$$('#endDate').val()+'&Cri_currency=USD&Cri_language=en_US&hotelType=1&rooms='+$$('#number_of_rooms').val()+'&adults='+adultsArr+'&childs='+childsArr+'&childAge=';
 	   mainView.router.loadPage(url);
-   })   	
- } 
+   })
+  
+ }
+ 
  /*=== Search Result page ====*/
  if(page.name=='search-results')
  {
@@ -164,10 +330,10 @@ if(page.name=='search-hotels'){
    var adults = page.query.adults;
    var childs = page.query.childs;
    var childAge = page.query.childAge;
-   
    if( (destination!='') && (latitude!='') && (longitude!=''))
    {
-	 myApp.showIndicator();
+	  myApp.showIndicator();
+	   
 	 var param ={actionType:'findSearchKey',lat:latitude,lon:longitude, checkIn:checkIn,checkOut:checkOut, rooms:rooms,adults:adults,childs:childs,childAge:childAge};
 	 
 	 $$.get('http://twc5.com/demo/MobAppRequest/update_rates.php',param, function (response,status) {
@@ -182,8 +348,8 @@ if(page.name=='search-hotels'){
 			Upldate_Rates(); 
 		 }
 	  });
-	  
-	  function Upldate_Rates(){ 
+
+     function Upldate_Rates(){ 
 	     var search_Session_Id = $$('#search_Session_Id').val();
 		 
 		 var param ={actionType:'Upldate_Rates',search_Session_Id:search_Session_Id,lat:latitude,lon:longitude, checkIn:checkIn,checkOut:checkOut, rooms:rooms,adults:adults,childs:childs,childAge:childAge};
@@ -209,8 +375,8 @@ if(page.name=='search-hotels'){
 		 } 
 	    });
      }
-	  
-	 function Searched_Hotels(){
+	
+    function Searched_Hotels(){
 	  var search_Session_Id = $$('#search_Session_Id').val();
       var sortField =$$('#sortField').val(sortField);
       var sortby = $$('#sortby').val(sortby);  	  
@@ -220,16 +386,16 @@ if(page.name=='search-hotels'){
 		 if(status==200){
 		   var myData =JSON.parse(response);
 		   var totalrecords =myData.totalrecords;
-		   alert(totalrecords);
 		   var getHotelLists=myData.result;
 		    $$('#totalrecords').val(totalrecords);
 			$$('#counthotel').html(totalrecords);
-		   listHotelResults(getHotelLists,'0');	  
+		   listHotelResults(getHotelLists,0);	  
 		 } 
 	    });
-	  } 
-	  
-   }//end condition
+	} 	
+	 
+	 
+   }
    
    $$('.sortingHotels').on('click', function (e) {
 	 var getHotelLists = myApp.formGetData('HotelLists');  
@@ -306,6 +472,7 @@ if(page.name=='search-hotels'){
 		}		 
 	 } 	 
    }
+    
    
    
    var loading = false;
@@ -343,10 +510,9 @@ if(page.name=='search-hotels'){
 		myApp.detachInfiniteScroll($$('.infinite-scroll'));  
 	  }
    });
-
+   
  }
- 
- /*===== Hotel Details Page ===*/  
+/*===== Hotel Details Page ===*/  
  if(page.name=='detailsPage')
  {
    var hotel_id =page.query.hotel_id;	 
@@ -477,8 +643,6 @@ if(page.name=='search-hotels'){
 	});
  }
  
- 
-
 });
 /*
 $$(document).on('pageInit','.page[data-page="about"]',function(e){
