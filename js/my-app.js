@@ -38,6 +38,41 @@ $$(document).on('pageInit',function(e){
  if(page.name=='products'){
 	alert('Helow Product'); 
  }
+ 
+ /*=== Hotel Search Box page ====*/  
+if(page.name=='search-hotels'){
+	var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+	var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  
+    var today =new Date();
+	
+	var calendarRange = myApp.calendar({
+    input: '#calendar-range',
+    dateFormat: 'M dd yyyy',
+    rangePicker: true,
+	direction: 'vertical',
+	minDate: today,
+	rangesClasses:'',
+	onChange: function (p, values, displayValues){
+		var start =values[0];
+		var end =values[1];
+		
+		var sMonth =start.getMonth() < 12 ? start.getMonth() + 1 : 1;
+		var eMonth =end.getMonth() < 12 ? start.getMonth() + 1 : 1;
+		
+		var startDate = sMonth+'/'+start.getDate()+'/'+start.getFullYear(); 
+		var endDate =eMonth+'/'+end.getDate()+'/'+end.getFullYear();
+		var startDate_txt = weekday[start.getDay()]+', '+start.getDate()+' '+monthNames[start.getMonth()]+' '+start.getFullYear().toString().substr(-2);
+		var endDate_txt = weekday[end.getDay()]+', '+end.getDate()+' '+monthNames[end.getMonth()]+' '+end.getFullYear().toString().substr(-2);
+		
+		$$('#startDate').val(startDate);
+		$$('#endDate').val(endDate);
+		$$('#startDate_txt').html(startDate_txt);
+		$$('#endDate_txt').html(endDate_txt);
+	    }
+    });
+  } 
+ 
 
 });
 /*
