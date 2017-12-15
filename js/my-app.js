@@ -308,44 +308,6 @@ if(page.name=='search-hotels'){
    }
     
    
-   
-   var loading = false;
-   var lastLoadedIndex =  $$('.list-block li').length;
-   var page =2;
-   $$('.infinite-scroll').on('infinite', function () {
-      // Exit, if loading in progress
-        if (loading) return;
-        // Set loading trigger
-        loading = true;
-		var search_Session_Id = $$('#search_Session_Id').val();
-		var totalrecords =$$('#totalrecords').val();
-		var no_of_pages =Math.ceil(totalrecords/15);
-		alert(no_of_pages+'=>'+page);
-		if(no_of_pages>page){
-		var param ={actionType:'Searched_Hotels',search_Session_Id:search_Session_Id,lat:latitude,lon:longitude, checkIn:checkIn,checkOut:checkOut, rooms:rooms,adults:adults,childs:childs,childAge:childAge,page:page};
-        $$.get('http://twc5.com/demo/MobAppRequest/update_rates.php', param, function (data) {
-            loading = false;
-            if (data === '') {
-                // Nothing more to load, detach infinite scroll events to prevent unnecessary loadings
-                myApp.detachInfiniteScroll($$('.infinite-scroll'));
-            }
-            else {
-                // Append loaded elements to list block
-                //$$('#hotelResults').append(data);
-				var myData =JSON.parse(data);
-		        var getHotelLists=myData.result;
-				listHotelResults(getHotelLists,page);
-                // Update last loaded index
-                lastLoadedIndex = $$('.list-block li').length;
-				page++;
-            }
-        });
-	  }else{
-		myApp.detachInfiniteScroll($$('.infinite-scroll'));  
-	  }
-		
-		
-   });
  }
 
 });
