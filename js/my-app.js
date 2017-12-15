@@ -118,9 +118,36 @@ if(page.name=='search-hotels'){
      $$('#longitude').val(dataObj.location.lon);
 
 	}
-	
    });	
-	
+   
+  $$('.findHotelResults').on('click', function(e){
+	   e.preventDefault();	
+	   var formData = myApp.formToData('#searchHotel_frm');
+	   myApp.formStoreData('HotelRequestData',formData);
+	   var adts  = document.getElementsByName('adults[]');
+	   var chds  = document.getElementsByName('childs[]');
+	 
+	   var adultsArr= new  Array;
+	   var childsArr= new  Array;
+	   var childAgeArr= new  Array;
+	   for (var i = 0; i <adts.length; i++) {
+		  var adt=adts[i].value;
+		  adultsArr.push(adt);
+		}
+	   for (var i = 0; i <chds.length; i++) {
+		  var chd=chds[i].value;
+		  childsArr.push(chd);
+		}
+		childsArr=0;
+	  
+		$$('.childAgeCls select').each(function(){ 
+		   var relKey =$$(this).attr('relKey');
+		   childAgeArr.push([relKey, $$(this).val()]); 
+		});
+		
+	   var url ='search-results.html?destination='+$$('#destination').val()+'&latitude='+$$('#latitude').val()+'&longitude='+$$('#longitude').val()+'&checkIn='+$$('#startDate').val()+'&checkOut='+$$('#endDate').val()+'&Cri_currency=USD&Cri_language=en_US&hotelType=1&rooms='+$$('#number_of_rooms').val()+'&adults='+adultsArr+'&childs='+childsArr+'&childAge=';
+	   mainView.router.loadPage(url);
+   })   
 	
 	
  } 
