@@ -152,7 +152,40 @@ if(page.name=='search-hotels'){
  /*=== Search Result page ====*/
  if(page.name=='search-results')
  {
-   alert('search-results');
+   var destination =page.query.destination;
+   var latitude =page.query.latitude;	 
+   var longitude =page.query.longitude;	 
+   var checkIn =page.query.checkIn;
+   var checkOut =page.query.checkOut;
+   var Cri_currency =page.query.Cri_currency;
+   var Cri_language =page.query.Cri_language;
+   var checkOut =page.query.checkOut;
+   var rooms =page.query.rooms;
+   var adults = page.query.adults;
+   var childs = page.query.childs;
+   var childAge = page.query.childAge;
+   
+   if( (destination!='') && (latitude!='') && (longitude!=''))
+   {
+	 myApp.showIndicator();
+	 var param ={actionType:'findSearchKey',lat:latitude,lon:longitude, checkIn:checkIn,checkOut:checkOut, rooms:rooms,adults:adults,childs:childs,childAge:childAge};
+	 
+	 $$.get('http://twc5.com/demo/MobAppRequest/update_rates.php',param, function (response,status) {
+		 var myData =JSON.parse(response);
+		 var search_Session_Id =myData.search_session;
+		 var exist =myData.exist;
+		 
+		 alert(search_Session_Id+''+exist);
+		 
+		 $$('#search_Session_Id').val(search_Session_Id);
+		 if(exist=='Yes'){
+			//Searched_Hotels(); 
+		 }
+		 else{
+			//Upldate_Rates(); 
+		 }
+	  });
+   }
  }
 
 });
