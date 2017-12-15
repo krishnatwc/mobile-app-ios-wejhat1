@@ -1,60 +1,70 @@
 <div class="page" data-page="search-results">
- 
- <div class="page-content page-content-search">
-	<div class="top_banner">
-		<div class="top_bannerRowtw">
-			<div class="row">
-				<div class="col-100">
-					<a href="" class="homeMioncs"><i class="material-icons md-70">home</i> </a>
-					<a href="" class="GpsHome">GPS Home</a>
-					<a href="searchDes.html" class="AccountIoncs"><i class="material-icons md-70">account_circle</i></a>
-				</div>
-			</div>
-		</div>
-		<div class="top_bannerRow">
-			<div class="row">
-				<div class="col-100">
-					<a href="" class="homeMioncs"><i class="material-icons md-70">filter</i> </a>
-					<a href="" class="GpsHome">
-						<div class="item-content">
-							<div class="item-inner">
-								<div class="item-input">
-									<i class="material-icons md-70 inputPlaceholderIons">person</i>
-									<input type="text" class="inputPlaceholder" placeholder="Your name">
-								</div>
-							</div>
-						</div>
-					</a>
-					<a href="searchDes.html" class="AccountIoncs"><i class="material-icons md-70">map</i></a>
-				</div>
-			</div>
-		</div>
-
-		<div class="serDistance">
-			<div class="row">
-				<div class="col-25">
-					<a href="" >Distance </a>
-				</div>
-                <div class="col-25">
-					<a href="#" class="sortingHotels" sortField="hotelRating" rel="0">Rating </a>
-				</div> 
-				<div class="col-25">
-					<a href="#" class="sortingHotels" sortField="lowRate" rel="0" >Pirce</a>
-				</div>
-
-				<div class="col-25">
-					<a href="">Popularity  </a>
-				</div>
-
+ <input type="hidden" name="search_Session_Id" id="search_Session_Id" value=""><br>
+ <input type="hidden" name="totalrecords" id="totalrecords" value="">
+ <input type="hidden" name="sortField" id="sortField" value="">
+ <input type="hidden" name="sortby" id="sortby" value=""> 
+  
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="left"><a href="#index" class="link"><i class="material-icons">arrow_back</i></a>
 				
+				 <div class="item-inner">
+		<div class="item-title-row">
+		  <div class="item-title search-resultsPageNavbarTitle">New Delhi</div>
+		</div>
+		<div class="item-subtitle search-resultsPageNavbarTitlef">25 Nov - 27 Nov | 7 Guests | <span id="counthotel">381</span> hotels</div>
+		
+	  </div>
+		</div>
+			<div class="right">  
+			<a href="" class="link"><i class="material-icons">search</i></a><a href="" class="link"><i class="material-icons">favorite</i></a>
+			
+			
 			</div>
+			
+		</div>
+		
+		
+	</div>
+	<div class="toolbar toolbar-bottom search-resultsPagebottom">
+		<div class="toolbar-inner">
+			<a href="#" data-popup=".mappopup" class="open-popup link"> <i class="material-icons">location_on</i> MAP VIEW</a>
+			<a href="#" data-panel="right" class="open-panel link" ><i class="material-icons">filter_list</i> FILTER</a>
+		 </div>
+	</div>
+	<div class="page-content">
+	
+	<div class="ALL_HOTELS">
+			<div class="buttons-row">
+			  <a href="#" class="button active">ALL HOTELS </a>
+			  <a href="#" class="button">HOMESTAYS</a>
+			</div>
+		</div>
+		
+	
+		<div class="SearchPagetile">
+			<div class="buttons-row">
+			  <a href="#" class="button sortingHotels active" rel="0">Suggested</a>
+			  <a href="#" class="button sortingHotels" rel="0" sortField="hotelRating">Stars</a>
+			  <a href="#" class="button sortingHotels" rel="0" sortField="tripAdvisorRating">Guest Rating</a>
+			  <a href="#" class="button sortingHotels" rel="0" sortField="lowRate">Price</a>
+			</div>
+		</div>
+		
+		<div data-distance="50" class="page-content ResultsPageCard infinite-scroll">
+		 <div class="list-block media-list media-list-adblock " id="hotelResults">
+			<ul></ul>
+		 </div>
 		</div>
 
 	</div>
-
-	<div class="content-block-title content-block-title-available">1148 Results Available</div>
-	<div class="list-block media-list media-list-adblock " id="hotelResults">
-		<ul></ul>
-	</div>
-</div>
+	
+	<!-- end -->
+  <div class = "panel panel-right panel-cover">
+	 <div class = "content-block">
+		<h2>Right Panel content fgfdgr</h2>
+		<p><a href = "#" class = "close-panel">Close me</a></p>
+		<p><a href = "#" data-panel = "left" class = "open-panel">Open Left Panel</a></p>
+	 </div>
+  </div>
 </div>
