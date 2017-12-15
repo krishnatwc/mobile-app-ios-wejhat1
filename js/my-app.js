@@ -71,7 +71,59 @@ if(page.name=='search-hotels'){
 		$$('#endDate_txt').html(endDate_txt);
 	    }
     });
-  } 
+	
+  /*=== Auto suggetion ===*/
+  var autocompleteDropdownAjax = myApp.autocomplete({
+	opener: $$('#autocomplete-standalone-popup'),
+    openIn: 'popup',
+	backOnSelect: true,
+    preloader: true, 
+    valueProperty: 'fullname', 
+    textProperty: 'fullname', 
+    limit: 20, 
+    dropdownPlaceholderText: 'Try "JavaScript"',
+    expandInput: true, 
+    source: function (autocomplete, query, render) {
+        var results = [];
+        if (query.length === 0) {
+            render(results);
+            return;
+        }
+        autocomplete.showPreloader();
+        $$.ajax({
+            url: 'http://yasen.hotellook.com/autocomplete',
+            method: 'GET',
+            dataType: 'json',
+            data: {
+                term: query,
+				action: "Location_Fetch",
+				lang: 'en',
+				limit: 5
+            },
+            success: function (data) {
+				var myData =data.cities; 
+                for (var i = 0; i < myData.length; i++) {
+                   if (myData[i].fullname.toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(myData[i]);
+                }
+                autocomplete.hidePreloader();
+                render(results);
+            }
+        });
+    },
+	onChange: function (autocomplete, value) { 
+	 var dataObj =value[0];
+	 $$('#destination').val(dataObj.latinFullName);	
+     $$('#selectedDest').html(dataObj.latinFullName);	 	 
+     $$('#latitude').val(dataObj.location.lat);
+     $$('#longitude').val(dataObj.location.lon);
+
+	}
+	
+   });	
+	
+	
+	
+ } 
  
 
 });
