@@ -231,6 +231,26 @@ if(page.name=='search-hotels'){
 	  
    }//end condition
    
+   $$('.sortingHotels').on('click', function (e) {
+	 var getHotelLists = myApp.formGetData('HotelLists');  
+     var sortField = $$(this).attr('sortField');
+	 var rel = $$(this).attr('rel');
+	 if(rel==0){
+	   var sortby ='ASC';	 
+	   $$(this).attr('rel',1);
+	 }
+	 else{
+	   var sortby ='DESC';	 
+	   $$(this).attr('rel',0);	 
+	 }
+	 if(sortField!=''){
+	   $$('#sortField').val(sortField);
+       $$('#sortby').val(sortby);	   
+	   Searched_Hotels();
+	 }
+   });
+   
+   
    function listHotelResults(getHotelLists,page){
      if(getHotelLists.length>0){
 		 var html=''; 
@@ -323,9 +343,141 @@ if(page.name=='search-hotels'){
 		myApp.detachInfiniteScroll($$('.infinite-scroll'));  
 	  }
    });
-   
-   
+
  }
+ 
+ /*===== Hotel Details Page ===*/  
+ if(page.name=='detailsPage')
+ {
+   var hotel_id =page.query.hotel_id;	 
+   var destination =page.query.destination;
+   var latitude =page.query.latitude;	 
+   var longitude =page.query.longitude;	 
+   var checkIn =page.query.checkIn;
+   var checkOut =page.query.checkOut;
+   var Cri_currency =page.query.Cri_currency;
+   var Cri_language =page.query.Cri_language;
+   var checkOut =page.query.checkOut;
+   var rooms =page.query.rooms;
+   var adults = page.query.adults;
+   var childs = page.query.childs;
+   var childAge = page.query.childAge;
+   
+   var param ={actionType:'Hotel_Description',hotel_id:hotel_id};
+   $$.get('http://twc5.com/demo/MobAppRequest/update_rates.php',param, function (response,status) {
+	 if(status==200){
+	   var myData =JSON.parse(response);
+	   var HotelInformationResponse =myData.HotelInformationResponse;
+	   var HotelSummary =HotelInformationResponse.HotelSummary;
+	   var HotelDetails =HotelInformationResponse.HotelDetails;
+	   var PropertyAmenities =HotelInformationResponse.PropertyAmenities.PropertyAmenity;
+	   var HotelImages =HotelInformationResponse.HotelImages.HotelImage[0].url;
+	   var PropertyAmenityHtml ='';
+	   $$.each(PropertyAmenities, function( key, value ) {
+		  PropertyAmenityHtml+='<li>'+value.amenity+'</li>';
+		});
+	   
+	   var HTML =''; 
+	    HTML+='<div class="card ft-detail-header-img">'+
+			  '<div style="background-image:url('+HotelImages+')" valign="bottom" class="card-header color-white no-border">'+HotelSummary.lowRate+'</div>'+
+			  '<div class="card-content">'+
+				'<div class="card-content-inner">'+
+				  '<div class="item-title TitleRelease">'+HotelSummary.name+'</div>'+
+				  '<div class="color-gray">'+HotelSummary.address1+', '+HotelSummary.city+', '+HotelSummary.countryCode+'</div>'+
+				  '<div class="content-block-title content-block-margin">'+HotelSummary.hotelRating+'</div>'+
+				  '<div class="item-subtitle"><img src="'+HotelSummary.tripAdvisorRatingUrl+'"></div>'+
+				  '<div class="item-subtitle">'+HotelSummary.tripAdvisorReviewCount+' reviews</div>'+
+				'</div>'+
+			  '</div>'+
+				'<div class="card-footer CardFooterMaterial">'+
+				  '<a href="#" class="FooterMaterialDeal">DEAL</a>'+
+				  '<a href="#" class="FootFlatOff">Flat 30% off. Earn 15% in eWallte. Code HOTEL17</a>'+
+				  '<a href="#" class="fooAddMore">+1More</a>'+
+				'</div>'+
+				'<div class="HotelOverview">'+
+				  '<div class="content-block">'+
+					'<div class="content-block-title">Hotel Overview</div>'+
+					 '<p href="#" class="detailsPagecontentpr">'+HotelDetails.propertyInformation+'</p>'+
+					  '<a href="#" class="detailsPagecontentprad">READ MORE</a>'+
+					  '</div>'+
+					'</div>'+
+					'<div class="content-block-title">Check In Instructions</div>'+
+					 '<p href="#" class="detailsPagecontentpr">'+HotelDetails.checkInInstructions+'</p>'+
+					'</div>'+
+					'<div class="content-block-title">Special Check In Instructions</div>'+
+					 '<p href="#" class="detailsPagecontentpr">'+HotelDetails.specialCheckInInstructions+'</p>'+
+					'</div>'+
+					'<div class="content-block-title">Room Fees Description</div>'+
+					 '<p href="#" class="detailsPagecontentpr">'+HotelDetails.roomFeesDescription+'</p>'+
+					'</div>'+
+					'<div class="content-block-title">PropertyAmenity</div>'+
+					 '<ul>'+PropertyAmenityHtml+'</ul>'+
+					'</div>'+
+					'<div class="detailsPageMap">'+
+						 '<img src="img/mapImage.jpg" width="100%" class="lazy lazy-fadeIn">'+
+					'</div>'+
+					
+					'<div class="NearbyLandmarks">'+
+						  '<div class = "content-block-title nearbyTitle">Point of Interest</div>'+
+							 '<div class="list-block">'+ HotelDetails.areaInformation +
+								'<div class = "list-block-label list-block-label-text-align">'+
+									'<a href="#" data-popover=".popover-links" class="open-popover">View More</a>'+
+								'</div>'+
+							 '</div>'+
+					'</div>'+
+					'<div class="HotelPolicies">'+
+					 '<div class="card-content-inner">'+
+					  '<div class="data-table-title hotel-policies-title">Hotel Policies</div>'+
+						'<div class="row">'+
+							'<a href="" class="col-25">'+
+								'<div class="HotelPolicies-check">Check-In</div>'+
+								'<div class="HotelPolicies-check-Time">01:00 PM</div>'+
+							'</a>'+
+							'<a href="" class="col-25">'+
+								'<div class="HotelPolicies-check">Check-Out</div>'+
+								'<div class="HotelPolicies-check-Time">12:00 PM</div>'+
+							'</a>'+
+
+							'<a href="" class="col-25">'+
+								'<div class="HotelPolicies-check">Floors</div>'+
+								'<div class="HotelPolicies-check-Time">3</div>'+
+							'</a>'+
+							'<a href="" class="col-25">'+
+								'<div class="HotelPolicies-check">Rooms</div>'+
+								'<div class="HotelPolicies-check-Time">59</div>'+
+							'</a>'+
+						'</div>'+
+						'</div>'+
+					'</div>'+
+			'</div>';
+			
+		 '<div class="card Check-In-Cardout">'+
+		  '<div class="row">'+
+			'<div  href="" class="col-75">'+
+				'<div class="row">'+
+				'<div  href="" class="col-50">'+
+					'<div class="HotelPolicies-check">Check-In</div>'+
+					'<div class="HotelPolicies-check-Time">Nov 19, Sun</div>'+
+				'</div>'+
+				'<div  href="" class="col-50">'+
+					'<div class="HotelPolicies-check">Check-Out</div>'+
+					'<div class="HotelPolicies-check-Time">Nov 19, Sun</div>'+
+				'</div>'+
+				'</div>'+
+			'</div>'+
+			'<div  href="" class="col-25">'+
+				'<div class="HotelPolicies-check">3 Rooms</div>'+
+				'<div class="HotelPolicies-check-Time">7 Guests</div>'+
+			'</div>'+
+		  '</div>'+
+		'</div>'
+      $$('.detailsPagecontent').html(HTML);
+		
+	 } 
+	});
+ }
+ 
+ 
 
 });
 /*
