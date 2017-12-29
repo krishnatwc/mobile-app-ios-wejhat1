@@ -5,7 +5,6 @@ var myApp = new Framework7({
     pushState: true,
     material: true,
 	animatePages:false,
-	pushState: true,
     cache: false,
     // Hide and show indicator during ajax requests
     onAjaxStart: function (xhr) {
@@ -24,9 +23,7 @@ var mainView = myApp.addView('.view-main', {
    domCache: true,
 });
 
-
 var RequestURL ='http://twc5.com/demo/MobAppRequest';
-
 
 $$(document).on('pageInit',function(e){
   // Do something here when the page laod and initialize	
@@ -53,8 +50,28 @@ if(page.name=='search-hotels'){
 	var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   
     var today =new Date();
-	var calendarRange = myApp.calendar({ 
-       input: '.calendar-range'
+	var calendarRange = myApp.calendar({
+    input: '.calendar-range',
+    dateFormat: 'M dd yyyy',
+    rangePicker: true,
+	minDate: today,
+	onChange: function (p, values, displayValues){  
+		var start =values[0];
+		var end =values[1];
+		if( (start!='') && (end!='')){
+			var sMonth =start.getMonth() < 12 ? start.getMonth() + 1 : 1;
+			var eMonth =end.getMonth() < 12 ? end.getMonth() + 1 : 1;
+			var startDate = sMonth+'/'+start.getDate()+'/'+start.getFullYear(); 
+			var endDate =eMonth+'/'+end.getDate()+'/'+end.getFullYear();
+			var startDate_txt = weekday[start.getDay()]+', '+start.getDate()+' '+monthNames[start.getMonth()]+' '+start.getFullYear().toString().substr(-2);
+			var endDate_txt = weekday[end.getDay()]+', '+end.getDate()+' '+monthNames[end.getMonth()]+' '+end.getFullYear().toString().substr(-2);
+			
+			$$('#startDate').val(startDate);
+			$$('#endDate').val(endDate);
+			$$('#startDate_txt').html(startDate_txt);
+			$$('#endDate_txt').html(endDate_txt);
+		} 
+	   }
     });
 
    
@@ -219,10 +236,9 @@ if(page.name=='search-hotels'){
   
   
   /*=== Auto suggetion ===*/
-  
   var autocompleteDropdownAjax = myApp.autocomplete({
-	opener: $$('#autocomplete-standalone-popup'),
     openIn: 'popup',
+	opener: $$('#autocomplete-standalone-popup'),
 	backOnSelect: true,
     preloader: true, 
     valueProperty: 'fullname', 
@@ -263,10 +279,13 @@ if(page.name=='search-hotels'){
      $$('#selectedDest').html(dataObj.latinFullName);	 	 
      $$('#latitude').val(dataObj.location.lat);
      $$('#longitude').val(dataObj.location.lon);
-
 	}
-	
    });
+ 
+   
+   
+   
+   
   
    $$('.findHotelResults').on('click', function(e){
 	   e.preventDefault();	
