@@ -46,10 +46,17 @@ $$(document).on('pageInit',function(e){
 if(page.name=='search-hotels'){
 	var currDate =new Date();
   /* ===== Calendar ===== */
+  /*
    var myCalendar = myApp.calendar({ 
     input: '#calendarDefault',
 	rangePicker: true
    });
+   */
+    $$(".calendar-range").on("click",function(){ 
+      myApp.calendar({ input:this,
+	                   rangePicker: true
+                	 });
+	});
    
   
     var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
@@ -82,10 +89,7 @@ if(page.name=='search-hotels'){
 	   }
 	});*/
     
-  $$('.calendar-range').on('click',function(){
-	$$('#calendarDefault').trigger('click');  
-  });	
-	
+ 
    
    var glob =0;
    $$('.addMoreRooms').on('click', function () {
