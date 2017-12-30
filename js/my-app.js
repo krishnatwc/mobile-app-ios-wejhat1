@@ -46,7 +46,10 @@ $$(document).on('pageInit',function(e){
 if(page.name=='search-hotels'){
 	var currDate =new Date();
   /* ===== Calendar ===== */
-   var myCalendar = myApp.calendar({ input: '#calendarDefault' });
+   var myCalendar = myApp.calendar({ 
+    input: '#calendarDefault',
+	rangePicker: true
+   });
    
   
     var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
