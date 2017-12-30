@@ -57,7 +57,7 @@ if(page.name=='search-hotels'){
   
     var today =new Date();
 	
-	
+	/*
 	var calendarRange = myApp.calendar({
 	input: '.calendar-range',
 	dateFormat: 'M dd yyyy',
@@ -80,8 +80,11 @@ if(page.name=='search-hotels'){
 			$$('#endDate_txt').html(endDate_txt);
 		} 
 	   }
-	});
-     
+	});*/
+    
+  $$('.calendar-range').on('click',function(){
+	$$('#calendarDefault').trigger('click');  
+  });	
 	
    
    var glob =0;
