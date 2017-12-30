@@ -52,7 +52,12 @@ if(page.name=='search-hotels'){
 	rangePicker: true
    });
    */
-  
+   
+   var myCal = myApp.calendar({
+	input: '#calendarDefault',
+	rangePicker: true
+   });
+  $$(".calendar-range").on("click",function(){ myCal.open(); });
    
   
     var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
