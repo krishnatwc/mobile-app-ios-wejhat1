@@ -76,6 +76,9 @@ if(page.name=='search-hotels'){
 	   }
 	});
      
+	$$('.calendar-range').click(function() {
+     calendarRange.open();
+   }); 
    
    var glob =0;
    $$('.addMoreRooms').on('click', function () {
