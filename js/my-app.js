@@ -76,7 +76,7 @@ if(page.name=='search-hotels'){
 	   }
 	});
      
-	$$('.calendar-range').click(function() {
+	$$('.calendar-range').click(function() { alert('');
      calendarRange.open();
    }); 
    
