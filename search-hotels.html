@@ -1,4 +1,4 @@
-<div class="page" data-page="search-hotels">
+<div class="page search-hotelspage" data-page="search-hotels">
         <div class="navbar">
             <div class="navbar-inner">
                 <div class="left"><a href="#index" class="link back"><i class="material-icons">arrow_back</i> 
@@ -18,8 +18,8 @@
                 <div class="row">
 					<a href="#" id="autocomplete-standalone-popup" class="col-100 BoxPageBorder-bottom">
 						<div class="item-inner">
-						  <div class="item-title">Destination</div>
-						  <div class="item-after" id="selectedDest">Delhi City, India</div>
+						  <div class="item-title BoxPageLoc">Destination</div>
+						  <div class="item-after BoxPageDelhi" id="selectedDest">Delhi City, India</div>
 						</div>
 					</a>
                 </div>
@@ -30,43 +30,30 @@
                         <div class="BoxPagebold">1 Adult</div>
                     </a>
                 </div>
-				
-				<input type="text" name="PassExpiry" readonly id="calendarDefault">
-				
-				
                 <div class="HomePadding"></div>
-				<input type="hidden" name="startDate" id="startDate" value="12/28/2017">
-				<input type="hidden" name="endDate" id="endDate" value="12/29/2017">
-				
-				<div class="content-block-title">Inline with custom toolbar</div>
-				<div class="content-block">
-				  <div style="padding:0; margin-right:-15px; width:auto" class="content-block-inner">
-					<div id="calendar-inline-container"></div>
-				  </div>
-				</div>  
-				
-				
-                <div class="row">
-                    <a href="#" class="col-33 calendar-range" id="ks-calendar-inline-container">
+				<input type="hidden" name="startDate" id="startDate" value="">
+				<input type="hidden" name="endDate" id="endDate" value="">
+
+                <div class="row appCalendarposition">
+                    <a href="#" class="col-33 startDatecss" id="ks-calendar-inline-container">
                         <div class="BoxPageLoc">Check-In</div>
-                        <div class="BoxPagebold" id="startDate_txt">Thu, 16 Nov' 17</div>
+                        <div class="BoxPagebold" id="startDate_txt"></div>
                     </a>
                     <a href="#" class="col-33 boxPagebrightnessIcons">
                         <div class="BoxPageLoc"><i class="material-icons"> brightness_3</i></div>
                         <div class="BoxPagebold">New Delhi</div>
                     </a>
-                    <a href="#" class="col-33 calendar-range">
+                    <a href="#" class="col-33 endDatecss" id="">
                         <div class="BoxPageLoc">Check-Out</div>
-                        <div class="BoxPagebold" id="endDate_txt">Thu, 20 Nov' 17</div>
+                        <div class="BoxPagebold" id="endDate_txt"></div>
                     </a>
+					<input type="text" name="appCalendar" id="appCalendar" value="12/29/2017" style="opacity: 0;">
                 </div>
-				
-
                 <div class="HomePadding"></div><!-- Seperator -->
                 <div><a href="#" class="button boxPagebutton-big button-fill findHotelResults">SEARCH HOTELS</a></div>
 
            
-			<div class="card">
+			<div class="card card-margin-add">
 				<div class="card-content">
 					<div class="list-block media-list">
 						<ul>
@@ -92,7 +79,7 @@
               <div class="right"> <a href="" class="link"><i class="material-icons">restore</i></a></div>
             </div>
          </div>
-         <div class="page-content-kk" >
+         <div class="page-content-not-use">
 		  <div id="roomspacksDetails"> <!-- Start Room List -->
 		  <div class="card ks-facebook-card roomListcls">
 		    <input type="hidden" name="adults[]" id="adults_0" value="1">
@@ -141,18 +128,22 @@
 								</div>
 							</div>
 						</div>
-						<div class="row childAgeCls" id="childAgeList_0"></div>
+						<div class="row">
+							<div class="col-30">&nbsp;</div>
+							<div class="col-70 childAgeCls" id="childAgeList_0"></div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	  </div><!-- End Room List-->	
-	  <div>
+	  <div class="btn_addRooms">
 	   <a href="#" class="addMoreRooms">Add Another Rooms</a>
 	   <input type="hidden" name="number_of_rooms" id="number_of_rooms" value="1">
 	  </div>
+	   <div class="btn_DoneRooms"><a href="#" class="close-popup">Done</a></div>
     </div>
-	 <div><a href="#" class="close-popup">Done</a></div>
+	
    </div><!-- end Two popup use code -->
   </div> <!-- end content block -->
   </form>
