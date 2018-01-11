@@ -5,6 +5,7 @@ var myApp = new Framework7({
     pushState: true,
     material: true,
 	animatePages:false,
+	pushState: true,
     cache: false,
     // Hide and show indicator during ajax requests
     onAjaxStart: function (xhr) {
@@ -15,6 +16,7 @@ var myApp = new Framework7({
     }
 });
 
+
 // Export selectors engine
 var $$ = Dom7;
 
@@ -23,12 +25,17 @@ var mainView = myApp.addView('.view-main', {
    domCache: true,
 });
 
-var RequestURL ='http://twc5.com/demo/MobAppRequest';
+$$(window).on('popstate', function (e) {
+ myApp.closeModal('.popup.modal-in');
+ myApp.closeModal('.popover.modal-in');
+});
 
+
+var RequestURL ='http://twc5.com/demo/MobAppRequest';
 $$(document).on('pageInit',function(e){
   // Do something here when the page laod and initialize	
  var page =e.detail.page;
-
+/*
  if(page.name=='about'){
 	 var count =page.query.count;
 	 var listHtml ='<ul>';
@@ -40,57 +47,88 @@ $$(document).on('pageInit',function(e){
  }
  if(page.name=='products'){
 	alert('Helow Product'); 
- }
+ }*/
 
  /*=== Hotel Search Box page ====*/ 
 if(page.name=='search-hotels'){
+	var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+	var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	
+	var searchedData = myApp.formGetData('HotelRequestData');
+	var searchedDataObj =searchedData;
+	if(searchedDataObj==''){
+	  $$('#selectedDest').html(searchedDataObj.destination);
+	  $$('#destination').val(searchedDataObj.destination);
+      $$('#latitude').val(searchedDataObj.latitude);	
+      $$('#longitude').val(searchedDataObj.longitude);
+      $$('#startDate').val(searchedDataObj.startDate);
+      $$('#endDate').val(searchedDataObj.endDate);
+	 
+	  var start =new Date(searchedDataObj.startDate);
+	  var end =new Date(searchedDataObj.endDate);
+	 
+	  var startDate_txt = weekday[start.getDay()]+', '+start.getDate()+' '+monthNames[start.getMonth()]+' '+start.getFullYear().toString().substr(-2);
+	  var endDate_txt = weekday[end.getDay()]+', '+end.getDate()+' '+monthNames[end.getMonth()]+' '+end.getFullYear().toString().substr(-2);
+      $$('#startDate_txt').html(startDate_txt);
+      $$('#endDate_txt').html(endDate_txt);	  
+	}else{
+	  var sDate = new Date();
+	      sDate.setDate(sDate.getDate() + 5);
+	  var m =  sDate.getMonth();
+	      m += 1;  // JavaScript months are 0-11
+	  var dstart = m+'/'+sDate.getDate()+'/'+sDate.getFullYear();
+	 // var dend = new Date();
+	 var eDate = new Date();
+	     eDate.setDate(eDate.getDate() + 6);
+	  var m =  eDate.getMonth();
+	   m += 1;  // JavaScript months are 0-11
+	  var dend = m+'/'+eDate.getDate()+'/'+eDate.getFullYear();
+	 
+	 
+      var start =new Date(dstart);
+	  var end =new Date(dend);
+	  
+	  $$('#selectedDest').html('Delhi City, India');
+	  $$('#destination').val('Delhi City, India');
+      $$('#latitude').val('28.632558');	
+      $$('#longitude').val('77.220036');
+      $$('#startDate').val(dstart);
+      $$('#endDate').val(dend);
+	 
+	  var startDate_txt = weekday[start.getDay()]+', '+start.getDate()+' '+monthNames[start.getMonth()]+' '+start.getFullYear().toString().substr(-2);
+	  var endDate_txt = weekday[end.getDay()]+', '+end.getDate()+' '+monthNames[end.getMonth()]+' '+end.getFullYear().toString().substr(-2);
+      $$('#startDate_txt').html(startDate_txt);
+      $$('#endDate_txt').html(endDate_txt);	 	
+	}
+	
 	var currDate =new Date();
   /* ===== Calendar ===== */
-  /*
-   var myCalendar = myApp.calendar({ 
-    input: '#calendarDefault',
-	rangePicker: true
-   });
-   */
-   
-   var myCal = myApp.calendar({
-	input: '#calendarDefault',
-	rangePicker: true
-   });
-  $$(".calendar-range").on("click",function(){ myCal.open(); });
-   
-  
-    var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-	var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  
     var today =new Date();
-	
-	
 	var calendarRange = myApp.calendar({
-	input: '#calendarDefault',
-	dateFormat: 'M dd yyyy',
-	rangePicker: true,
+    input: '#appCalendar',
+    dateFormat: 'M dd yyyy',
+    rangePicker: true,
 	minDate: today,
 	onChange: function (p, values, displayValues){  
 		var start =values[0];
 		var end =values[1];
-		if( (start!='') && (end!='')){
-			var sMonth =start.getMonth() < 12 ? start.getMonth() + 1 : 1;
-			var eMonth =end.getMonth() < 12 ? end.getMonth() + 1 : 1;
-			var startDate = sMonth+'/'+start.getDate()+'/'+start.getFullYear(); 
-			var endDate =eMonth+'/'+end.getDate()+'/'+end.getFullYear();
-			var startDate_txt = weekday[start.getDay()]+', '+start.getDate()+' '+monthNames[start.getMonth()]+' '+start.getFullYear().toString().substr(-2);
-			var endDate_txt = weekday[end.getDay()]+', '+end.getDate()+' '+monthNames[end.getMonth()]+' '+end.getFullYear().toString().substr(-2);
-			
-			$$('#startDate').val(startDate);
-			$$('#endDate').val(endDate);
-			$$('#startDate_txt').html(startDate_txt);
-			$$('#endDate_txt').html(endDate_txt);
-		} 
+		
+		var sMonth =start.getMonth() < 12 ? start.getMonth() + 1 : 1;
+		var eMonth =end.getMonth() < 12 ? start.getMonth() + 1 : 1;
+		
+		var startDate = sMonth+'/'+start.getDate()+'/'+start.getFullYear(); 
+		var endDate =eMonth+'/'+end.getDate()+'/'+end.getFullYear();
+		var startDate_txt = weekday[start.getDay()]+', '+start.getDate()+' '+monthNames[start.getMonth()]+' '+start.getFullYear().toString().substr(-2);
+		var endDate_txt = weekday[end.getDay()]+', '+end.getDate()+' '+monthNames[end.getMonth()]+' '+end.getFullYear().toString().substr(-2);
+		
+		$$('#startDate').val(startDate);
+		$$('#endDate').val(endDate);
+		$$('#startDate_txt').html(startDate_txt);
+		$$('#endDate_txt').html(endDate_txt);
+		
 	   }
-	});
-    
- 
+    });
+
    
    var glob =0;
    $$('.addMoreRooms').on('click', function () {
@@ -145,7 +183,7 @@ if(page.name=='search-hotels'){
 								'</div>'+
 							'</div>'+
 						'</div>'+
-						'<div class="row childAgeCls" id="childAgeList_'+glob+'"></div>'+
+						'<div class="row"><div class="col-30">&nbsp;</div><div class="col-70 childAgeCls" id="childAgeList_'+glob+'"></div></div>'+
 					'</div>'+
 				'</div>'+
 			'</div>'+
@@ -253,9 +291,10 @@ if(page.name=='search-hotels'){
   
   
   /*=== Auto suggetion ===*/
+  
   var autocompleteDropdownAjax = myApp.autocomplete({
-    openIn: 'popup',
 	opener: $$('#autocomplete-standalone-popup'),
+    openIn: 'popup',
 	backOnSelect: true,
     preloader: true, 
     valueProperty: 'fullname', 
@@ -296,13 +335,10 @@ if(page.name=='search-hotels'){
      $$('#selectedDest').html(dataObj.latinFullName);	 	 
      $$('#latitude').val(dataObj.location.lat);
      $$('#longitude').val(dataObj.location.lon);
+
 	}
+	
    });
- 
-   
-   
-   
-   
   
    $$('.findHotelResults').on('click', function(e){
 	   e.preventDefault();	
@@ -350,8 +386,11 @@ if(page.name=='search-hotels'){
    var adults = page.query.adults;
    var childs = page.query.childs;
    var childAge = page.query.childAge;
+   var guest =parseInt(adults)+parseInt(childs);
    if( (destination!='') && (latitude!='') && (longitude!=''))
    {
+	 $$('#destinationName').html(destination);
+	 $$('#dateguist').html(checkIn+' - '+checkOut+' | '+ guest+' Guests | ')
 	 myApp.showIndicator();  
 	 var param ={actionType:'findSearchKey',lat:latitude,lon:longitude, checkIn:checkIn,checkOut:checkOut, rooms:rooms,adults:adults,childs:childs,childAge:childAge};
 	 
@@ -441,6 +480,9 @@ if(page.name=='search-hotels'){
      if(getHotelLists.length>0){
 		 var html=''; 
 		for (var i = 0; i < getHotelLists.length; i++) {
+		 var thumbNailUrl = getHotelLists[i].thumbNailUrl
+             thumbNailUrl =	thumbNailUrl.replace('_t','_b');	 
+			
 		 html+='<li><div class="card">'+
 			   '<div class="card-content">'+
 			      '<div class="list-block media-list">'+
@@ -448,7 +490,7 @@ if(page.name=='search-hotels'){
 					'<a href="detailsPage.html?destination='+destination+'&hotel_id='+getHotelLists[i].hotelId+'&latitude='+latitude+'&longitude='+longitude+'&checkIn='+checkIn+'&checkOut='+checkOut+'&Cri_currency='+Cri_currency+'&Cri_language='+Cri_language+'&rooms='+rooms+'&adults='+adults+'&childs='+childs+'&childAge='+childAge+'" >'+
 					'<div class="item-content">'+
 					 '<div class="item-media ResultsPagehover">'+
-						'<div class="ResultsPageMaxWidth" style="background: url(http://images.trvl-media.com'+ getHotelLists[i].thumbNailUrl +') no-repeat center;">'+
+						'<div class="ResultsPageMaxWidth" style="background: url(http://images.trvl-media.com'+ thumbNailUrl +') no-repeat center;">'+
 								'<i class="material-icons Resultsfavorite">favorite</i>'+
 							'</div>'+
 						    '</div>'+
@@ -457,15 +499,15 @@ if(page.name=='search-hotels'){
 							 '<div class="item-title ResultsTetelHotel">' + getHotelLists[i].name +'</div>'+
 							'</div>'+
 							'<div class="item-subtitle ResultsTetelHotell">' + getHotelLists[i].address1 +'</div>'+
-							'<div class="item-subtitle ResultsTetelstar_rate"><i class="material-icons"></i>' + getHotelLists[i].hotelRating +'</div>'+
+							'<div class="item-subtitle ResultsTetelstar_rate"><div class="ratings icons_strall str_' + getHotelLists[i].hotelRating +'"></div></div>'+
 							'<div class="item-subtitle ResultsTetelReviews">'+
-								'<div><img src="'+getHotelLists[i].tripAdvisorRatingUrl+'"></div> <div class="sre4pde40">'+getHotelLists[i].tripAdvisorRating+'</div> '+getHotelLists[i].tripAdvisorReviewCount+' Reviews</div>'+
+								'<div><img src="'+getHotelLists[i].tripAdvisorRatingUrl+'"></div> <div class="sre4pde40" style="display: none;">'+getHotelLists[i].tripAdvisorRating+'</div></div>'+
 						 '</div>'+
 						  '<div class="item-innerPrices">'+
 							  '<div class="itemTitel12">$' + getHotelLists[i].highRate +'</div>'+
 							  '<div class="itemTitel24price">$' + getHotelLists[i].lowRate +'</div>'+
 							 '<div class="itemTitel2Night">for 2 Nights</div>'+
-							 '<div class="itemTitel6room">6rooms left</div>'+
+							 '<div class="itemTitel6room">6 rooms left</div>'+
 						  '</div>'+
 						'</div>'+
 						'</a>'+
@@ -480,7 +522,6 @@ if(page.name=='search-hotels'){
 					 '<div class="card-footer CardFooterMaterial">'+
 					 '<a href="#" class="FooterMaterialDeal">DEAL</a>'+
 					  '<a href="#" class="FootFlatOff">Flat 30% off. Earn 15% in eWallte. Code HOTEL17</a>'+
-					  '<a href="#" class="fooAddMore">+1More</a>'+
 					'</div>'+
 				'</div></li>';	
 		}
@@ -576,7 +617,7 @@ if(page.name=='search-hotels'){
 				'<div class="card-content-inner">'+
 				  '<div class="item-title TitleRelease">'+HotelSummary.name+'</div>'+
 				  '<div class="color-gray">'+HotelSummary.address1+', '+HotelSummary.city+', '+HotelSummary.countryCode+'</div>'+
-				  '<div class="content-block-title content-block-margin">'+HotelSummary.hotelRating+'</div>'+
+				  '<div class="content-block-title content-block-margin ratings icons_strall str_'+HotelSummary.hotelRating+'"></div>'+
 				  '<div class="item-subtitle"><img src="'+HotelSummary.tripAdvisorRatingUrl+'"></div>'+
 				  '<div class="item-subtitle">'+HotelSummary.tripAdvisorReviewCount+' reviews</div>'+
 				'</div>'+
@@ -584,26 +625,32 @@ if(page.name=='search-hotels'){
 				'<div class="card-footer CardFooterMaterial">'+
 				  '<a href="#" class="FooterMaterialDeal">DEAL</a>'+
 				  '<a href="#" class="FootFlatOff">Flat 30% off. Earn 15% in eWallte. Code HOTEL17</a>'+
-				  '<a href="#" class="fooAddMore">+1More</a>'+
 				'</div>'+
 				'<div class="HotelOverview">'+
 				  '<div class="content-block">'+
-					'<div class="content-block-title">Hotel Overview</div>'+
+					'<div class="content-block-title OverviewdetailsPagetitle">Hotel Overview</div>'+
 					 '<p href="#" class="detailsPagecontentpr">'+HotelDetails.propertyInformation+'</p>'+
 					  '<a href="#" class="detailsPagecontentprad">READ MORE</a>'+
 					  '</div>'+
 					'</div>'+
-					'<div class="content-block-title">Check In Instructions</div>'+
+					'<div class="content-block">'+
+					'<div class="content-block-title OverviewdetailsPagetitle">Check In Instructions</div>'+
 					 '<p href="#" class="detailsPagecontentpr">'+HotelDetails.checkInInstructions+'</p>'+
 					'</div>'+
-					'<div class="content-block-title">Special Check In Instructions</div>'+
+					'</div>'+
+					'<div class="content-block">'+
+					'<div class="content-block-title OverviewdetailsPagetitle">Special Check In Instructions</div>'+
 					 '<p href="#" class="detailsPagecontentpr">'+HotelDetails.specialCheckInInstructions+'</p>'+
 					'</div>'+
-					'<div class="content-block-title">Room Fees Description</div>'+
-					 '<p href="#" class="detailsPagecontentpr">'+HotelDetails.roomFeesDescription+'</p>'+
+					'<div class="content-block">'+
+					'<div class="content-block-title OverviewdetailsPagetitleroomfess">Room Fees Description</div>'+
+					 '<p class="detailsPagecontentpr">'+HotelDetails.roomFeesDescription+'</p>'+
 					'</div>'+
-					'<div class="content-block-title">PropertyAmenity</div>'+
-					 '<ul>'+PropertyAmenityHtml+'</ul>'+
+					'</div>'+
+					'<div class="content-block">'+
+					'<div class="content-block-title OverviewdetailsPagetitleroomfess">PropertyAmenity</div>'+
+					 '<ul class="PropertyAmenityHtmlli">'+PropertyAmenityHtml+'</ul>'+
+					'</div>'+
 					'</div>'+
 					'<div class="detailsPageMap">'+
 						 '<img src="img/mapImage.jpg" width="100%" class="lazy lazy-fadeIn">'+
@@ -611,7 +658,7 @@ if(page.name=='search-hotels'){
 					
 					'<div class="NearbyLandmarks">'+
 						  '<div class = "content-block-title nearbyTitle">Point of Interest</div>'+
-							 '<div class="list-block">'+ HotelDetails.areaInformation +
+							 '<div class="content-block ContenHotelDetails">'+ HotelDetails.areaInformation +
 								'<div class = "list-block-label list-block-label-text-align">'+
 									'<a href="#" data-popover=".popover-links" class="open-popover">View More</a>'+
 								'</div>'+
@@ -693,13 +740,9 @@ if(page.name=='select-rooms'){
    var childs = page.query.childs;
    var childAge = page.query.childAge;
    var hotelRating =page.query.hotelRating;
-   
    var backLink ='detailsPage.html?destination='+destination+'&hotel_id='+hotel_id+'&latitude='+latitude+'&longitude='+longitude+'&checkIn='+checkIn+'&checkOut='+checkOut+'&Cri_currency='+Cri_currency+'&Cri_language='+Cri_language+'&rooms='+rooms+'&adults='+adults+'&childs='+childs+'&childAge='+childAge;
-   
    $$('.backLink').attr('href',backLink);
-   
    var param ={actionType:'RoomAvailability', hotel_id: hotel_id,destination:destination,latitude:latitude,longitude:longitude,checkIn: checkIn,checkOut: checkOut,Cri_currency: Cri_currency,Cri_language: Cri_language, rooms: rooms,adults: adults,childs: childs,childAge: childAge,hotelRating:hotelRating};
-				
     $$.get(RequestURL+'/update_rates.php', param, function (data) {
 	 if (data!='') {
 	  RoomAvailability(data,param);
@@ -842,8 +885,8 @@ if(page.name=='online-booking'){
 				'<div class="card-content">'+
 					'<div class="card-content-inner">'+
 						'<div class="item-title TitleRelease">'+$HotelRoomAvailabilityResponse.hotelName+'</div>'+
-						'<div class="content-block-title content-block-margin">'+$HotelRoomAvailabilityResponse.tripAdvisorRating+'</div>'+
-						'<p class="color-gray">'+$HotelRoomAvailabilityResponse.hotelAddress+','+$HotelRoomAvailabilityResponse.hotelCity+','+$HotelRoomAvailabilityResponse.hotelCountry+'</p>'+
+						'<div class="content-block-title content-block-marginder ratings icons_strall str_'+$HotelRoomAvailabilityResponse.tripAdvisorRating+'"></div>'+
+						'<p class="color-gray color-graypadeins ">'+$HotelRoomAvailabilityResponse.hotelAddress+','+$HotelRoomAvailabilityResponse.hotelCity+','+$HotelRoomAvailabilityResponse.hotelCountry+'</p>'+
 					'</div>'+
 				'</div>'+
 				'<div class="card-content-inner">'+
@@ -870,7 +913,7 @@ if(page.name=='online-booking'){
 				'</div>'+
 			'<div class="card margin_reviewPage">'+
 					'<div class="card-content-inner">'+
-			  '<div class="card-header">Pricing Details</div>'+
+			  '<div class="card-header card-headerPricing">Pricing Details</div>'+
 				'<div class="card-content Tariff-Details">'+
 					'<div class="row">'+
 						'<div class="col-50"><p class="Tariff-DetailsTitle">Room: 1</p></div>'+
@@ -894,7 +937,7 @@ if(page.name=='online-booking'){
           '</div> ';
 		
 		
-       $html+='<div>'+
+       $html+='<div class="card-content-inner booking_forminner">'+
 	         '<form name="booking_form" id="booking_form">'+ 
 			   '<input type="hidden" name="action" value="Make_Booking">'+
 		       '<input type="hidden" name="is_custom" value="0">'+
@@ -928,21 +971,21 @@ if(page.name=='online-booking'){
 			   '<input type="hidden" name="childs" value="'+childs+'">'+
 			   '<input type="hidden" name="childAge" value="'+childAge+'">'+
 			   
-	            '<h2>Details</h2>'+
+	            '<div class="card-header card-headerPricing">Details</div>'+
 				'<div class="row">'+
-				'<div class="col-30">'+
+				'<div class="col-20">'+
 				    '<div class="item-title label">Title</div>'+
 				    '<div class="item-input">'+
 					  '<select name="titles_0" id="titles_0"><option value="Mr">Mr</option><option value="Ms">Ms</option><option value="Mrs">Mrs</option></select>'+
 				    '</div>'+
 				 '</div>'+
-				'<div class="col-30">'+
+				'<div class="col-40">'+
 				   '<div class="item-title label">First Name</div>'+
 				   '<div class="item-input">'+
 					  '<input type="text" name="firstName_0" id="firstName_0" value="Test">'+
 				   '</div>'+
 				 '</div>'+
-				'<div class="col-30">'+
+				'<div class="col-40">'+
 				   '<div class="item-title label">Last Name</div>'+
 				   '<div class="item-input">'+
 					  '<input type="text" name="lastName_0" id="lastName_0" value="Booking">'+
@@ -950,13 +993,13 @@ if(page.name=='online-booking'){
 				'</div>'+
 				'</div>'+
 				'<div class="row">'+
-				'<div class="col-30">'+
+				'<div class="col-35">'+
 				    '<div class="item-title label">Bed Type</div>'+
 				    '<div class="item-input">'+
 					  '<select name="bedTypeId" id="bedTypeId">'+$BedTypeStr+'</select>'+
 				    '</div>'+
 				 '</div>'+
-				'<div class="col-30">'+
+				'<div class="col-65">'+
 				   '<div class="item-title label">Smoking Preferences</div>'+
 				   '<div class="item-input">'+
 					  '<select name="smokingPreference" id="smokingPreference">'+$smokingPreferencesStr+'</select>'+
@@ -965,40 +1008,42 @@ if(page.name=='online-booking'){
 				'</div>'+
 				
 				'<div class="row">'+
-				'<div class="col-30">'+
+				'<div class="col-50">'+
 				    '<div class="item-title label">Cardholder FirstName</div>'+
 				    '<div class="item-input">'+
 					  '<input type="text" name="creditCardFirstName" id="creditCardFirstName" value="Test">'+
 				    '</div>'+
 				 '</div>'+
-				'<div class="col-30">'+
+				'<div class="col-50">'+
 				   '<div class="item-title label">Cardholder LastName</div>'+
 				   '<div class="item-input">'+
 					  '<input type="text" name="creditCardLastName" id="creditCardLastName" value="Booking">'+
 				   '</div>'+
 				 '</div>'+
-				'<div class="col-30">'+
-				   '<div class="item-title label">Card Type</div>'+
-				   '<div class="item-input">'+
-					  '<select name="creditCardType" id="creditCardType">'+$CardTypes+'</select>'+
-				   '</div>'+
-				'</div>'+
 				'</div>'+
 				
 				'<div class="row">'+
-				'<div class="col-30">'+
+					'<div class="col-50">'+
+					   '<div class="item-title label">Card Type</div>'+
+					   '<div class="item-input">'+
+						  '<select name="creditCardType" id="creditCardType">'+$CardTypes+'</select>'+
+					   '</div>'+
+					'</div>'+
+				'<div class="col-50">'+
 				    '<div class="item-title label">Card Number</div>'+
 				    '<div class="item-input">'+
 					  '<input type="text" name="creditCardNumber" id="creditCardNumber" value="5401999999999999">'+
 				    '</div>'+
 				 '</div>'+
-				'<div class="col-30">'+
+				 '</div>'+
+				 '<div class="row">'+
+				'<div class="col-50">'+
 				   '<div class="item-title label">Expiration Month</div>'+
 				   '<div class="item-input">'+
 					  '<select class="form-element" name="creditCardExpirationMonth" id="creditCardExpirationMonth"><option value="01">01-January</option><option value="02">02-February</option><option value="03">03-March</option><option value="04">04-April</option><option value="05">05-May</option><option value="06">06-June</option><option value="07">07-July</option><option value="08">08-August</option><option value="09">09-September</option><option value="10">10-October</option><option value="11">11-November</option><option value="12">12-December</option></select>'+
 				   '</div>'+
 				 '</div>'+
-				'<div class="col-30">'+
+				'<div class="col-50">'+
 				   '<div class="item-title label">Expiration Year</div>'+
 				   '<div class="item-input">'+
 					  '<select class="form-element" name="creditCardExpirationYear" id="creditCardExpirationYear">'+$ExpiryYear+'</select>'+
@@ -1007,23 +1052,23 @@ if(page.name=='online-booking'){
 				'</div>'+
 				
 				'<div class="row">'+
-				'<div class="col-30">'+
+				'<div class="col-50">'+
 				    '<div class="item-title label">Security Code (CCV)</div>'+
 				    '<div class="item-input">'+
 					  '<input type="text" name="creditCardIdentifier" id="creditCardIdentifier" value="123">'+
 				    '</div>'+
 				 '</div>'+
-				'</div>'+
-				
-				'<div class="row">'+
-				'<div class="col-30">'+
+				 '<div class="col-50">'+
 				    '<div class="item-title label">Country</div>'+
 				    '<div class="item-input">'+
 					  '<select name="countryCode" id="countryCode"><option value="">Select</option><option value="US" selected="selected">United States</option><option value="IN">India</option></select>'+
 				    '</div>'+
 				 '</div>'+
-				'<div class="col-30">'+
-				   '<div class="item-title label">Postal / Zip Code</div>'+
+				'</div>'+
+				
+				'<div class="row">'+
+				'<div class="col-100">'+
+				   '<div class="item-title label">Postal / Zip Code <span class="weli_use">(We’ll use this to verify your credit card details)</span></div>'+
 				   '<div class="item-input">'+
 					  '<input type="text" name="postalCode" id="postalCode" value="98004">'+
 				   '</div>'+
@@ -1031,40 +1076,41 @@ if(page.name=='online-booking'){
 				'</div>'+
 				
 				'<div class="row">'+
-				'<div class="col-30">'+
+				'<div class="col-50">'+
 				    '<div class="item-title label">Address</div>'+
 				    '<div class="item-input">'+
 					  '<input type="text" name="address1" id="address1" value="travelnow">'+
 				    '</div>'+
 				 '</div>'+
-				'<div class="col-30">'+
+				'<div class="col-50">'+
 				   '<div class="item-title label">City</div>'+
 				   '<div class="item-input">'+
 					  '<input type="text" name="city" id="city" value="Seattle">'+
 				   '</div>'+
 				 '</div>'+
-				 '<div class="col-30">'+
+				 '</div>'+
+				 '<div class="row">'+
+				 '<div class="col-50">'+
 				   '<div class="item-title label">State</div>'+
 				   '<div class="item-input">'+
 					  '<select type="text" name="stateProvinceCode" id="stateProvinceCode"><option value="AL">Alabama</option></select>'+
 				   '</div>'+
 				 '</div>'+
-				'</div>'+
-				
-				'<div class="row">'+
-				'<div class="col-30">'+
+				'<div class="col-50">'+
 				    '<div class="item-title label">Email Address</div>'+
 				    '<div class="item-input">'+
 					 '<input type="text" name="email_id" id="email_id" value="support@thewebconz.com">'+
 				    '</div>'+
 				 '</div>'+
-				'<div class="col-30">'+
+				 '</div>'+
+				 '<div class="row">'+
+				'<div class="col-50">'+
 				   '<div class="item-title label">Confirm Email Address</div>'+
 				   '<div class="item-input">'+
 					  '<input type="text" name="email_id_2" id="email_id_2" value="support@thewebconz.com">'+
 				   '</div>'+
 				 '</div>'+
-				 '<div class="col-30">'+
+				 '<div class="col-50">'+
 				   '<div class="item-title label">Telephone Number</div>'+
 				   '<div class="item-input">'+
 					  '<input type="text" name="homePhone" id="homePhone" value="9540121212">'+
@@ -1075,8 +1121,8 @@ if(page.name=='online-booking'){
 	          '</form></div>';
 		
 		$html+='<div class="popup popup-inclusionPolicy" >'+
-				'<div class="content-block">'+
-				  '<p><a href="#" class="close-popup">Close popup</a></p>'+
+				'<div class="content-block popup-inclusionPolicyblock">'+
+				  '<p class="close-popup-ioncsfa"><a href="#" class="close-popup"><i class="fa fa-times" aria-hidden="true"></i></a></p>'+
 				  '<h2>INCLUSIONS</h2>'+
 				  $ValueAddsHtml+
 				  '<h2>Decription</h2>'+
@@ -1118,7 +1164,8 @@ if(page.name=='confirmation'){
   var param ={actionType:'Confirmation',itineraryId:itineraryId};
   $$.get(RequestURL+'/update_rates.php', param, function (data) {
 	  $response =JSON.parse(data);
-	  html ='<div class="card margin_reviewPage">'+
+	  html ='<div class="page-content confirmation-page-conten">'+
+				'<div class="card margin_reviewPage">'+
 				'<div class="card-content">'+
 					'<div class="card-content-inner">'+
 						'<div class="item-title TitleRelease">'+$response.hotelName+'</div>'+
@@ -1159,6 +1206,7 @@ if(page.name=='confirmation'){
 						'<div class="col-50"> <p class="Tariff-DetailsPrice">$'+$response.chargable_rate+'</p></div>'+
 					'</div>'+
 					'</div>'+
+				'</div>'+
 				'</div>'+
           '</div> ';
 		$$('#confirmationPageData').html(html);
@@ -1241,12 +1289,13 @@ function RoomAvailability(data,paramData){
 							'<div class="item-subtitle ResultsTetelHotell">SmokingPreferences:'+$Room_Details[i].smokingPreferences+'</div>'+
 							'<div class="item-subtitle ResultsTetelHotell">Max Guests:'+$Room_Details[i].rateOccupancyPerRoom+'</div>'+$ValueAddStr+
 							
-							'<div class="itemTitel6room">'+$RateInfoObj.currentAllotment+' rooms left</div>'+
+							
 						  '</div>'+
 						  
 						  '<div class="item-innerPrices">'+
 							  '<div class="itemTitel12">$'+$ChargeableRateInfo.averageBaseRate+'</div>'+
 							  '<div class="itemTitel24price">$'+$ChargeableRateInfo.averageRate+'</div>'+
+							  '<div class="itemTitel6room">'+$RateInfoObj.currentAllotment+'&nbsp;rooms left</div>'+
 						  '</div>'+
 						'</li>'+
 					'</ul>'+
@@ -1262,7 +1311,7 @@ function RoomAvailability(data,paramData){
 	   $html+='<div class="popover popover-cancellation-'+$rateCode+'">'+
 				'<div class="popover-angle"></div>'+
 				'<div class="popover-inner">'+
-				  '<div class="list-block">'+
+				  '<div class="list-block cancellation-paragraph">'+
 					$RateInfoObj.cancellationPolicy+
 				  '</div>'+
 				'</div>'+
@@ -1271,7 +1320,7 @@ function RoomAvailability(data,paramData){
        $html+='<div class="popover popover-roomOverview-'+$rateCode+' ">'+
 				'<div class="popover-angle"></div>'+
 				'<div class="popover-inner">'+
-				  '<div class="list-block">'+
+				  '<div class="list-block cancellation-paragraph">'+
 					$RoomType.descriptionLong+
 				  '</div>'+
 				'</div>'+
