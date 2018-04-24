@@ -1,0 +1,37 @@
+.hotelInfo_slideshow{width: 100%;float: left;overflow: hidden;position: relative;}
+.ft-detail-header-img .card-header{ /*height: 235px !important;*/}
+
+
+.booking_forminner .card-headerPricing{margin-bottom: 12px !important;font-size: 19px !important;font-weight: 500 !important;width:100%;}
+.booking_forminner .row .item-input input, .booking_forminner .row .item-input input, .booking_forminner .row .item-input input{width: 100% !important;}
+.borderbottom{}
+.card-headerPricing{font-size: 19px !important;
+    color: #000;
+    font-weight: 500;}
+.TitleRelease{font-size: 20px !important;font-weight: 500 !important;}
+.color-black{color: #000 !important;font-size: 18px !important;}
+.Tariff-Details-border{border-bottom: 1px solid #c2c2c2;border-top: 1px solid #c2c2c2 !important;}
+.inclusionsPolc{    margin: 0px;text-align: right;display: inherit;font-size: 12px;width: 93%;position: absolute !important;top: 16px !important; }
+.color-gray {font-size: 13px !important;color:#848383 !important;}
+.color-black1{    color: #000 !important;
+    font-size: 13px !important;}
+
+.paddingcontent{padding-top: 0px ;}
+.paddingcontent1{    padding-bottom: 12px;}
+.floatbox{float:right;}
+.close-popup-ioncsfa{float: right;text-transform: uppercase;font-size: 15px;font-weight: 500;    padding: 0px 35px;}
+.confirmation_header_booking{    font-weight: 500 !important;}
+.color1{padding-bottom: 22px;}
+.row-inner1{border-right: 1px solid #ddd;}
+.confirmation_Tariff-Details .row .col-50 p{font-size:15px;    padding: 15px 15px;}
+
+.confirmation-page-inner{display:none;}
+.widthcolumn{width:100% !important;}
+.margin_reviewPage{margin: 0px !important;}
+.page-content>.card:last-child{    padding: 7px;}
+.boderrow{    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px !important;
+    border-top: 1px solid #ddd;
+    padding-top: 20px !important;}
+.borderbottom {    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;}
