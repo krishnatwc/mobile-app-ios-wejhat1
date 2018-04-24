@@ -1,0 +1,350 @@
+<div class="page search-resultspage" data-page="flights-search-results">
+ <input type="hidden" name="search_Session_Id" id="search_Session_Id" value=""><br>
+ <input type="hidden" name="totalrecords" id="totalrecords" value="">
+ <input type="hidden" name="sortField" id="sortField" value="">
+ <input type="hidden" name="sortby" id="sortby" value=""> 
+  
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="left"><a href="#search-hotels.html" class="link back"><i class="material-icons">arrow_back</i></a>
+				
+				 <div class="item-inner">
+		<div class="item-title-row">
+		  <div class="item-title search-resultsPageNavbarTitle">New Delhis</div>
+		</div>
+		<div class="item-subtitle search-resultsPageNavbarTitlef">25 Nov - 27 Nov | 7 Guests | <span id="counthotel">381</span> hotels</div>
+		
+	  </div>
+		</div>
+			<!--<div class="right">  
+			<a href="" class="link"><i class="material-icons">search</i></a><a href="" class="link"><i class="material-icons">favorite</i></a>
+			
+			
+			</div>-->
+			
+		</div>
+		
+		
+	</div>
+	<div class="toolbar toolbar-bottom search-resultsPagebottom">
+		<div class="toolbar-inner">
+			<a href="#" data-popup=".mappopup" class="open-popup link"> <i class="material-icons">location_on</i> MAP VIEW</a>
+			<a href="#" data-panel="right" class="open-panel link" ><i class="material-icons">filter_list</i> FILTER</a>
+		 </div>
+	</div>
+	<div data-distance="50" class="page-content search-results-page-content ResultsPageCard infinite-scroll">
+	
+	<div class="ALL_HOTELS">
+			<div class="buttons-row">
+			  <a href="#" class="button active">ALL HOTELS </a>
+			  <a href="#" class="button">HOMESTAYS</a>
+			</div>
+		</div>
+		
+	
+		<div class="SearchPagetile">
+			<div class="buttons-row">
+			  <a href="#" class="button sortingHotels active" rel="0">Suggested </a>			
+			  <a href="#" class="button sortingHotels" rel="0" sortField="hotelRating">Stars</a>
+			  <a href="#" class="button sortingHotels" rel="0" sortField="tripAdvisorRating">Guest Rating</a>
+			  <a href="#" class="button sortingHotels" rel="0" sortField="lowRate">Price</a>
+			</div>
+		</div>
+
+		<div>
+		 <div class="list-block media-list media-list-adblock " id="hotelResults">
+			<script src='//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js' type='text/javascript'></script>
+            <div id='logs'></div>
+            <iframe id='travelstartIframe-dbe73dbb-d314-4457-8a13-4d2612cd837e' frameBorder='0' scrolling='no' style='margin: 0px; padding: 0px; border: 0px; height: 0px; background-color: #fafafa;'>
+
+			</iframe>
+
+            <script src='//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js' type='text/javascript'></script>
+            <script type='text/javascript' src='https://www.travelstart.com/resources/js/jquery.ba-postmessage.min.js'></script>
+            <script type='text/javascript'>
+                // these variables can be configured 
+                var travelstartIframeId = 'travelstartIframe-dbe73dbb-d314-4457-8a13-4d2612cd837e';
+                var iframeUrl = 'https://www.travelstart.com';
+                var logMessages = false;
+                var showBanners = false;
+                var affId = '183933';
+                var affCampaign = '';
+                var affCurrency = 'USD'; // ZAR / USD / NAD / ... 
+                var height = '0px';
+                var width = '100%';
+
+                var language = ''; // ar / en / leave empty for user preference
+                // do not change these 
+                var iframe = $('#' + travelstartIframeId);
+                var iframeVersion = '11';
+                var autoSearch = false;
+                var affiliateIdExist = false;
+                var urlParams = {};
+                var alreadyExist = [];
+                var iframeParams = [];
+                var cpySource = '';
+                var match,
+                    pl = /\+/g,
+                    search = /([^&=]+)=?([^&]*)/g,
+                    decode = function(s) {
+                        return decodeURIComponent(s.replace(pl, " "));
+                    },
+                    query = window.location.search.substring(1);
+                while (match = search.exec(query)) {
+                    urlParams[decode(match[1])] = decode(match[2]);
+                }
+                for (var key in urlParams) {
+                    if (urlParams.hasOwnProperty(key)) {
+                        if (key == 'search' && urlParams[key] == 'true') {
+                            autoSearch = true;
+                        }
+                        if (key == 'affId' || key == 'affid' || key == 'aff_id') {
+                            affiliateIdExist = true;
+                        }
+                        iframeParams.push(key + '=' + urlParams[key]);
+                        alreadyExist.push(key);
+                    }
+                }
+                if (!('show_banners' in alreadyExist)) {
+                    iframeParams.push('show_banners=' + showBanners);
+                }
+                if (!('log' in alreadyExist)) {
+                    iframeParams.push('log=' + logMessages);
+                }
+                if (!affiliateIdExist) {
+                    iframeParams.push('affId=' + affId);
+                }
+                if (!affiliateIdExist) {
+                    iframeParams.push('language=' + language);
+                }
+                if (!('affCampaign' in alreadyExist)) {
+                    iframeParams.push('affCampaign=' + affCampaign);
+                }
+                if (cpySource !== '' && !('cpySource' in alreadyExist)) {
+                    iframeParams.push('cpy_source=' + cpySource);
+                }
+                if (!('utm_source' in alreadyExist)) {
+                    iframeParams.push('utm_source=affiliate');
+                }
+                if (!('utm_medium' in alreadyExist)) {
+                    iframeParams.push('utm_medium=' + affId);
+                }
+                if (!('isiframe' in alreadyExist)) {
+                    iframeParams.push('isiframe=true');
+                }
+                if (!('landing_page' in alreadyExist)) {
+                    iframeParams.push('landing_page=false');
+                }
+                if (affCurrency.length == 3) {
+                    iframeParams.push('currency=' + affCurrency);
+                }
+                if (!('iframeVersion' in alreadyExist)) {
+                    iframeParams.push('iframeVersion=' + iframeVersion);
+                }
+                if (!('host' in alreadyExist)) {
+                    iframeParams.push('host=' + window.location.href.split('?')[0]);
+                }
+                var newIframeUrl = iframeUrl + (autoSearch ? '/search-on-index?search=true' : '/search-on-index?search=false') + '&' + iframeParams.join('&');
+                iframe.attr('src', newIframeUrl);
+				
+                function setIframeSize(newWidth, newHeight) {
+                    iframe.css('width', newWidth);
+                    iframe.width(newWidth);
+                    iframe.css('height', newHeight);
+                    iframe.height(newHeight);
+                }
+                setIframeSize(width, height);
+                jQuery.receiveMessage(function(e, host) {
+                    try {
+                        if (typeof e.data !== 'undefined') {
+                            var dataElements = e.data.split('&');
+                            if (dataElements) {
+                                if (dataElements.length === 1) {
+                                    //Resize 
+                                    setIframeSize(width, e.data + 'px');
+                                } else {
+                                    // Set iframe Size 
+                                    var height = dataElements[1].split('=');
+                                    setIframeSize(width, height[1] + 'px');
+                                    // Scroll to position 
+                                    if (dataElements.length > 2) {
+                                        var scrollTo = dataElements[2].split('=');
+                                        if (scrollTo[1] !== 'none') {
+                                            var iframeTop = iframe.position().top;
+                                            if (scrollTo[1] == 'to-top') {
+                                                window.scrollTo(0, iframeTop);
+                                            } else {
+                                                window.scrollTo(0, iframeTop + parseInt(scrollTo[1]));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } catch (err) {
+                        window.console && console.log(err);
+                    }
+                }, iframeUrl);
+            </script>
+		 </div>
+		</div>
+
+	</div>
+	
+	<!-- end -->
+  <div class="panel panel-right panel-cover" style="width: 290px;">
+            
+               <div class="filter_controls_div">
+			 
+				<h6 class="reset-all-title">Filter your Search<a href="#" class="ng-binding1">Reset All</a> </h6>
+                <div class="filter_criteria">
+                  <h5 class="ng-binding">Distance from Destination</h5>
+                  <ul class="criteria_listing">
+                    <li>
+                      <label class="hotel_filter_label">
+                      <div class="label-image-hot-name">
+                      <input type="radio">
+                      <span class="mls ng-binding">2 Miles</span>
+					  <span class="starRatHotel-img"> </span>
+                      <span class="starRatHotel">(178)</span>
+                      </div>
+                      
+                      </label>
+                    </li>
+                    <li>
+                      <label class="hotel_filter_label">
+                      <div class="label-image-hot-name">
+                      <input type="radio">
+                      <span class="mls ng-binding"> 5 Miles</span>
+					  <span class="starRatHotel-img"> </span>
+                      <span class="starRatHotel">(277)</span>
+                      </div>
+                      
+                      </label>
+                    </li>
+                    <li>
+                      <label class="hotel_filter_label">
+                      <div class="label-image-hot-name">
+                      <input type="radio">
+                      <span class="mls ng-binding">10 Miles</span>
+					  <span class="starRatHotel-img"></span>
+                      <span class="starRatHotel">(513)</span>
+                      </div>
+                      
+                      </label>
+                    </li>
+                   
+                    <li>
+                      <label class="hotel_filter_label">
+                      <div class="label-image-hot-name">
+                      <input type="radio">
+                       <span class="mls ng-binding">50 Miles</span>
+					   <span class="starRatHotel-img"></span>
+                       <span class="starRatHotel">(792)</span>
+                      </div>
+                      
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+				<div class="filter_criteria wleft">
+                  <h5 class="ng-binding">Search with Hotel Name</h5>
+				  <input type="text" name="hotel_name"value="" placeholder="Search by name" class="input_box">
+				
+				<div class="filter_criteria wleft">
+                  <h5 class="ng-binding">STAR RATING  <a href="#" class="ng-binding2">Clear</a></h5>
+                  <ul class="criteria_listing">
+				    <li>
+                      <label class="hotel_filter_label">
+                        <input type="radio" >
+                        <span class="starRat"><i class="fa" aria-hidden="true"></i>Budget Hotels</span><span class="star_number">(2)</span></label>
+                    </li>
+                    <li>
+                      <label class="hotel_filter_label">
+                        <input type="radio">
+                        <span class="starRat starratcolor"><i class="fa fa-star" aria-hidden="true"></i></span><span class="star_number">(0)</span></label>
+                    </li>
+                    <li>
+                      <label class="hotel_filter_label">
+                        <input type="radio">
+                        <span class="starRat starratcolor"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></span><span class="star_number">(21)</span></label>
+                    </li>
+                    <li>
+                      <label class="hotel_filter_label">
+                        <input type="radio">
+                        <span class="starRat starratcolor"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></span><span class="star_number" >(21)</span></label>
+                    </li>
+                    <li>
+                      <label class="hotel_filter_label">
+                        <input type="radio">
+                        <span class="starRat starratcolor"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></span><span class="star_number">(21)</span></label>
+                    </li>
+                    <li>
+                      <label class="hotel_filter_label">
+                        <input type="radio">
+                        <span class="starRat starratcolor"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></span><span class="star_number">(21)</span></label>
+                    </li>
+                    <li> </li>
+                  </ul>
+                </div>
+				<div>
+                  <h5 class="ng-binding" >Property Ameneties <a href="#" class="ng-binding1">Clear</a></h5>
+                  <ul class="criteria_listing">
+				  <li >
+					   <input type="checkbox"value="Free Parking"><span class="ng-binding">Free Parking</span>
+					</li>
+					<li >
+					   <input type="checkbox"value="Free Parking"><span class="ng-binding">Free High-Speed Internet</span>
+					</li>
+					<li >
+					   <input type="checkbox"value="Free Parking"><span class="ng-binding">Free Wireless Internet</span>
+					</li>
+					<li >
+					   <input type="checkbox"value="Free Parking"><span class="ng-binding">Free Breakfast</span>
+					</li>
+					<li >
+					   <input type="checkbox"value="Free Parking"><span class="ng-binding">Breakfast Buffet</span>
+					</li>
+					<li >
+					   <input type="checkbox"value="Free Parking"><span class="ng-binding">Free Internet</span>
+					</li>
+					<li >
+					   <input type="checkbox"value="Free Parking"><span class="ng-binding">Free welcome drink</span>
+					</li>
+					<li >
+					   <input type="checkbox"value="Free Parking"><span class="ng-binding">Continental Breakfast</span>
+					</li>
+					<li >
+					   <input type="checkbox"value="Free Parking"><span class="ng-binding">Free Valet Parking</span>
+					</li>
+					
+					   <li >
+					   <input type="checkbox"value="Free Parking"><span class="ng-binding">Late Check-out</span>
+					</li>
+					<li >
+					   <input type="checkbox"value="Free Parking"><span class="ng-binding">Early Check-in</span>
+					</li>
+					<li >
+					   <input type="checkbox"value="Free Parking"><span class="ng-binding">Free Room Upgrade</span>
+					</li>
+					
+					
+                  </ul>
+                </div>
+				
+				</div>
+				</div>
+				</div>
+ 
+ <!--map view -->
+	 <div class="panel-overlay"></div>
+	 <div class="popup mappopup" style="height:111%">
+    <div class="detailsPageMap1 map1">
+	<img src="img/mapImage.jpg" style="width: 100%;height:100%;">
+		<div class="toolbar toolbar-bottom toolbar-bottomDetailsPage">
+		 <div class="navbar1">
+		 <a href="#" class="link close-popup" style="height: 49px;    font-size: 16px;">Hotel List</a>
+		 <a href="#" data-panel="right" class="open-panel link" ><i class="material-icons">filter_list</i> FILTER</a>
+		</div>
+	  </div>
+  </div>

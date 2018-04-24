@@ -1,14 +1,18 @@
-<div class="page search-hotelspage" data-page="search-hotels">
+<div class="page search-flightspage" data-page="search-flight">
         <div class="navbar">
             <div class="navbar-inner">
                 <div class="left"><a href="#index" class="link back with-animation"><i class="material-icons">arrow_back</i> 
-					<span class="BoxPageNavbarTitle">Hotels Search </span></a></div>
+					<span class="BoxPageNavbarTitle">Flight Search </span></a></div>
                 <div class="right"> <a href="" class="link"><i class="material-icons">restore</i></a></div>
             </div>
         </div>
     
         <div class="page-content">
-		<div class="content-block-title boxPage-title"><i class="material-icons"> my_location</i> <span class="BoxPageHotelNear">I need a place tonight!</span></div>
+		<!--<div class="content-block-title boxPage-title"><i class="material-icons"> my_location</i> <span class="BoxPageHotelNear">I need a place tonight!</span></div>-->
+		<div class="flightRound">
+			<a href="#"><i class="material-icons">trending_flat</i>ONE-WAY</a>
+			<a href="#"><i class="material-icons">swap_horiz</i>ROUND TRIP</a>
+		</div>
 			
        <form class="BoxPageForm" name="searchHotel_frm" id="searchHotel_frm">   
 		<div class="content-block paddingNOne">
@@ -17,7 +21,19 @@
 			 <input type="hidden" name="destination" id="destination" value="Delhi City, India" />
 				<div class="HotelDiVBox">
 					<div class="HotelDiVBoxLeft">
-						<i class="fa fa-map" aria-hidden="true"></i>
+						<i class="material-icons">flight_takeoff</i>
+					</div>
+					<div class="HotelDiVBoxRight">
+						<a href="#" id="autocomplete-standalone-popup">
+						<p class="item-title Pseitel">Destination</p>
+						<p class="item-after PseitelDes"  id="selectedDest">Delhi, India</p>
+						</a>
+					</div>
+				</div>
+				
+				<div class="HotelDiVBox">
+					<div class="HotelDiVBoxLeft">
+						<i class="material-icons">flight_land</i>
 					</div>
 					<div class="HotelDiVBoxRight">
 						<a href="#" id="autocomplete-standalone-popup">
@@ -51,20 +67,32 @@
 					</div>
 				</div>
 			 
-			 <div class="HotelDiVBox HotelDiVBox-last">
+			 <div class="HotelDiVBox ">
 					<div class="HotelDiVBoxLeft">
-						<i class="fa fa-bed" aria-hidden="true"></i>
+						<i class="material-icons">group</i>
 					</div>
 					<div class="HotelDiVBoxRight">
 						<a href="#" data-popup=".aautocomplete-standalone-popup" class="open-popup">
-						<p class="item-title Pseitel">Room</p>
+						<p class="item-title Pseitel">1 Adult</p>
 						<p class="item-after PseitelDes"  id="selectedDest_adults">2 Adults in 1 Room</p>
+						</a>
+					</div>
+				</div>
+				
+				<div class="HotelDiVBox HotelDiVBox-last HotelDiVBox-last-flight">
+					<div class="HotelDiVBoxLeft">
+						<i class="material-icons">card_travel</i>
+					</div>
+					<div class="HotelDiVBoxRight">
+						<a href="#" data-popup=".aautocomplete-standalone-popup" class="open-popup">
+						<p class="item-title Pseitel">Economy</p>
+						<p class="item-after PseitelDes"  id="selectedDest_adults">Economy</p>
 						</a>
 					</div>
 				</div>
 			 
 			 
-			 <div class="btnHotelrel"><a href="#" class="findHotelResults with-animation">SEARCH HOTELS</a></div>
+			 <div class="btnHotelrel"><a href="#" class="findFlightResults with-animation">SEARCH FLIGHTS</a></div>
 			 
 			 
 			 
