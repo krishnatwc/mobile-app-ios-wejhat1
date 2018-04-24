@@ -4,9 +4,12 @@ var myApp = new Framework7({
     // If it is webapp, we can enable hash navigation:
     pushState: true,
     material: true,
-	animatePages:false,
-	pushState: true,
+	animatePages:true,
+	
     cache: false,
+	panel: {
+		swipe: 'left',
+	},
     // Hide and show indicator during ajax requests
     onAjaxStart: function (xhr) {
         myApp.showIndicator();
@@ -14,8 +17,8 @@ var myApp = new Framework7({
     onAjaxComplete: function (xhr) {
         myApp.hideIndicator();
     }
+	
 });
-
 
 // Export selectors engine
 var $$ = Dom7;
@@ -25,10 +28,7 @@ var mainView = myApp.addView('.view-main', {
    domCache: true,
 });
 
-$$(window).on('popstate', function (e) {
- myApp.closeModal('.popup.modal-in');
- myApp.closeModal('.popover.modal-in');
-});
+
 
 
 var RequestURL ='http://twc5.com/demo/MobAppRequest';
@@ -51,59 +51,12 @@ $$(document).on('pageInit',function(e){
 
  /*=== Hotel Search Box page ====*/ 
 if(page.name=='search-hotels'){
-	var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-	var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-	
-	var searchedData = myApp.formGetData('HotelRequestData');
-	var searchedDataObj =searchedData;
-	if(searchedDataObj==''){
-	  $$('#selectedDest').html(searchedDataObj.destination);
-	  $$('#destination').val(searchedDataObj.destination);
-      $$('#latitude').val(searchedDataObj.latitude);	
-      $$('#longitude').val(searchedDataObj.longitude);
-      $$('#startDate').val(searchedDataObj.startDate);
-      $$('#endDate').val(searchedDataObj.endDate);
-	 
-	  var start =new Date(searchedDataObj.startDate);
-	  var end =new Date(searchedDataObj.endDate);
-	 
-	  var startDate_txt = weekday[start.getDay()]+', '+start.getDate()+' '+monthNames[start.getMonth()]+' '+start.getFullYear().toString().substr(-2);
-	  var endDate_txt = weekday[end.getDay()]+', '+end.getDate()+' '+monthNames[end.getMonth()]+' '+end.getFullYear().toString().substr(-2);
-      $$('#startDate_txt').html(startDate_txt);
-      $$('#endDate_txt').html(endDate_txt);	  
-	}else{
-	  var sDate = new Date();
-	      sDate.setDate(sDate.getDate() + 5);
-	  var m =  sDate.getMonth();
-	      m += 1;  // JavaScript months are 0-11
-	  var dstart = m+'/'+sDate.getDate()+'/'+sDate.getFullYear();
-	 // var dend = new Date();
-	 var eDate = new Date();
-	     eDate.setDate(eDate.getDate() + 6);
-	  var m =  eDate.getMonth();
-	   m += 1;  // JavaScript months are 0-11
-	  var dend = m+'/'+eDate.getDate()+'/'+eDate.getFullYear();
-	 
-	 
-      var start =new Date(dstart);
-	  var end =new Date(dend);
-	  
-	  $$('#selectedDest').html('Delhi City, India');
-	  $$('#destination').val('Delhi City, India');
-      $$('#latitude').val('28.632558');	
-      $$('#longitude').val('77.220036');
-      $$('#startDate').val(dstart);
-      $$('#endDate').val(dend);
-	 
-	  var startDate_txt = weekday[start.getDay()]+', '+start.getDate()+' '+monthNames[start.getMonth()]+' '+start.getFullYear().toString().substr(-2);
-	  var endDate_txt = weekday[end.getDay()]+', '+end.getDate()+' '+monthNames[end.getMonth()]+' '+end.getFullYear().toString().substr(-2);
-      $$('#startDate_txt').html(startDate_txt);
-      $$('#endDate_txt').html(endDate_txt);	 	
-	}
-	
 	var currDate =new Date();
   /* ===== Calendar ===== */
-    var today =new Date();
+    var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+	var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	
+  var today =new Date();
 	var calendarRange = myApp.calendar({
     input: '#appCalendar',
     dateFormat: 'M dd yyyy',
@@ -143,7 +96,7 @@ if(page.name=='search-hotels'){
 				'<div class="card-content">'+
 				 '<div class="content-block">'+ 
 					'<div class="roomPagePadding">'+ 
-						'<div class="row">'+
+						'<div class="row margin_br">'+
 							'<div class="col-60">'+ 
 								'<div class="roomPageTitle">Adults</div>'+
 								'<div class="roomPageTitleBottom">Above 12 yrs</div>'+
@@ -165,7 +118,7 @@ if(page.name=='search-hotels'){
 					'</div>'+
 					'<div class="roomPagePadding">'+
 						'<div class="row">'+
-							'<div class="col-60"> '+
+							'<div class="col-60 marginbr"> '+
 								'<div class="roomPageTitle">Children</div>'+
 								'<div class="roomPageTitleBottom">0-12 yrs</div>'+
 							'</div>'+
@@ -287,6 +240,7 @@ if(page.name=='search-hotels'){
 	
 	var rooms =$$('#number_of_rooms').val();
    	$$('#roomGuestTxt').html(rooms+' Rooms, '+guest+' Guests ');
+	$$('#selectedDest_adults').html(rooms+' Rooms, '+guest+' Guests ');
   }
   
   
@@ -300,6 +254,7 @@ if(page.name=='search-hotels'){
     valueProperty: 'fullname', 
     textProperty: 'fullname', 
     limit: 20, 
+	autoFocus: true,
     dropdownPlaceholderText: 'Try "JavaScript"',
     expandInput: true, 
     source: function (autocomplete, query, render) {
@@ -335,12 +290,23 @@ if(page.name=='search-hotels'){
      $$('#selectedDest').html(dataObj.latinFullName);	 	 
      $$('#latitude').val(dataObj.location.lat);
      $$('#longitude').val(dataObj.location.lon);
-
 	}
 	
    });
   
+  
+  $$('.findFlightResults').on('click', function(e){
+	alert("Test");
+		var url ='search-flight-results.html?destination='+$$('#destination').val()+'&latitude='+$$('#latitude').val()+'&longitude='+$$('#longitude').val()+'&checkIn='+$$('#startDate').val()+'&checkOut='+$$('#endDate').val()+'&Cri_currency=USD&Cri_language=en_US&hotelType=1&rooms='+$$('#number_of_rooms').val()+'&adults='+adultsArr+'&childs='+childsArr+'&childAge=';
+	   mainView.router.loadPage(url);
+		
+		
+   });
+  
+  
+  
    $$('.findHotelResults').on('click', function(e){
+	   
 	   e.preventDefault();	
 	   var formData = myApp.formToData('#searchHotel_frm');
 	   myApp.formStoreData('HotelRequestData',formData);
@@ -374,6 +340,8 @@ if(page.name=='search-hotels'){
  /*=== Search Result page ====*/
  if(page.name=='search-results')
  {
+   var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
    var destination =page.query.destination;
    var latitude =page.query.latitude;	 
    var longitude =page.query.longitude;	 
@@ -386,12 +354,18 @@ if(page.name=='search-hotels'){
    var adults = page.query.adults;
    var childs = page.query.childs;
    var childAge = page.query.childAge;
-   var guest =parseInt(adults)+parseInt(childs);
+   
+   var checkindate = checkIn.split("/");
+   var checkoutdate = checkOut.split("/");
+   
    if( (destination!='') && (latitude!='') && (longitude!=''))
    {
-	 $$('#destinationName').html(destination);
-	 $$('#dateguist').html(checkIn+' - '+checkOut+' | '+ guest+' Guests | ')
-	 myApp.showIndicator();  
+	 $$(".search-resultsPageNavbarTitle").html(destination);
+	 $$("#startenddate").html(checkindate[1] + " " + monthNames[(parseInt(checkindate[0])-1)] + " - " + checkoutdate[1] + " " + monthNames[(parseInt(checkoutdate[0])-1)]);
+	 $$("#noofguestenddate").html(rooms);
+	 //checkIn=05/28/2018&checkOut
+	 
+	 //alert("Started");
 	 var param ={actionType:'findSearchKey',lat:latitude,lon:longitude, checkIn:checkIn,checkOut:checkOut, rooms:rooms,adults:adults,childs:childs,childAge:childAge};
 	 
 	 $$.get(RequestURL+'/update_rates.php',param, function (response,status) {
@@ -405,7 +379,7 @@ if(page.name=='search-hotels'){
 		 else{
 			Upldate_Rates(); 
 		 }
-		  myApp.hideIndicator();
+		  filtrationHtml(); 
 	  });
 
      function Upldate_Rates(){ 
@@ -436,11 +410,24 @@ if(page.name=='search-hotels'){
      }
 	
     function Searched_Hotels(){
+	$$("#hotelResults").css("opacity", "0.5");
 	  var search_Session_Id = $$('#search_Session_Id').val();
+	  
+	  var Cri_destination =$$('input[name=Cri_destination]:checked').val();
+	  var Cri_Rating = [];
+	  $$("input[name='Cri_Rating[]']:checked").each(function (){
+		Cri_Rating.push($$(this).val());
+	  });
+	  
+	  var Cri_amenity = [];
+	  $$("input[name='Cri_amenity[]']:checked").each(function (){
+		Cri_amenity.push($$(this).val());
+	  });
+	  
       var sortField =$$('#sortField').val(sortField);
       var sortby = $$('#sortby').val(sortby);  	  
 	  
-	   var param ={actionType:'Searched_Hotels',search_Session_Id:search_Session_Id,lat:latitude,lon:longitude, checkIn:checkIn,checkOut:checkOut, rooms:rooms,adults:adults,childs:childs,childAge:childAge,page:1,orderby_fild:sortField,orderby_val:sortby};
+	   var param ={actionType:'Searched_Hotels',search_Session_Id:search_Session_Id,lat:latitude,lon:longitude, checkIn:checkIn,checkOut:checkOut, rooms:rooms,adults:adults,childs:childs,childAge:childAge,page:1,Cri_destination:Cri_destination,Cri_Rating:Cri_Rating,Cri_amenity:Cri_amenity,orderby_fild:sortField,orderby_val:sortby};
 	   $$.get(RequestURL+'/update_rates.php',param, function (response,status) {
 		 if(status==200){
 		   var myData =JSON.parse(response);
@@ -448,13 +435,13 @@ if(page.name=='search-hotels'){
 		   var getHotelLists=myData.result;
 		    $$('#totalrecords').val(totalrecords);
 			$$('#counthotel').html(totalrecords);
-		   listHotelResults(getHotelLists,0);	  
+		    listHotelResults(getHotelLists,0);	
+			$$("#hotelResults").css("opacity", "1");
 		 } 
 	    });
 	} 	
-	 
-	 
    }
+   
    
    $$('.sortingHotels').on('click', function (e) {
 	 var getHotelLists = myApp.formGetData('HotelLists');  
@@ -475,6 +462,17 @@ if(page.name=='search-hotels'){
 	 }
    });
    
+   function filterResults(){
+	$$('.filterResults').on('click',function(e){
+	var resultsType =$$('#resultsType').val();	   
+	  if(resultsType=='hotel'){
+	    Searched_Hotels();
+	   }else{
+		loading_Google_Map();   
+	   }
+     });   
+   }
+   
    
    function listHotelResults(getHotelLists,page){
      if(getHotelLists.length>0){
@@ -485,44 +483,53 @@ if(page.name=='search-hotels'){
 			
 		 html+='<li><div class="card">'+
 			   '<div class="card-content">'+
+					'<div class="fulldiv_header">'+
+					
+					
+						'<div class="fulldiv_header-left">'+
+							'<div class="item-title ResultsTetelHotel">' + getHotelLists[i].name +'</div>'+
+							'<div class="item-subtitle ResultsTetelHotell">' + getHotelLists[i].address1 +'</div>'+
+							'</div>'+
+							'<div class="fulldiv_header-right">'+
+							  '<div class="itemTitel12">$' + getHotelLists[i].highRate +'</div>'+
+							  '<div class="itemTitel24price">$' + getHotelLists[i].lowRate +'</div>'+
+							'</div>'+
+					'</div>'+
+					
 			      '<div class="list-block media-list">'+
 				    '<div>'+
 					'<a href="detailsPage.html?destination='+destination+'&hotel_id='+getHotelLists[i].hotelId+'&latitude='+latitude+'&longitude='+longitude+'&checkIn='+checkIn+'&checkOut='+checkOut+'&Cri_currency='+Cri_currency+'&Cri_language='+Cri_language+'&rooms='+rooms+'&adults='+adults+'&childs='+childs+'&childAge='+childAge+'" >'+
 					'<div class="item-content">'+
 					 '<div class="item-media ResultsPagehover">'+
-						'<div class="ResultsPageMaxWidth" style="background: url(http://images.trvl-media.com'+ thumbNailUrl +') no-repeat center;">'+
-								'<i class="material-icons Resultsfavorite">favorite</i>'+
-							'</div>'+
+						'<div class="ResultsPageMaxWidth" style="background: url(http://images.trvl-media.com'+ thumbNailUrl +') no-repeat center;height: 118px; width: 114px;">'+
+								'<i class="material-icons Resultsfavorite" style="display:none;">favorite</i>';
+								if((parseInt(getHotelLists[i].highRate) - parseInt(getHotelLists[i].lowRate)) > 1){
+									html+='<div class="divOff5">Save $' + (parseInt(getHotelLists[i].highRate) - parseInt(getHotelLists[i].lowRate)) + '</div>';
+								}
+				html+='</div>'+
 						    '</div>'+
 						  '<div class="item-inner">'+
-							'<div class="item-title-row">'+
-							 '<div class="item-title ResultsTetelHotel">' + getHotelLists[i].name +'</div>'+
-							'</div>'+
-							'<div class="item-subtitle ResultsTetelHotell">' + getHotelLists[i].address1 +'</div>'+
-							'<div class="item-subtitle ResultsTetelstar_rate"><div class="ratings icons_strall str_' + getHotelLists[i].hotelRating +'"></div></div>'+
 							'<div class="item-subtitle ResultsTetelReviews">'+
-								'<div><img src="'+getHotelLists[i].tripAdvisorRatingUrl+'"></div> <div class="sre4pde40" style="display: none;">'+getHotelLists[i].tripAdvisorRating+'</div></div>'+
+								'<div class="ratings icons_strall str_' + getHotelLists[i].hotelRating +'"></div>'+
+								'<div class="img5"><img src="'+getHotelLists[i].tripAdvisorRatingUrl+'"></div> <div class="sre4pde40" style="display: none;">'+getHotelLists[i].tripAdvisorRating+'</div></div>'+
+							'<div class="boxleftDse">'+
+							  '<a href="#" class="materialicon1"><i class="material-icons material-iconsclear">clear</i>Free Cancellation</a>'+'</div>'+
+							'<div class="boxleftDse">'+
+							  '<a href="#" class="materialicon2"><i class="material-icons material-iconsclear">wifi</i>Free Wi-Fi</a>'+'</div>'+
+							  '<div class="boxleftDse">'+
+							  '<a href="#" class="materialicon2"><i class="material-icons material-iconsclear">check</i>All Meals</a>'+'</div>'+
+							  '<div class="boxleftDse">'+
+							  '<a href="#" class="materialicon2"><i class="material-icons material-iconsclear">wifi</i>Half Board</a>'+'</div>'+
+							'</div>'+'<div class="ribbon"><span>'+getHotelLists[i].currentAllotment+' rooms left</span></div></div>'+
 						 '</div>'+
-						  '<div class="item-innerPrices">'+
-							  '<div class="itemTitel12">$' + getHotelLists[i].highRate +'</div>'+
-							  '<div class="itemTitel24price">$' + getHotelLists[i].lowRate +'</div>'+
-							 '<div class="itemTitel2Night">for 2 Nights</div>'+
-							 '<div class="itemTitel6room">6 rooms left</div>'+
 						  '</div>'+
 						'</div>'+
 						'</a>'+
 					'</div>'+
 					'</div>'+
 				 '</div>'+
-					'<div class="card-footer CardFooterMateriall">'+
-					 '<a href="#" class=""><i class="material-icons">check</i>Free Cancellation</a>'+
-					 '<a href="#" class=""><i class="material-icons">check</i>Free Wi-Fi</a>'+
-					 '<a href="#" class=""><i class="material-icons material-iconsclear">clear</i>Free breakfast</a>'+
-					'</div>'+
-					 '<div class="card-footer CardFooterMaterial">'+
-					 '<a href="#" class="FooterMaterialDeal">DEAL</a>'+
-					  '<a href="#" class="FootFlatOff">Flat 30% off. Earn 15% in eWallte. Code HOTEL17</a>'+
-					'</div>'+
+					
+					
 				'</div></li>';	
 		}
 		if(page>1){
@@ -533,9 +540,71 @@ if(page.name=='search-hotels'){
 		}		 
 	 } 	 
    }
-    
    
+  
+   function filtrationHtml(){
+	  var search_Session_Id = $$('#search_Session_Id').val(); 
+	  var param ={actionType:'getControls',search_Session_Id:search_Session_Id};
+	  $$.get(RequestURL+'/update_rates.php',param, function (response,status) {
+		var myData =JSON.parse(response);
+	    var filter_distanceHtml ='<label class="checkmark-box"><span class="mls">2 Miles</span><span class="starRatHotel">('+myData.distance2+')</span>'+
+		  '<input type="radio" name="Cri_destination" value="2" class="filterResults">'+
+		  '<span class="checkmark"></span>'+
+		'</label>'+
+		'<label class="checkmark-box"><span class="mls">5 Miles</span><span class="starRatHotel">('+myData.distance5+')</span>'+
+		  '<input type="radio" name="Cri_destination" value="5" class="filterResults">'+
+		  '<span class="checkmark"></span>'+
+		'</label>'+
+		'<label class="checkmark-box"><span class="mls">10 Miles</span><span class="starRatHotel">('+myData.distance10+')</span>'+
+		  '<input type="radio" name="Cri_destination" value="10" class="filterResults">'+
+		  '<span class="checkmark"></span>'+
+		'</label>'+
+		'<label class="checkmark-box"><span class="mls">50 Miles</span><span class="starRatHotel">('+myData.distance50+')</span>'+
+		  '<input type="radio" name="Cri_destination" value="50" class="filterResults">'+
+		  '<span class="checkmark"></span>'+
+		'</label>';
+		
+	    $$('#filter_distanceHtml').html(filter_distanceHtml); 
+
+        /*=== Star Html ===*/
+	 var filter_starHtml ='<ul class="star-ul-li">'+
+		 '<li>'+
+		   '<input type="checkbox" name="Cri_Rating[]" value="1" class="filterResults">'+
+		   '<a href="#">1<i class="fa fa-star" aria-hidden="true"></i><br>('+myData.stars1+')</a></li>'+
+		 '<li><input type="checkbox" name="Cri_Rating[]" value="2" class="filterResults">'+
+		    '<a href="#">2<i class="fa fa-star" aria-hidden="true"></i><br>('+myData.stars2+')</a></li>'+
+		 '<li>'+
+		   '<input type="checkbox" name="Cri_Rating[]" value="3" class="filterResults">'+
+		   '<a href="#">3<i class="fa fa-star" aria-hidden="true"></i><br>('+myData.stars3+')</a></li>'+
+		 '<li>'+
+		  '<input type="checkbox" name="Cri_Rating[]" value="4" class="filterResults">'+
+		  '<a href="#">4<i class="fa fa-star" aria-hidden="true"></i><br>('+myData.stars4+')</a></li>'+
+		 '<li>'+
+		  '<input type="checkbox" name="Cri_Rating[]" value="5" class="filterResults">'+
+		  '<a href="#">5<i class="fa fa-star" aria-hidden="true"></i><br>('+myData.stars5+')</a></li>'+
+		'</ul>';
+		
+	   $$('#filter_starHtml').html(filter_starHtml); 	
+       filterResults();
+      });		   
+	   
+	 /*=== Amenity Html ===*/ 
+	  var param ={actionType:'getAmenityControls',search_Session_Id:search_Session_Id};
+	  $$.get(RequestURL+'/update_rates.php',param, function (response,status) {
+		var results =JSON.parse(response);
+		var myData =results.aminity;
+		var filter_amenityHtml ='';
+		for(var i=0;i<myData.length;i++){
+	    filter_amenityHtml+='<label class="checkmark-box"><span class="mls">'+myData[i]+'</span>'+
+							  '<input type="checkbox" name="Cri_amenity[]" value="'+myData[i]+'" class="filterResults">'+
+							  '<span class="checkmark"></span>'+
+							'</label>';
+		}
+		 $$('#filter_amenityHtml').html(filter_amenityHtml);
+	  });		
+   }
    
+ 
    var loading = false;
    var lastLoadedIndex =  $$('.list-block li').length;
    var page =2;
@@ -544,10 +613,11 @@ if(page.name=='search-hotels'){
         if (loading) return;
         // Set loading trigger
         loading = true;
+		
 		var search_Session_Id = $$('#search_Session_Id').val();
 		var totalrecords =$$('#totalrecords').val();
 		var no_of_pages =Math.ceil(totalrecords/15);
-		alert(no_of_pages+'=>'+page);
+		//alert(no_of_pages+'=>'+page);
 		if(no_of_pages>page){
 		var param ={actionType:'Searched_Hotels',search_Session_Id:search_Session_Id,lat:latitude,lon:longitude, checkIn:checkIn,checkOut:checkOut, rooms:rooms,adults:adults,childs:childs,childAge:childAge,page:page};
         $$.get(RequestURL+'/update_rates.php', param, function (data) {
@@ -572,6 +642,192 @@ if(page.name=='search-hotels'){
 	  }
    });
    
+   
+   
+  /*=== Maps ===*/
+   var countshowmap =0;
+   var map;
+   var markers = [];
+   var Info_Boxes = [];
+   var asc_desc = 1;	
+   var Update_Results_Now = null;
+   var bounds = new google.maps.LatLngBounds();
+   var loc;
+   $$(".Hotel_Map_LI_Tab").click(function(){
+	  var res_content = $$(this).attr("rel");
+      $$('#resultsType').val(res_content);	  
+	  if(res_content=='map'){
+		$$(this).attr('rel','hotel'); 
+        $$('.bindHtmlcl').html('<i class="material-icons">location_on</i>List</span>');			
+	    $$('#hotelResults').hide();	
+        $$('#map-canvas').show();	
+        if(countshowmap==0){ loading_Google_Map(); }
+		else{ No_Loader(); }
+	    countshowmap++;		
+	  }
+	  else{
+		$$(this).attr('rel','map');
+        $$('.bindHtmlcl').html('<i class="material-icons">location_on</i> MAP VIEW</span>');		
+		$$('#map-canvas').hide();	  
+		$$('#hotelResults').show();	
+	  }
+    });
+	
+   function loading_Google_Map(){
+		var haightAshbury = new google.maps.LatLng(12.125264,64.234314);
+		var mapOptions = {
+		zoom: 12,
+		center: haightAshbury,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+		var marker = new google.maps.Marker({
+			position: new google.maps.LatLng($$("#cur_rent_lat").val(), $$("#cur_rent_lon").val()),
+			map: map,
+			icon: 'images/Map-Marker-Flag--Right-Pink.png'
+		});
+		// Add circle overlay and bind to marker
+		var circle = new google.maps.Circle({
+			map: map,
+			radius: 2500,    // metres
+			fillColor: '#AA0000'
+		});
+		circle.bindTo('center', marker, 'position');
+
+		No_Loader();
+	}
+	function setAllMap(map) {
+	  for (var i = 0; i < markers.length; i++) {
+		markers[i].setMap(map);
+	  }
+	}
+	function No_Loader(page){
+		var search_Session_Id = $$('#search_Session_Id').val();
+		var Cri_destination =$$('input[name=Cri_destination]:checked').val();
+	    var Cri_Rating = [];
+	    $$("input[name='Cri_Rating[]']:checked").each(function (){
+		 Cri_Rating.push($$(this).val());
+	    });
+	  
+	    var Cri_amenity = [];
+	    $$("input[name='Cri_amenity[]']:checked").each(function (){
+		 Cri_amenity.push($$(this).val());
+	    });
+		
+		var param ={actionType:'Show_Markers',search_Session_Id:search_Session_Id,lat:latitude,lon:longitude, checkIn:checkIn,checkOut:checkOut, rooms:rooms,adults:adults,childs:childs,childAge:childAge,page:page,Cri_destination:Cri_destination,Cri_Rating:Cri_Rating,Cri_amenity:Cri_amenity};
+		
+		setAllMap(null);
+		var location_right="";
+		
+		$$.get(RequestURL+'/update_rates.php', param, function (data) {
+            var result =JSON.parse(data);
+			for(a=0;a<result.length;a++){ 
+				addMarker(result[a].Latitude, result[a].Longitude, result[a].Name, result[a].ThumbnailURL, result[a].Address1, result[a].Address2, result[a].StarRating, result[a].shortDescription, result[a].EANHotelID,result[a].LowRate);
+				loc = new google.maps.LatLng(result[a].Latitude,result[a].Longitude);
+				bounds.extend(loc);
+				map.fitBounds(bounds);
+			}
+        });
+	}
+	function addMarker(lat, longi, hotel_name, ThumbnailURL, Address1, Address2, StarRating, shortDescription, EANHotelID,LowRate) { //alert(StarRating);
+		 //var StarRatingMarker = (Math.round(StarRating)/10);
+		 var StarRatingMarker = (Math.round(StarRating));
+		 var Thumbnail_url='//images.travelnow.com'+ThumbnailURL;	
+			map.setCenter(new google.maps.LatLng(lat,longi));
+			boxTextVal="";
+			marker = new google.maps.Marker({
+			position: new google.maps.LatLng(lat, longi),
+			map: map,
+			draggable : false,
+			icon :"images/"+StarRatingMarker+"-marker.png"
+		});
+
+		var boxText = document.createElement("div");
+		
+		boxText.className = "boxelement";
+
+		boxTextVal += '<div class="gmapta"><table width="100%" border="0" cellspacing="0" cellpadding="0">';
+		boxTextVal += '<caption>';
+		boxTextVal += 'Click marker above to see prices and availability';
+		boxTextVal += '</caption>';
+		boxTextVal += '<tr>';
+		boxTextVal += '<th style="padding:0px;width:82px;vertical-align: top;"><img src="'+Thumbnail_url+'" alt="" width="80" height="80"></th>';
+		boxTextVal += '<th><span style="font-weight:bold">'+hotel_name+'</span>';
+		boxTextVal += '<div>'+Address1+', '+Address2+'</div>';
+		boxTextVal += '<p><span class="rating-static rating-'+StarRating+'"></span></p>';
+		boxTextVal += '<p class="mprice">$ '+LowRate+'</p>';
+		boxTextVal += '</th>';
+		boxTextVal += '</tr>';
+		boxTextVal += '</table></div>';
+
+	   boxText.innerHTML=boxTextVal;
+
+		var myOptions = {
+
+		content: boxText,
+
+		disableAutoPan: false,
+
+		maxWidth: 0,
+
+		pixelOffset: new google.maps.Size(-140, 0),
+
+		zIndex: 10000,
+
+		boxStyle: { 
+			background: "url('images/gmap-aro.png') 100px 7px no-repeat",
+			opacity: 0.95,
+			width: "360px"
+		},
+
+		closeBoxMargin: "-10px -20px -20px -20px",
+
+		closeBoxURL: "images/1359163327_Error.png",
+
+		infoBoxClearance: new google.maps.Size(1, 1),
+
+		isHidden: false,
+		pane: "floatPane",
+		mapTypeId: 'terrain',
+		enableEventPropagation: false
+		};
+		var ib = new InfoBox(myOptions);
+
+		google.maps.event.addListener(marker, "mouseover", function (e) {
+
+		if(Info_Boxes){
+			for (i in Info_Boxes){
+				Info_Boxes[i].setMap(null);
+			}
+		}
+			ib.open(map, this);
+
+		});
+		google.maps.event.addListener(marker, "click", function (e) {
+		 var url ="detailsPage.html?destination="+destination+"&hotel_id="+EANHotelID+"&latitude="+latitude+"&longitude="+longitude+"&checkIn="+checkIn+"&checkOut="+checkOut+"&Cri_currency=USD&Cri_language=en_US&rooms="+rooms+"&adults="+adults+"&childs="+childs+"&childAge="+childAge;	
+		 mainView.router.loadPage(url);
+		 
+		 // window.location="/hotel-information/"+EANHotelID+"/"+hotel_name;
+		});
+		google.maps.event.addListener(marker, "mouseout", function (e) {
+		if(Info_Boxes){
+			for (i in Info_Boxes){
+				Info_Boxes[i].setMap(null);
+			}
+		  }
+		}); 
+		
+   if($$("#hotel_name_search").val()!=""){
+			ib.open(map, marker);
+	}
+	Info_Boxes.push(ib);
+	
+	markers.push(marker);
+	for (i in Info_Boxes){
+		Info_Boxes[i].setMap(null);
+		}
+	}
+   
  }
 /*===== Hotel Details Page ===*/  
  if(page.name=='detailsPage')
@@ -589,8 +845,19 @@ if(page.name=='search-hotels'){
    var adults = page.query.adults;
    var childs = page.query.childs;
    var childAge = page.query.childAge;
-   
-   
+    $$(".detailsPagecontent").scroll(function() {
+	   console.log($$(this).scrollTop());
+    if($$(this).scrollTop() > 180) {
+        $$('.detailsPageeNaver').addClass('opaque');
+		$$('.tab-Roomtype').addClass('fixkarde');
+		$$('.Roomtypetabs').addClass('marginTopad');
+    } else {
+        $$('.detailsPageeNaver').removeClass('opaque');
+		$$('.tab-Roomtype').removeClass('fixkarde');
+		$$('.Roomtypetabs').removeClass('marginTopad');
+    }
+	});
+	
    var backLink ='search-results.html?destination='+destination+'&latitude='+latitude+'&longitude='+longitude+'&checkIn='+checkIn+'&checkOut='+checkOut+'&Cri_currency='+Cri_currency+'&Cri_language='+Cri_language+'&hotelType=1&rooms='+rooms+'&adults='+adults+'&childs='+childs+'&childAge='+childAge;
    
    $$('.backLink').attr('href',backLink);
@@ -605,66 +872,172 @@ if(page.name=='search-hotels'){
 	   var HotelDetails =HotelInformationResponse.HotelDetails;
 	   var PropertyAmenities =HotelInformationResponse.PropertyAmenities.PropertyAmenity;
 	   var HotelImages =HotelInformationResponse.HotelImages.HotelImage[0].url;
+	   var hotelRating =HotelSummary.hotelRating.toString();
+	       hotelRating =hotelRating.replace('.','-');
+	  
 	   var PropertyAmenityHtml ='';
 	   $$.each(PropertyAmenities, function( key, value ) {
-		  PropertyAmenityHtml+='<li>'+value.amenity+'</li>';
+		  PropertyAmenityHtml+='<li><span class="chkClass"><i class="fa fa-check" aria-hidden="true"></i></span>'+value.amenity+'</li>';
 		});
-	   
+
 	   var HTML =''; 
 	    HTML+='<div class="card ft-detail-header-img">'+
-			  '<div style="background-image:url('+HotelImages+')" valign="bottom" class="card-header color-white no-border">'+HotelSummary.lowRate+'</div>'+
-			  '<div class="card-content">'+
+		'<div style="background-image:url('+HotelImages+')" valign="bottom" class="card-header color-white no-border">'+
+			'<div class="topTiteldep">'+
+				'<p class="topTiteldep1">'+HotelSummary.lowRate+'</p>'+
+				'<p class="topTiteldep2">'+HotelSummary.name+'</p>'+
+				'<p class="topTiteldep3 ratings icons_strall str_'+hotelRating+'"></p>'+
+			'</div>'+
+			'</div>'+
+		
+				'<div class="tab-Roomtype">'+
+					'<a href="#" data-tab="#tab-1" class="tab-link">Description</a>'+
+					'<a href="#" data-tab="#tab-2" class="tab-link">Reviews</a>'+
+					'<a href="#" data-tab="#tab-3" class="tab-link">Map</a>'+
+					'</div>	'+
+					'<div class="tabs Roomtypetabs">'+
+					'<div class="tab active" id="tab-1">'+
+					'<div class="DivAmen">'+
+						'<div class="form_title">'+
+							   ' <h3 class=""><strong><i class="fa fa-check" aria-hidden="true"></i></strong>Property Amenities</h3>'+
+							   ' <p class="">Property Amenities</p>'+
+						   ' </div>'+
+					'<div class="step">'+
+						'<ul class="float-left-property-Amenity">'+PropertyAmenityHtml+'</ul>'+
+					'</div>'+
+					'</div>'+
+					
+					'<div class="DivAmen">'+
+						'<div class="form_title">'+
+							   ' <h3 class=""><strong><i class="fa fa-check" aria-hidden="true"></i></strong>CheckIn Instructions</h3>'+
+							   ' <p class="">CheckIn Instructions</p>'+
+						   ' </div>'+
+					'<div class="step">'+
+						'<p class="stepPragf">'+HotelDetails.checkInInstructions+'<br></p>'+
+					'</div>'+
+					'</div>'+
+					'<div class="DivAmen">'+
+						'<div class="form_title">'+
+							   ' <h3 class=""><strong><i class="fa fa-check" aria-hidden="true"></i></strong>Special CheckIn Instructions</h3>'+
+							   ' <p class="">Special CheckIn Instructions</p>'+
+						   ' </div>'+
+					'<div class="step">'+
+						'<p class="stepPragf">'+HotelDetails.specialCheckInInstructions+'<br></p>'+
+					'</div>'+
+					'</div>'+
+					'<div class="DivAmen">'+
+						'<div class="form_title">'+
+							   ' <h3 class=""><strong><i class="fa fa-check" aria-hidden="true"></i></strong>Point of Interest</h3>'+
+							   ' <p class="">Point of Interest</p>'+
+						   ' </div>'+
+					'<div class="step">'+
+						'<p class="stepPragf">'+ HotelDetails.areaInformation +' <br></p>'+
+					'</div>'+
+					'</div>'+
+					'<div class="DivAmen">'+
+						'<div class="form_title">'+
+							   ' <h3 class=""><strong><i class="fa fa-check" aria-hidden="true"></i></strong>Property Information</h3>'+
+							   ' <p class="">Property Information</p>'+
+						   ' </div>'+
+					'<div class="step">'+
+						'<p class="stepPragf">'+HotelDetails.propertyInformation+'<br></p>'+
+					'</div>'+
+					'</div>'+
+					
+					'<div class="DivAmen">'+
+						'<div class="form_title">'+
+							   ' <h3 class=""><strong><i class="fa fa-check" aria-hidden="true"></i></strong>Property Description</h3>'+
+							   ' <p class="">Property Description</p>'+
+						   ' </div>'+
+					'<div class="step">'+
+						'<p class="stepPragf">'+HotelDetails.propertyDescription+'<br></p>'+
+					'</div>'+
+					'</div>'+
+					
+					'</div>'+
+					
+					'<div class="tab" id="tab-2">'+
+						'<div class="mainDivImg">'+
+						'<div class="DivAmen">'+
+						'<div class="form_title">'+
+							   '<h3 class=""><strong><i class="fa fa-check" aria-hidden="true"></i></strong>TripAdvisor Reviews</h3>'+
+							   ' <p class="">TripAdvisor Reviews</p>'+
+						   ' </div>'+
+					'<div class="step">'+
+						'<div id="tripAdvisorRating"></div>'+
+					'</div>'+
+					'</div>'+
+						
+						
+						'<div class="mainDivImgleft">'+
+						
+					'</div>'+
+					'<div class="mainDivImgright">'+
+						
+						
+					'</div>'+
+						
+					'</div>'+
+					
+					'</div>'+
+					'<div class="tab" id="tab-3">'+
+					'<div class="mapDesPage">'+
+						'<iframe frameborder="0" width="100%" height="480" src="scripts-libraries/search-result-google-map.php?lat='+HotelSummary.latitude+'&amp;long='+HotelSummary.longitude+'"></iframe>'+
+					'</div>'+
+					'</div>'+
+					'</div>	'+
+				
+			'<div class="card-content card-contentnotusedispaylnone">'+
 				'<div class="card-content-inner">'+
 				  '<div class="item-title TitleRelease">'+HotelSummary.name+'</div>'+
-				  '<div class="color-gray">'+HotelSummary.address1+', '+HotelSummary.city+', '+HotelSummary.countryCode+'</div>'+
+				  
 				  '<div class="content-block-title content-block-margin ratings icons_strall str_'+HotelSummary.hotelRating+'"></div>'+
-				  '<div class="item-subtitle"><img src="'+HotelSummary.tripAdvisorRatingUrl+'"></div>'+
+				  '<div class="color-gray">'+HotelSummary.address1+', '+HotelSummary.city+', '+HotelSummary.countryCode+'</div>'+
+				  
 				  '<div class="item-subtitle">'+HotelSummary.tripAdvisorReviewCount+' reviews</div>'+
 				'</div>'+
 			  '</div>'+
-				'<div class="card-footer CardFooterMaterial">'+
-				  '<a href="#" class="FooterMaterialDeal">DEAL</a>'+
-				  '<a href="#" class="FootFlatOff">Flat 30% off. Earn 15% in eWallte. Code HOTEL17</a>'+
-				'</div>'+
-				'<div class="HotelOverview">'+
+				
+				'<div class="HotelOverview card-contentnotusedispaylnone">'+
 				  '<div class="content-block">'+
 					'<div class="content-block-title OverviewdetailsPagetitle">Hotel Overview</div>'+
 					 '<p href="#" class="detailsPagecontentpr">'+HotelDetails.propertyInformation+'</p>'+
 					  '<a href="#" class="detailsPagecontentprad">READ MORE</a>'+
 					  '</div>'+
 					'</div>'+
-					'<div class="content-block">'+
+					'<div class="content-block content-block2 card-contentnotusedispaylnone">'+
+					'<div class="detailsPageMap">'+
+						 '<img src="img/mapImage.jpg" width="100%" class="lazy lazy-fadeIn">'+
+					'</div>'+
+					'</div>'+
+					'<div class="content-block card-contentnotusedispaylnone">'+
 					'<div class="content-block-title OverviewdetailsPagetitle">Check In Instructions</div>'+
 					 '<p href="#" class="detailsPagecontentpr">'+HotelDetails.checkInInstructions+'</p>'+
 					'</div>'+
 					'</div>'+
-					'<div class="content-block">'+
+					'<div class="content-block card-contentnotusedispaylnone">'+
 					'<div class="content-block-title OverviewdetailsPagetitle">Special Check In Instructions</div>'+
 					 '<p href="#" class="detailsPagecontentpr">'+HotelDetails.specialCheckInInstructions+'</p>'+
 					'</div>'+
-					'<div class="content-block">'+
+					'<div class="content-block content-block3 card-contentnotusedispaylnone" >'+
 					'<div class="content-block-title OverviewdetailsPagetitleroomfess">Room Fees Description</div>'+
 					 '<p class="detailsPagecontentpr">'+HotelDetails.roomFeesDescription+'</p>'+
 					'</div>'+
 					'</div>'+
-					'<div class="content-block">'+
+					'<div class="content-block content-block4 card-contentnotusedispaylnone">'+
 					'<div class="content-block-title OverviewdetailsPagetitleroomfess">PropertyAmenity</div>'+
 					 '<ul class="PropertyAmenityHtmlli">'+PropertyAmenityHtml+'</ul>'+
 					'</div>'+
 					'</div>'+
-					'<div class="detailsPageMap">'+
-						 '<img src="img/mapImage.jpg" width="100%" class="lazy lazy-fadeIn">'+
-					'</div>'+
 					
-					'<div class="NearbyLandmarks">'+
+					
+					'<div class="NearbyLandmarks card-contentnotusedispaylnone">'+
 						  '<div class = "content-block-title nearbyTitle">Point of Interest</div>'+
 							 '<div class="content-block ContenHotelDetails">'+ HotelDetails.areaInformation +
-								'<div class = "list-block-label list-block-label-text-align">'+
-									'<a href="#" data-popover=".popover-links" class="open-popover">View More</a>'+
-								'</div>'+
+								
 							 '</div>'+
 					'</div>'+
-					'<div class="HotelPolicies">'+
+					'<div class="HotelPolicies card-contentnotusedispaylnone">'+
 					 '<div class="card-content-inner">'+
 					  '<div class="data-table-title hotel-policies-title">Hotel Policies</div>'+
 						'<div class="row">'+
@@ -721,6 +1094,12 @@ if(page.name=='search-hotels'){
 	 } 
 	 
 	});
+	
+	/*=== TripAdvisor ===*/
+   var param ={actionType:'TripAdvisor_Rating',Cri_language:Cri_language,hotel_id:hotel_id};
+   $$.get(RequestURL+'/update_rates.php',param, function (response,status) {
+	  $$('#tripAdvisorRating').html(response); 
+   });
 	
 }
 
@@ -881,47 +1260,49 @@ if(page.name=='online-booking'){
 		$ExpiryYear+='<option value="' + i + '">' + i + '</option>';
 	  }
 	  
-	   $html+='<div class="card margin_reviewPage">'+
+	   $html+='<div class="margin_reviewPage">'+
 				'<div class="card-content">'+
 					'<div class="card-content-inner">'+
 						'<div class="item-title TitleRelease">'+$HotelRoomAvailabilityResponse.hotelName+'</div>'+
 						'<div class="content-block-title content-block-marginder ratings icons_strall str_'+$HotelRoomAvailabilityResponse.tripAdvisorRating+'"></div>'+
-						'<p class="color-gray color-graypadeins ">'+$HotelRoomAvailabilityResponse.hotelAddress+','+$HotelRoomAvailabilityResponse.hotelCity+','+$HotelRoomAvailabilityResponse.hotelCountry+'</p>'+
-					'</div>'+
-				'</div>'+
-				'<div class="card-content-inner">'+
-				'<div class="row review-hotel-detailsPage">'+
+						'<p class="color-gray color-graypadeins color1">'+$HotelRoomAvailabilityResponse.hotelAddress+','+$HotelRoomAvailabilityResponse.hotelCity+','+$HotelRoomAvailabilityResponse.hotelCountry+'</p>'+
+						'<div class="row review-hotel-detailsPage boderrow">'+
                     '<a href="box.html" class="col-33">'+
-                        '<div class="BoxPageLoc">Check-In</div>'+
-                        '<div class="BoxPagebold">'+$HotelRoomAvailabilityResponse.arrivalDate+'</div>'+
+                        '<div class="BoxPageLoc color-gray">Check-In</div>'+
+                        '<div class="BoxPagebold color-black">'+$HotelRoomAvailabilityResponse.arrivalDate+'</div>'+
                     '</a>'+
                     '<a href="box.html" class="col-33 boxPagebrightnessIcons">'+
-                        '<div class="BoxPageLoc"><i class="material-icons"> brightness_3</i></div>'+
-                        '<div class="BoxPagebold">New Delhi</div>'+
+                        '<div class="BoxPageLoc color-gray"><i class="material-icons"> brightness_3</i></div>'+
+                        '<div class="BoxPageLoc color-gray">New Delhi</div>'+
                    '</a>'+
                     '<a href="box.html" class="col-33">'+
-                        '<div class="BoxPageLoc">Check-Out</div>'+
-                        '<div class="BoxPagebold">'+$HotelRoomAvailabilityResponse.departureDate+'</div>'+
+                        '<div class="BoxPageLoc color-gray floatbox">Check-Out</div>'+
+                        '<div class="BoxPagebold color-black floatbox">'+$HotelRoomAvailabilityResponse.departureDate+'</div>'+
                     '</a>'+
                 '</div>'+
+						
+				'</div>'+
+				
 			  '</div>'+
-			 '<div class="card-content-inner">'+
-					  '<p class="card-header-Title">'+matchedRoom.rateDescription+'</p>'+
-					  '<p class="color-gray 3Rooms-rev">'+$HotelRoomAvailabilityResponse.numberOfRoomsRequested+' Rooms, 7 Guests</p>'+
-					  '<a href="#" class="link inclusionsPolc open-popup" data-popup=".popup-inclusionPolicy">INCLUSIONS & POLICY</a>'+
+			 '<div class="card-content-inner paddingcontent">'+
+			 '<div class="card-header card-headerPricing"> Room Details</div>'+
+			 '<a href="#" class="link inclusionsPolc open-popup" data-popup=".popup-inclusionPolicy">INCLUSIONS & POLICY</a>'+
+					  '<p class="card-header-Title color-gray">'+matchedRoom.rateDescription+'</p>'+
+					  '<p class="color-gray 3Rooms-rev borderbottom paddingcontent1">'+$HotelRoomAvailabilityResponse.numberOfRoomsRequested+' Rooms, 7 Guests</p>'+
+					  
 					'</div>'+
 				'</div>'+
-			'<div class="card margin_reviewPage">'+
-					'<div class="card-content-inner">'+
+			'<div class="margin_reviewPage">'+
+					'<div class="card-content-inner paddingcontent">'+
 			  '<div class="card-header card-headerPricing">Pricing Details</div>'+
 				'<div class="card-content Tariff-Details">'+
 					'<div class="row">'+
-						'<div class="col-50"><p class="Tariff-DetailsTitle">Room: 1</p></div>'+
-						'<div class="col-50"> <p class="Tariff-DetailsPrice">$'+$ChargeableRateInfo.averageRate+'</p></div>'+
+						'<div class="col-50"><p class="Tariff-DetailsTitle color-gray">Room: 1</p></div>'+
+						'<div class="col-50"> <p class="Tariff-DetailsPrice color-black1">$'+$ChargeableRateInfo.averageRate+'</p></div>'+
 					'</div>'+  
 			        '<div class="row">'+
-						'<div class="col-50"><p class="Tariff-DetailsTitle">Total Nightly Rate</p></div>'+
-						'<div class="col-50"> <p class="Tariff-DetailsPrice">$'+$ChargeableRateInfo.nightlyRateTotal+'</p></div>'+
+						'<div class="col-50"><p class="Tariff-DetailsTitle color-gray">Total Nightly Rate</p></div>'+
+						'<div class="col-50"> <p class="Tariff-DetailsPrice color-black1">$'+$ChargeableRateInfo.nightlyRateTotal+'</p></div>'+
 					'</div>'+
 	                 $SurchargeHtml +
 					
@@ -929,15 +1310,15 @@ if(page.name=='online-booking'){
 				
 				'<div class="card-content Tariff-Details Tariff-Details-border">'+
 						'<div class="row">'+
-						'<div class="col-50"><p class="Tariff-DetailsTitle">You Pay</p></div>'+
-						'<div class="col-50"> <p class="Tariff-DetailsPrice">$'+$ChargeableRateInfo.total+'</p></div>'+
+						'<div class="col-50"><p class="Tariff-DetailsTitle color-gray">You Pay</p></div>'+
+						'<div class="col-50"> <p class="Tariff-DetailsPrice color-black1">$'+$ChargeableRateInfo.total+'</p></div>'+
 					'</div>'+
 					'</div>'+
 				'</div>'+
           '</div> ';
 		
 		
-       $html+='<div class="card-content-inner booking_forminner">'+
+       $html+='<div class="card-content-inner booking_forminner coloumnborder">'+
 	         '<form name="booking_form" id="booking_form">'+ 
 			   '<input type="hidden" name="action" value="Make_Booking">'+
 		       '<input type="hidden" name="is_custom" value="0">'+
@@ -971,21 +1352,26 @@ if(page.name=='online-booking'){
 			   '<input type="hidden" name="childs" value="'+childs+'">'+
 			   '<input type="hidden" name="childAge" value="'+childAge+'">'+
 			   
-	            '<div class="card-header card-headerPricing">Details</div>'+
+	            '<div class="DivAmen">'+
+						'<div class="form_title">'+
+							   ' <h3 class=""><strong><i class="fa fa-check" aria-hidden="true"></i></strong>Personal Details</h3>'+
+							   
+						   ' </div>'+
+				'<div class="step">'+
 				'<div class="row">'+
-				'<div class="col-20">'+
+				'<div class="col-20 widthcolumn">'+
 				    '<div class="item-title label">Title</div>'+
 				    '<div class="item-input">'+
 					  '<select name="titles_0" id="titles_0"><option value="Mr">Mr</option><option value="Ms">Ms</option><option value="Mrs">Mrs</option></select>'+
 				    '</div>'+
 				 '</div>'+
-				'<div class="col-40">'+
+				'<div class="col-40 widthcolumn">'+
 				   '<div class="item-title label">First Name</div>'+
 				   '<div class="item-input">'+
 					  '<input type="text" name="firstName_0" id="firstName_0" value="Test">'+
 				   '</div>'+
 				 '</div>'+
-				'<div class="col-40">'+
+				'<div class="col-40 widthcolumn">'+
 				   '<div class="item-title label">Last Name</div>'+
 				   '<div class="item-input">'+
 					  '<input type="text" name="lastName_0" id="lastName_0" value="Booking">'+
@@ -993,28 +1379,34 @@ if(page.name=='online-booking'){
 				'</div>'+
 				'</div>'+
 				'<div class="row">'+
-				'<div class="col-35">'+
+				'<div class="col-35 widthcolumn">'+
 				    '<div class="item-title label">Bed Type</div>'+
 				    '<div class="item-input">'+
 					  '<select name="bedTypeId" id="bedTypeId">'+$BedTypeStr+'</select>'+
 				    '</div>'+
 				 '</div>'+
-				'<div class="col-65">'+
+				'<div class="col-65 widthcolumn">'+
 				   '<div class="item-title label">Smoking Preferences</div>'+
 				   '<div class="item-input">'+
 					  '<select name="smokingPreference" id="smokingPreference">'+$smokingPreferencesStr+'</select>'+
 				   '</div>'+
 				 '</div>'+
 				'</div>'+
-				
+				'</div>'+
+				'<div class="DivAmen">'+
+						'<div class="form_title">'+
+							   ' <h3 class=""><strong><i class="fa fa-check" aria-hidden="true"></i></strong>Payment Details</h3>'+
+							   
+						   ' </div>'+
+				'<div class="step">'+
 				'<div class="row">'+
-				'<div class="col-50">'+
+				'<div class="col-50 widthcolumn">'+
 				    '<div class="item-title label">Cardholder FirstName</div>'+
 				    '<div class="item-input">'+
 					  '<input type="text" name="creditCardFirstName" id="creditCardFirstName" value="Test">'+
 				    '</div>'+
 				 '</div>'+
-				'<div class="col-50">'+
+				'<div class="col-50 widthcolumn">'+
 				   '<div class="item-title label">Cardholder LastName</div>'+
 				   '<div class="item-input">'+
 					  '<input type="text" name="creditCardLastName" id="creditCardLastName" value="Booking">'+
@@ -1023,13 +1415,13 @@ if(page.name=='online-booking'){
 				'</div>'+
 				
 				'<div class="row">'+
-					'<div class="col-50">'+
+					'<div class="col-50 widthcolumn">'+
 					   '<div class="item-title label">Card Type</div>'+
 					   '<div class="item-input">'+
 						  '<select name="creditCardType" id="creditCardType">'+$CardTypes+'</select>'+
 					   '</div>'+
 					'</div>'+
-				'<div class="col-50">'+
+				'<div class="col-50 widthcolumn">'+
 				    '<div class="item-title label">Card Number</div>'+
 				    '<div class="item-input">'+
 					  '<input type="text" name="creditCardNumber" id="creditCardNumber" value="5401999999999999">'+
@@ -1037,13 +1429,13 @@ if(page.name=='online-booking'){
 				 '</div>'+
 				 '</div>'+
 				 '<div class="row">'+
-				'<div class="col-50">'+
+				'<div class="col-50 widthcolumn">'+
 				   '<div class="item-title label">Expiration Month</div>'+
 				   '<div class="item-input">'+
 					  '<select class="form-element" name="creditCardExpirationMonth" id="creditCardExpirationMonth"><option value="01">01-January</option><option value="02">02-February</option><option value="03">03-March</option><option value="04">04-April</option><option value="05">05-May</option><option value="06">06-June</option><option value="07">07-July</option><option value="08">08-August</option><option value="09">09-September</option><option value="10">10-October</option><option value="11">11-November</option><option value="12">12-December</option></select>'+
 				   '</div>'+
 				 '</div>'+
-				'<div class="col-50">'+
+				'<div class="col-50 widthcolumn">'+
 				   '<div class="item-title label">Expiration Year</div>'+
 				   '<div class="item-input">'+
 					  '<select class="form-element" name="creditCardExpirationYear" id="creditCardExpirationYear">'+$ExpiryYear+'</select>'+
@@ -1052,13 +1444,22 @@ if(page.name=='online-booking'){
 				'</div>'+
 				
 				'<div class="row">'+
-				'<div class="col-50">'+
+				'<div class="col-50 widthcolumn">'+
 				    '<div class="item-title label">Security Code (CCV)</div>'+
 				    '<div class="item-input">'+
 					  '<input type="text" name="creditCardIdentifier" id="creditCardIdentifier" value="123">'+
 				    '</div>'+
 				 '</div>'+
-				 '<div class="col-50">'+
+				 '</div>'+
+				 '</div>'+
+				 '<div class="DivAmen">'+
+						'<div class="form_title">'+
+							   ' <h3 class=""><strong><i class="fa fa-check" aria-hidden="true"></i></strong>Address Details</h3>'+
+							   
+						   ' </div>'+
+				'<div class="step">'+
+				 '<div class="row">'+
+				 '<div class="col-50 widthcolumn">'+
 				    '<div class="item-title label">Country</div>'+
 				    '<div class="item-input">'+
 					  '<select name="countryCode" id="countryCode"><option value="">Select</option><option value="US" selected="selected">United States</option><option value="IN">India</option></select>'+
@@ -1067,7 +1468,7 @@ if(page.name=='online-booking'){
 				'</div>'+
 				
 				'<div class="row">'+
-				'<div class="col-100">'+
+				'<div class="col-100 widthcolumn">'+
 				   '<div class="item-title label">Postal / Zip Code <span class="weli_use">(We’ll use this to verify your credit card details)</span></div>'+
 				   '<div class="item-input">'+
 					  '<input type="text" name="postalCode" id="postalCode" value="98004">'+
@@ -1076,13 +1477,13 @@ if(page.name=='online-booking'){
 				'</div>'+
 				
 				'<div class="row">'+
-				'<div class="col-50">'+
+				'<div class="col-50 widthcolumn">'+
 				    '<div class="item-title label">Address</div>'+
 				    '<div class="item-input">'+
 					  '<input type="text" name="address1" id="address1" value="travelnow">'+
 				    '</div>'+
 				 '</div>'+
-				'<div class="col-50">'+
+				'<div class="col-50 widthcolumn">'+
 				   '<div class="item-title label">City</div>'+
 				   '<div class="item-input">'+
 					  '<input type="text" name="city" id="city" value="Seattle">'+
@@ -1090,13 +1491,13 @@ if(page.name=='online-booking'){
 				 '</div>'+
 				 '</div>'+
 				 '<div class="row">'+
-				 '<div class="col-50">'+
+				 '<div class="col-50 widthcolumn">'+
 				   '<div class="item-title label">State</div>'+
 				   '<div class="item-input">'+
 					  '<select type="text" name="stateProvinceCode" id="stateProvinceCode"><option value="AL">Alabama</option></select>'+
 				   '</div>'+
 				 '</div>'+
-				'<div class="col-50">'+
+				'<div class="col-50 widthcolumn">'+
 				    '<div class="item-title label">Email Address</div>'+
 				    '<div class="item-input">'+
 					 '<input type="text" name="email_id" id="email_id" value="support@thewebconz.com">'+
@@ -1104,32 +1505,35 @@ if(page.name=='online-booking'){
 				 '</div>'+
 				 '</div>'+
 				 '<div class="row">'+
-				'<div class="col-50">'+
+				'<div class="col-50 widthcolumn">'+
 				   '<div class="item-title label">Confirm Email Address</div>'+
 				   '<div class="item-input">'+
 					  '<input type="text" name="email_id_2" id="email_id_2" value="support@thewebconz.com">'+
 				   '</div>'+
 				 '</div>'+
-				 '<div class="col-50">'+
+				 
+				 '<div class="col-50 widthcolumn">'+
 				   '<div class="item-title label">Telephone Number</div>'+
 				   '<div class="item-input">'+
 					  '<input type="text" name="homePhone" id="homePhone" value="9540121212">'+
 				   '</div>'+
 				 '</div>'+
 				'</div>'+
-				
+				'</div>'+
 	          '</form></div>';
 		
 		$html+='<div class="popup popup-inclusionPolicy" >'+
 				'<div class="content-block popup-inclusionPolicyblock">'+
-				  '<p class="close-popup-ioncsfa"><a href="#" class="close-popup"><i class="fa fa-times" aria-hidden="true"></i></a></p>'+
+				 
 				  '<h2>INCLUSIONS</h2>'+
 				  $ValueAddsHtml+
 				  '<h2>Decription</h2>'+
 				  '<p>'+matchedRoom.RoomType.descriptionLong+'</p>'+
 				  '<h2>CancellationPolicy</h2>'+
 				  '<p>'+$cancellationPolicy+'</p>'+
+				   
 				'</div>'+
+				'<p class="close-popup-ioncsfa"><a href="#" class="close-popup">Got It</a></p>'+
 			  '</div>';	 
 		  
 	  $$('#onlinePageData').html($html);
@@ -1164,48 +1568,67 @@ if(page.name=='confirmation'){
   var param ={actionType:'Confirmation',itineraryId:itineraryId};
   $$.get(RequestURL+'/update_rates.php', param, function (data) {
 	  $response =JSON.parse(data);
-	  html ='<div class="page-content confirmation-page-conten">'+
-				'<div class="card margin_reviewPage">'+
+	  html ='<div class="page-contentconfirmation-page-conten">'+
+				'<div class="box-shadow1">'+
 				'<div class="card-content">'+
-					'<div class="card-content-inner">'+
+					'<div class="card-content-inner card1" style="position:unset;" >'+
 						'<div class="item-title TitleRelease">'+$response.hotelName+'</div>'+
-						'<div class="content-block-title content-block-margin">'+$response.hotelRating+'</div>'+
+						'<div class="content-block-title content-block-margin ">'+$response.hotelRating+'</div>'+
 						'<p class="color-gray">'+$response.hotelAddress+','+$response.hotelCity+','+$response.hotelCountry+'</p>'+
 					'</div>'+
 				'</div>'+
-				'<div class="card-content-inner">'+
-				'<div class="row review-hotel-detailsPage">'+
-                    '<a href="box.html" class="col-33">'+
-                        '<div class="BoxPageLoc">Check-In</div>'+
-                        '<div class="BoxPagebold">'+$response.check_in+'</div>'+
+				'<div class="card-content-inner" style="position:unset;">'+
+				'<div class="row review-hotel-detailsPage boderrow">'+
+                    '<a href="#" class="col-33">'+
+                        '<div class="BoxPageLoc color-gray">Check-In</div>'+
+                        '<div class="BoxPagebold color-black">'+$response.check_in+'</div>'+
                     '</a>'+
-                    '<a href="box.html" class="col-33 boxPagebrightnessIcons">'+
+                    '<a href="#" class="col-33 boxPagebrightnessIcons">'+
                         '<div class="BoxPageLoc"><i class="material-icons"> brightness_3</i></div>'+
-                        '<div class="BoxPagebold">New Delhi</div>'+
+                        '<div class="BoxPagebold color-gray">New Delhi</div>'+
                    '</a>'+
-                    '<a href="box.html" class="col-33">'+
-                        '<div class="BoxPageLoc">Check-Out</div>'+
-                        '<div class="BoxPagebold">'+$response.check_out+'</div>'+
+                    '<a href="#" class="col-33">'+
+                        '<div class="BoxPageLoc color-gray">Check-Out</div>'+
+                        '<div class="BoxPagebold color-black">'+$response.check_out+'</div>'+
                     '</a>'+
                 '</div>'+
 			  '</div>'+
-			 '<div class="card-content-inner">'+
-					  '<p class="card-header-Title">ItineraryId: '+$response.itineraryId+'</p>'+
-					  '<p class="card-header-Title">confirmationNumbers: '+$response.confirmationNumbers+'</p>'+
-					  '<p class="card-header-Title">Status: '+$response.booking_status+'</p>'+
-					  '<p class="color-gray 3Rooms-rev">1 Rooms, 7 Guests</p>'+
-					  '<a href="#" class="link inclusionsPolc open-popup" data-popup=".popup-inclusionPolicy">INCLUSIONS & POLICY</a>'+
+			  '<div class="card-header card-headerPricing" style="padding-left: 16px;">Booking Details</div>'+
+			 '<div class="confirmation_Tariff-Details">'+
+					'<div class="row row-inner">'+
+					  '<div class="col-50 row-inner1">'+
+					  '<p class="card-header-Title confirmation-DetailsTitle">ItineraryId: </p>'+
+					  '</div>'+
+					  '<div class="col-50">'+
+					  '<p class="card-header-Title confirmation-DetailsPrice">'+$response.itineraryId+'</p>'+
+					 '</div>'+
+					  '</div>'+
+					  '<div class="row row-inner">'+
+					  '<div class="col-50 row-inner1">'+
+					  '<p class="card-header-Title confirmation-DetailsTitle">confirmationNumbers: </p>'+
+					  '</div>'+
+					  '<div class="col-50">'+
+					  '<p class="card-header-Title confirmation-DetailsPrice">'+$response.confirmationNumbers+'</p>'+
+					 '</div>'+
+					  '</div>'+
+					  '<div class="row row-inner">'+
+					  '<div class="col-50 row-inner1">'+
+					  '<p class="card-header-Title confirmation-DetailsTitle">Status: </p>'+
+					  '</div>'+
+					  '<div class="col-50">'+
+					  '<p class="card-header-Title confirmation-DetailsPrice">'+$response.booking_status+'</p>'+
+					 '</div>'+
+					  '</div>'+
+					  
 					'</div>'+
+					
+					
+					
 				'</div>'+
-			'<div class="card margin_reviewPage">'+
-					'<div class="card-content-inner">'+
-			  '<div class="card-header">Pricing Details</div>'+
-				'<div class="card-content Tariff-Details Tariff-Details-border">'+
-						'<div class="row">'+
-						'<div class="col-50"><p class="Tariff-DetailsTitle">You Pay</p></div>'+
-						'<div class="col-50"> <p class="Tariff-DetailsPrice">$'+$response.chargable_rate+'</p></div>'+
-					'</div>'+
-					'</div>'+
+			
+					
+			  
+				
 				'</div>'+
 				'</div>'+
           '</div> ';
@@ -1224,7 +1647,7 @@ function RoomAvailability(data,paramData){
  }else{
   $Room_Details[0] = response.HotelRoomAvailabilityResponse.HotelRoomResponse;
  }
- alert($Room_size);
+
  $html ='';
  if($Room_size>0){
    for(var i=0; i<$Room_size;i++){
@@ -1278,16 +1701,16 @@ function RoomAvailability(data,paramData){
 						'<li class="item-content">'+
 						  '<div class="item-media ResultsPagehover">'+
 							 '<div class="ResultsPageMaxWidth" style="background: url('+$RoomImage+') no-repeat center;">'+
-								'<i class="material-icons Resultsfavorite">favorite</i>'+
+								'<i class="material-icons Resultsfavorite" style="display:none;">favorite</i>'+
 							 '</div>'+
 						  '</div>'+
 						  '<div class="item-inner">'+
 							'<div class="item-title-row">'+
 							  '<div class="item-title ResultsTetelHotel">'+$Room_Details[i].rateDescription+' '+$BedTypeStr+'</div>'+
 							'</div>'+
-							'<div class="item-subtitle ResultsTetelHotell">'+$Refundable+'</div>'+
-							'<div class="item-subtitle ResultsTetelHotell">SmokingPreferences:'+$Room_Details[i].smokingPreferences+'</div>'+
-							'<div class="item-subtitle ResultsTetelHotell">Max Guests:'+$Room_Details[i].rateOccupancyPerRoom+'</div>'+$ValueAddStr+
+						'<div class="item-subtitle ResultsTetelHotell">Max Guests:'+$Room_Details[i].rateOccupancyPerRoom+'</div>'+
+							'<div class="item-subtitle ResultsTetelHotell">SmokingPreferences:'+$Room_Details[i].smokingPreferences+'</div>'+$ValueAddStr+
+						
 							
 							
 						  '</div>'+
@@ -1332,5 +1755,8 @@ function RoomAvailability(data,paramData){
   }   
    $$('#roomLists').html($html);
 } 
+
  
 });
+
+
