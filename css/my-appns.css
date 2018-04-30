@@ -19,7 +19,7 @@
 .paddingcontent{padding-top: 0px ;}
 .paddingcontent1{    padding-bottom: 12px;}
 .floatbox{float:right;}
-.close-popup-ioncsfa{float: right;text-transform: uppercase;font-size: 15px;font-weight: 500;    padding: 0px 35px;}
+.close-popup-ioncsfa{/*float: right;text-transform: uppercase;font-size: 15px;font-weight: 500;    padding: 0px 35px;*/}
 .confirmation_header_booking{    font-weight: 500 !important;}
 .color1{padding-bottom: 22px;}
 .row-inner1{border-right: 1px solid #ddd;}
