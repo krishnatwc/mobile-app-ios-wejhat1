@@ -1,4 +1,4 @@
-<div class="page search-flightspage" data-page="search-flight">
+<div class="page search-flightspage" data-page="search-flights">
         <div class="navbar">
             <div class="navbar-inner">
                 <div class="left"><a href="#index" class="link back with-animation"><i class="material-icons">arrow_back</i> 
@@ -10,23 +10,26 @@
         <div class="page-content">
 		<!--<div class="content-block-title boxPage-title"><i class="material-icons"> my_location</i> <span class="BoxPageHotelNear">I need a place tonight!</span></div>-->
 		<div class="flightRound">
-			<a href="#"><i class="material-icons">trending_flat</i>ONE-WAY</a>
-			<a href="#"><i class="material-icons">swap_horiz</i>ROUND TRIP</a>
+		 <a href="#" class="tripType active" rel="oneway"><i class="material-icons">trending_flat</i>ONE-WAY</a>
+		 <a href="#" class="tripType" rel="round"><i class="material-icons">swap_horiz</i>ROUND TRIP</a>
 		</div>
 			
-       <form class="BoxPageForm" name="searchHotel_frm" id="searchHotel_frm">   
+       <form class="BoxPageForm" name="searchFlight_frm" id="searchFlight_frm">
+        <input type="hidden" name="one_way" id="one_way" value="true">
+        <input type="hidden" name="flight_from" id="flight_from" value="Delhi, India"> 		
+        <input type="hidden" name="flight_locationId" id="flight_locationId" value="DEL">
+     
+        <input type="hidden" name="flight_to" id="flight_to" value="Goa, India"> 	 
+        <input type="hidden" name="flight_to_locationId" id="flight_to_locationId" value="GOI">		
 		<div class="content-block paddingNOne">
-		     <input type="hidden" name="latitude" id="latitude" value="28.632558" />
-			 <input type="hidden" name="longitude" id="longitude" value="77.220036" />
-			 <input type="hidden" name="destination" id="destination" value="Delhi City, India" />
 				<div class="HotelDiVBox">
 					<div class="HotelDiVBoxLeft">
 						<i class="material-icons">flight_takeoff</i>
 					</div>
 					<div class="HotelDiVBoxRight">
 						<a href="#" id="autocomplete-standalone-popup">
-						<p class="item-title Pseitel">Destination</p>
-						<p class="item-after PseitelDes"  id="selectedDest">Delhi, India</p>
+						<p class="item-title Pseitel">From</p>
+						<p class="item-after PseitelDes" id="selectedDest">Delhi,India</p>
 						</a>
 					</div>
 				</div>
@@ -36,144 +39,70 @@
 						<i class="material-icons">flight_land</i>
 					</div>
 					<div class="HotelDiVBoxRight">
-						<a href="#" id="autocomplete-standalone-popup">
-						<p class="item-title Pseitel">Destination</p>
-						<p class="item-after PseitelDes"  id="selectedDest">Delhi, India</p>
+						<a href="#" id="autocomplete-standalone-popup-to">
+						<p class="item-title Pseitel">To</p>
+						<p class="item-after PseitelDes"  id="selectedToDest">Goa,India</p>
 						</a>
 					</div>
 				</div>
-				<div class="HotelDiVBox">
+				<div class="HotelDiVBox Dateposition">
 					<div class="HotelDiVBoxLeft">
-					
 						<i class="fa fa-calendar" aria-hidden="true"></i>
 					</div>
-					
 					<div class="HotelDiVBoxRight">
-						<input type="hidden" name="startDate" id="startDate" value="05/28/2018">
-						<input type="hidden" name="endDate" id="endDate" value="05/29/2018">
-						 <a href="#" class="col-33 startDatecss calendarDatein" id="adivahacalendar">
-                        
-                        <div class="BoxPageLoc">Check-in Date</div>
+						<input type="hidden" name="startDate" id="startDate" value="">
+						<input type="hidden" name="endDate" id="endDate" value="">
+						<a href="#" class="col-33 startDatecss calendarDatein" id="adivahacalendar">
+                        <div class="BoxPageLoc">Departure Date</div>
 						<div class="BoxPagebold" id="startDate_txt">Wed, <span class="Date_txt">28</span> Feb</div>
-						
                     </a>
-						
-						 <a href="#" class="col-33 endDatecss calendarDateout" id="">
-                       <div class="BoxPageLoc">Check-out Date</div>
-                        <div class="BoxPagebold" id="endDate_txt">Thu, <span class="Date_txt">29</span> Feb</div>
-						 
+					<a href="#" class="col-33 endDatecss calendarDateout" id="">
+                     <div class="BoxPageLoc">Return Date</div>
+                     <div class="BoxPagebold" id="endDate_txt">Thu, <span class="Date_txt">29</span> Feb</div>
                     </a>
-					<input type="text" name="appCalendar" id="appCalendar" value="12/29/2017" style="opacity: 0;">
+					<input type="text" name="appCalendar" id="appCalendar" value="" style="opacity: 0;">
 					</div>
 				</div>
-			 
-			 <div class="HotelDiVBox ">
+			    <div class="HotelDiVBox ">
 					<div class="HotelDiVBoxLeft">
 						<i class="material-icons">group</i>
 					</div>
 					<div class="HotelDiVBoxRight">
 						<a href="#" data-popup=".aautocomplete-standalone-popup" class="open-popup">
-						<p class="item-title Pseitel">1 Adult</p>
-						<p class="item-after PseitelDes"  id="selectedDest_adults">2 Adults in 1 Room</p>
+						<p class="item-title Pseitel">Passengers</p>
+						<p class="item-after PseitelDes"  id="selectedPassengers">1 Passengers</p>
 						</a>
 					</div>
 				</div>
-				
 				<div class="HotelDiVBox HotelDiVBox-last HotelDiVBox-last-flight">
 					<div class="HotelDiVBoxLeft">
 						<i class="material-icons">card_travel</i>
 					</div>
 					<div class="HotelDiVBoxRight">
-						<a href="#" data-popup=".aautocomplete-standalone-popup" class="open-popup">
-						<p class="item-title Pseitel">Economy</p>
-						<p class="item-after PseitelDes"  id="selectedDest_adults">Economy</p>
-						</a>
+					<p class="item-title Pseitel">
+					  <input type="radio" name="result" checked="checked" value="Economy">Economy 
+					  <input type="radio" name="result" value="Business">Business
+					 </p>
 					</div>
 				</div>
 			 
 			 
 			 <div class="btnHotelrel"><a href="#" class="findFlightResults with-animation">SEARCH FLIGHTS</a></div>
-			 
-			 
-			 
-			 <!--
-                <div class="row">
-					<a href="#" id="autocomplete-standalone-popup" class="col-100 BoxPageBorder-bottom">
-						<div class="item-inner">
-						  <div class="item-title BoxPageLoc">Destination</div>
-						  <div class="item-after BoxPageDelhi" id="selectedDest">Delhi City, India</div>
-						</div>
-					</a>
-                </div>
-                <div class="HomePadding"></div>
-                <div class="row">
-                    <a href="#" data-popup=".aautocomplete-standalone-popup" class="col-100 BoxPageBorder-bottom open-popup">
-                        <div class="BoxPageLoc">1 Room</div>
-                        <div class="BoxPagebold">1 Adult</div>
-                    </a>
-                </div>
-                <div class="HomePadding"></div>
-				<input type="hidden" name="startDate" id="startDate" value="02/28/2018">
-				<input type="hidden" name="endDate" id="endDate" value="02/29/2018">
-
-				
-                <div class="row appCalendarposition">
-				
-				
-                    <a href="#" class="col-33 startDatecss" id="ks-calendar-inline-container">
-                        <div class="BoxPageLoc">Check-In</div>
-                        <div class="BoxPagebold" id="startDate_txt">Wed, <span class="Date_txt">28</span> Feb '18</div>
-                    </a>
-                    <a href="#" class="col-33 boxPagebrightnessIcons">
-                        <div class="BoxPageLoc"><i class="material-icons"> brightness_3</i></div>
-                        <div class="BoxPageLoc">New Delhi</div>
-                    </a>
-                    <a href="#" class="col-33 endDatecss" id="">
-                        <div class="BoxPageLoc">Check-Out</div>
-                        <div class="BoxPagebold" id="endDate_txt">Thu, <span class="Date_txt">29</span> Feb '18</div>
-                    </a>
-					
-					
-					<input type="text" name="appCalendar" id="appCalendar" value="12/29/2017" style="opacity: 0;">
-					
-					
-                </div>
-                <div class="HomePadding"></div>
-                <div><a href="#" class="button boxPagebutton-big button-fill findHotelResults">SEARCH HOTELS</a></div>-->
-
-           <!--
-			<div class="card card-margin-add">
-				<div class="card-content">
-					<div class="list-block media-list">
-						<ul>
-							<li class="item-content">
-								<div class="item-media"><i class="material-icons GoanlabelIoncs">label</i></div>
-								<div class="item-inner">
-									<div class="item-title-row">
-										<div class="item-title GoanlabelTitle">Goan Fiesta 2017</div>
-									</div>
-									<div class="item-subtitle Goanlabelcode">NO CODE REQUIRED</div>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>-->
 		<!-- Two popup use code -->
 	  <div class="popup aautocomplete-standalone-popup">
 		 <div class="navbar">
            <div class="navbar-inner">
              <div class="left"><a href="" class="link close-popup"><i class="material-icons">arrow_back</i> 
-			   <span class="BoxPageNavbarTitle" id="roomGuestTxt">1 Rooms, 1 Guests </span></a></div>
-              <!--<div class="right"> <a href="" class="link"><i class="material-icons">restore</i></a></div>-->
+			   <span class="BoxPageNavbarTitle" id="roomGuestTxt">1 Passenger </span></a></div>
             </div>
          </div>
          <div class="page-content-not-use">
 		  <div id="roomspacksDetails"> <!-- Start Room List -->
 		  <div class="card ks-facebook-card roomListcls">
-		    <input type="hidden" name="adults[]" id="adults_0" value="1">
-		    <input type="hidden" name="childs[]" id="childs_0" value="0">
-			<div class="card-footer no-border"><a href="#" class="link rooming">Room 1</a></div>
+		    <input type="hidden" name="adults" id="adults" value="1">
+		    <input type="hidden" name="childs" id="childs" value="0">
+			<input type="hidden" name="infants" id="infants" value="0">
+			<div class="card-footer no-border"><a href="#" class="link rooming">&nbsp;</a></div>
 				<div class="card-content"> 
 				 <div class="content-block"> 
 					<div class="roomPagePadding"> 
@@ -185,13 +114,13 @@
 							<div class="col-40">
 								<div class="row roomPagePaddingBottom">
 									<div class="col-33">
-										<a href="#" class="link left minusAdults" rel="0" ><i class="material-icons">remove</i></a>
+										<a href="#" class="link left pack_circle managePassenger" mType="adults" aType="remove"><i class="material-icons">remove</i></a>
 									</div>
 									<div class="col-33">
-										<a href="#" class="link center" id="countAdults_0">1</a> 
+										<a href="#" class="link center" id="countAdults">1</a> 
 									</div>
 									<div class="col-33">
-										<a href="#" class="link right plusAduls" rel="0"><i class="material-icons">add</i></a>
+										<a href="#" class="link right pack_circle managePassenger" mType="adults" aType="add"><i class="material-icons">add</i></a>
 									</div>
 								</div>
 							</div>
@@ -201,35 +130,49 @@
 						<div class="row">
 							<div class="col-60 marginbr"> 
 								<div class="roomPageTitle">Children</div>
-								<div class="roomPageTitleBottom">0-12 yrs</div>
+								<div class="roomPageTitleBottom">1-12 yrs</div>
 							</div>
 							<div class="col-40">
 								<div class="row roomPagePaddingBottom">
 									<div class="col-33">
-										<a href="#" class="link left minusChilds" rel="0"><i class="material-icons">remove</i></a>
+										<a href="#" class="link left pack_circle managePassenger" mType="childs" aType="remove"><i class="material-icons">remove</i></a>
 									</div>
 									<div class="col-33">
-										<a href="#" class="link center" id="countChilds_0">0</a> 
+										<a href="#" class="link center" id="countChilds">0</a> 
 									</div>
 									<div class="col-33">
-										<a href="#" class="link right plusChilds" rel="0"><i class="material-icons">add</i></a>
+										<a href="#" class="link right pack_circle managePassenger" mType="childs" aType="add"><i class="material-icons">add</i></a>
 									</div>
 								</div>
 							</div>
 						</div>
+					</div>
+					<div class="roomPagePadding"> 
 						<div class="row">
-							<div class="col-30">&nbsp;</div>
-							<div class="col-70 childAgeCls" id="childAgeList_0"></div>
+							<div class="col-60 marginbr"> 
+								<div class="roomPageTitle">Infants</div>
+								<div class="roomPageTitleBottom">Below 2 years</div>
+							</div>
+							<div class="col-40">
+								<div class="row roomPagePaddingBottom">
+									<div class="col-33">
+										<a href="#" class="link left pack_circle managePassenger" mType="infants" aType="remove"><i class="material-icons">remove</i></a>
+									</div>
+									<div class="col-33">
+										<a href="#" class="link center" id="countInfants">0</a> 
+									</div>
+									<div class="col-33">
+										<a href="#" class="link right pack_circle managePassenger" mType="infants" aType="add"><i class="material-icons">add</i></a>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
+					
 				</div>
 			</div>
 		</div>
 	  </div><!-- End Room List-->	
-	  <div class="btn_addRooms">
-	   <a href="#" class="addMoreRooms">Add Another Rooms</a>
-	   <input type="hidden" name="number_of_rooms" id="number_of_rooms" value="1">
-	  </div>
 	   <div class="btn_DoneRooms"><a href="#" class="close-popup">Done</a></div>
     </div>
 	

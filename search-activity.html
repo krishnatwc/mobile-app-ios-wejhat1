@@ -1,0 +1,67 @@
+<div class="page search-hotelspage" data-page="search-activity">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="left"><a href="#index" class="link back with-animation"><i class="material-icons">arrow_back</i> 
+					<span class="BoxPageNavbarTitle">Activity Search </span></a></div>
+                <div class="right"> 
+						<a href="#" data-panel="right" class="open-panel link" ><i class="material-icons">restore</i></a>
+				
+			<!--	<a href="" class="link open-panel"><i class="material-icons">restore</i></a>-->
+				
+				
+				</div>
+            </div>
+        </div>
+    
+        <div class="page-content">
+		<div class="content-block-title boxPage-title"><i class="material-icons"> my_location</i> <span class="BoxPageHotelNear">I need a place tonight!</span></div>
+			
+       <form class="BoxPageForm" name="searchActivity_frm" id="searchActivity_frm">   
+		<div class="content-block paddingNOne">
+		     <input type="hidden" name="regionid" id="regionid" value="804" />
+			 <input type="hidden" name="destination" id="destination" value="New Delhi" />
+				<div class="HotelDiVBox">
+					<div class="HotelDiVBoxLeft">
+						<i class="fa fa-map" aria-hidden="true"></i>
+					</div>
+					<div class="HotelDiVBoxRight">
+						<a href="#" id="autocomplete-standalone-popup">
+						<p class="item-title Pseitel">Destination</p>
+						<p class="item-after PseitelDes"  id="selectedDest">New Delhi</p>
+						</a>
+					</div>
+				</div>
+				<div class="HotelDiVBox">
+					<div class="HotelDiVBoxLeft">
+					
+						<i class="fa fa-calendar" aria-hidden="true"></i>
+					</div>
+					
+					<div class="HotelDiVBoxRight">
+						<input type="hidden" name="startDate" id="startDate" value="05/28/2018">
+						<input type="hidden" name="endDate" id="endDate" value="05/29/2018">
+						 <a href="#" class="col-33 startDatecss calendarDatein" id="adivahacalendar">
+                        
+                        <div class="BoxPageLoc">Check-in Date</div>
+						<div class="BoxPagebold" id="startDate_txt">Wed, <span class="Date_txt">28</span> Feb</div>
+						
+                    </a>
+						
+						 <a href="#" class="col-33 endDatecss calendarDateout" id="">
+                       <div class="BoxPageLoc">Check-out Date</div>
+                        <div class="BoxPagebold" id="endDate_txt">Thu, <span class="Date_txt">29</span> Feb</div>
+						 
+                    </a>
+					<input type="text" name="appCalendar" id="appCalendar" value="12/29/2017" style="opacity: 0;">
+					</div>
+				</div>
+			 
+			 <div class="btnHotelrel"><a href="#" class="findActivityResults with-animation">SEARCH ACTIVITY</a></div>
+		
+  </div> <!-- end content block -->
+  </form>
+  
+ </div>
+  <div class="panel-overlay"></div>
+
+</div>

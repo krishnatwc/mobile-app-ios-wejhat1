@@ -1,4 +1,4 @@
-<div class="page search-resultspage" data-page="search-results">
+<div class="page search-resultspage" data-page="activity-results">
  <input type="hidden" name="search_Session_Id" id="search_Session_Id" value=""><br>
  <input type="hidden" name="totalrecords" id="totalrecords" value="">
  <input type="hidden" name="sortField" id="sortField" value="">
@@ -17,7 +17,7 @@
 		<div class="item-title-row">
 		  <div class="item-title search-resultsPageNavbarTitle">New Delhi</div>
 		</div>
-		<div class="item-subtitle search-resultsPageNavbarTitlef"><span id="startenddate"></span> | <span id="noofguestenddate"></span> Rooms | <span id="counthotel">...</span> hotels</div>
+		<div class="item-subtitle search-resultsPageNavbarTitlef"><span id="startenddate"></span> | <span id="counthotel">...</span> Activity</div>
 		
 	  </div>
 		</div>
@@ -25,9 +25,7 @@
 	</div>
 	<div class="toolbar toolbar-bottom search-resultsPagebottom">
 		<div class="toolbar-inner">
-			<a href="#" class="Hotel_Map_LI_Tab link" rel="map"><i class="material-icons">location_on</i> MAP VIEW</a>
-			
-			
+			<a href="#">&nbsp;</a>
 			<a href="#" data-panel="right" class="open-panel link filterClicka" ><i class="material-icons">filter_list</i> FILTER</a>
 		 </div>
 	</div>
@@ -42,7 +40,7 @@
 			<div class="buttons-row">
 			  <a href="#" class="button sortingHotels active" rel="0">Suggested</a>		
 			  <a href="#" class="button sortingHotels" rel="0" sortField="hotelRating">Stars</a>
-			  <a href="#" class="button sortingHotels" rel="0" sortField="tripAdvisorRating">Rating</a>
+			  <a href="#" class="button sortingHotels" rel="0" sortField="rank">Rank</a>
 			  <a href="#" class="button sortingHotels" rel="0" sortField="lowRate">Price</a>
 			</div>
 		</div>
@@ -94,98 +92,12 @@
   <div class="panel panel-right panel-cover">
    <div class="filter_controls_div">
 	<h6 class="reset-all-title">Filter your Search<a href="#" class="ng-binding1">Reset All</a> </h6>
-	<div class="filter_criteria">
-	  <h5 class="ng-binding">Distance from Destination</h5>
-	  <div class="checkmarkRadio" id="filter_distanceHtml">
-	  <!--
-		<label class="checkmark-box"><span class="mls">2 Miles</span><span class="starRatHotel">(178)</span>
-		  <input type="radio" name="distances">
-		  <span class="checkmark"></span>
-		</label>
-		<label class="checkmark-box"><span class="mls">5 Miles</span><span class="starRatHotel">(178)</span>
-		  <input type="radio" name="distances">
-		  <span class="checkmark"></span>
-		</label>
-		<label class="checkmark-box"><span class="mls">10 Miles</span><span class="starRatHotel">178)</span>
-		  <input type="radio" name="distances">
-		  <span class="checkmark"></span>
-		</label>
-		<label class="checkmark-box"><span class="mls">50 Miles</span><span class="starRatHotel">(278)</span>
-		  <input type="radio" name="distances">
-		  <span class="checkmark"></span>
-		</label>-->
-	  </div>
-	</div>
-	<!--
-	<div class="filter_criteria wleft">
-	  <h5 class="ng-binding">Search with Hotel Name</h5>
-	  <div class="checkmarkRadio">
-		<input type="text" name="filterByName" id="filterByName" value="" placeholder="Search by name" class="input_box">
-	  </div>
-	</div> --> 
-	<div class="filter_criteria wleft">
-	  <h5 class="ng-binding">STAR RATING  <a href="#" class="ng-binding2">Clear</a></h5>
-	  <div class="checkmarkRadio" id="filter_starHtml">
-	   <!--
-		<ul class="star-ul-li">
-		 <li>
-		   <input type="radio" name="Cri_Rating[]" value="1">
-		   <a href="#">1<i class="fa fa-star" aria-hidden="true"></i></a></li>
-		 <li><input type="radio" name="Cri_Rating[]" value="2">
-		    <a href="#">2<i class="fa fa-star" aria-hidden="true"></i></a></li>
-		 <li>
-		   <input type="radio" name="Cri_Rating[]" value="3">
-		   <a href="#">3<i class="fa fa-star" aria-hidden="true"></i></a></li>
-		 <li>
-		  <input type="radio" name="Cri_Rating[]" value="4">
-		  <a href="#">4<i class="fa fa-star" aria-hidden="true"></i></a></li>
-		 <li>
-		  <input type="radio" name="Cri_Rating[]" value="5">
-		  <a href="#">5<i class="fa fa-star" aria-hidden="true"></i></a></li>
-		</ul>-->
-	  </div>
-	</div>
-	<div>
-	  <h5 class="ng-binding" >Property Ameneties <a href="#" class="ng-binding1">Clear</a></h5>
-	   <div class="checkmarkRadio" id="filter_amenityHtml">
-	   <!--
-		<label class="checkmark-box"><span class="mls">Free Parking</span>
-		  <input type="checkbox" name="Cri_amenity[]">
-		  <span class="checkmark"></span>
-		</label>
-		<label class="checkmark-box"><span class="mls">Free High-Speed Internet</span>
-		  <input type="radio" name="radio">
-		  <span class="checkmark"></span>
-		</label>
-		<label class="checkmark-box"><span class="mls">Free Wireless Internet</span>
-		  <input type="radio" name="radio">
-		  <span class="checkmark"></span>
-		</label>
-		<label class="checkmark-box"><span class="mls">Free Breakfast</span>
-		  <input type="radio" name="radio">
-		  <span class="checkmark"></span>
-		</label>
-		<label class="checkmark-box"><span class="mls">Continental Breakfast</span>
-		  <input type="radio" name="radio">
-		  <span class="checkmark"></span>
-		</label>
-		<label class="checkmark-box"><span class="mls">Free Valet Parking</span>
-		  <input type="radio" name="radio">
-		  <span class="checkmark"></span>
-		</label>
-		<label class="checkmark-box"><span class="mls">Early Check-in</span>
-		  <input type="radio" name="radio">
-		  <span class="checkmark"></span>
-		</label>
-		<label class="checkmark-box"><span class="mls">Free Room Upgrade</span>
-		  <input type="radio" name="radio">
-		  <span class="checkmark"></span>
-		</label>-->
-	  </div>
-
+	<div class="filter_criteria wleft" id="filter_criteria">
+	  <!-- Filter Criteria -->
 	</div>
 	
-	</div>
+	
+   </div>
  </div>
 
  
