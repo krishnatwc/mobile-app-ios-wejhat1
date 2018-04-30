@@ -10,6 +10,23 @@ var myApp = new Framework7({
 	panel: {
 		swipe: 'left',
 	},
+	
+	routes: [
+    {
+	  name: 'search-car',	
+      path: 'search-car',
+      url: 'search-car.html',
+    },
+	{
+	  path: '/',
+	  url: 'index.html',
+    },
+	{
+      path: '(.*)',
+      url: './pages/404.html',
+    },
+  ],
+	
     // Hide and show indicator during ajax requests
     onAjaxStart: function (xhr) {
         myApp.showIndicator();
@@ -27,8 +44,6 @@ var $$ = Dom7;
 var mainView = myApp.addView('.view-main', {
    domCache: true,
 });
-
-
 
 
 var RequestURL ='http://twc5.com/demo/MobAppRequest';
@@ -51,6 +66,7 @@ $$(document).on('pageInit',function(e){
 
  /*=== Hotel Search Box page ====*/ 
 if(page.name=='search-hotels'){
+	var hotelType =page.query.hotelType;
 	var currDate =new Date();
   /* ===== Calendar ===== */
     var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
@@ -104,13 +120,13 @@ if(page.name=='search-hotels'){
 							'<div class="col-40">'+
 								'<div class="row roomPagePaddingBottom">'+
 									'<div class="col-33">'+
-										'<a href="#" class="link left minusAdults" rel="'+glob+'"><i class="material-icons">remove</i></a>'+
+										'<a href="#" class="link left pack_circle minusAdults" rel="'+glob+'"><i class="material-icons">remove</i></a>'+
 									'</div>'+
 									'<div class="col-33">'+
 										'<a href="#" class="link center" id="countAdults_'+glob+'">1</a>'+ 
 									'</div>'+
 									'<div class="col-33">'+
-										'<a href="#" class="link right plusAduls" rel="'+glob+'"><i class="material-icons">add</i></a>'+
+										'<a href="#" class="link right pack_circle plusAduls" rel="'+glob+'"><i class="material-icons">add</i></a>'+
 									'</div>'+
 								'</div>'+
 							'</div>'+
@@ -125,13 +141,13 @@ if(page.name=='search-hotels'){
 							'<div class="col-40">'+
 								'<div class="row roomPagePaddingBottom">'+
 									'<div class="col-33">'+
-										'<a href="#" class="link left minusChilds" rel="'+glob+'"><i class="material-icons">remove</i></a>'+
+										'<a href="#" class="link left pack_circle minusChilds" rel="'+glob+'"><i class="material-icons">remove</i></a>'+
 									'</div>'+
 									'<div class="col-33">'+
 										'<a href="#" class="link center" id="countChilds_'+glob+'">0</a>'+
 									'</div>'+
 									'<div class="col-33">'+
-										'<a href="#" class="link right plusChilds" rel="'+glob+'"><i class="material-icons">add</i></a>'+
+										'<a href="#" class="link right pack_circle plusChilds" rel="'+glob+'"><i class="material-icons">add</i></a>'+
 									'</div>'+
 								'</div>'+
 							'</div>'+
@@ -245,7 +261,6 @@ if(page.name=='search-hotels'){
   
   
   /*=== Auto suggetion ===*/
-  
   var autocompleteDropdownAjax = myApp.autocomplete({
 	opener: $$('#autocomplete-standalone-popup'),
     openIn: 'popup',
@@ -293,8 +308,7 @@ if(page.name=='search-hotels'){
 	}
 	
    });
-  
-  
+
   $$('.findFlightResults').on('click', function(e){
 	alert("Test");
 		var url ='search-flight-results.html?destination='+$$('#destination').val()+'&latitude='+$$('#latitude').val()+'&longitude='+$$('#longitude').val()+'&checkIn='+$$('#startDate').val()+'&checkOut='+$$('#endDate').val()+'&Cri_currency=USD&Cri_language=en_US&hotelType=1&rooms='+$$('#number_of_rooms').val()+'&adults='+adultsArr+'&childs='+childsArr+'&childAge=';
@@ -331,7 +345,7 @@ if(page.name=='search-hotels'){
 		   childAgeArr.push([relKey, $$(this).val()]); 
 		});
 		
-	   var url ='search-results.html?destination='+$$('#destination').val()+'&latitude='+$$('#latitude').val()+'&longitude='+$$('#longitude').val()+'&checkIn='+$$('#startDate').val()+'&checkOut='+$$('#endDate').val()+'&Cri_currency=USD&Cri_language=en_US&hotelType=1&rooms='+$$('#number_of_rooms').val()+'&adults='+adultsArr+'&childs='+childsArr+'&childAge=';
+	   var url ='search-results.html?destination='+$$('#destination').val()+'&latitude='+$$('#latitude').val()+'&longitude='+$$('#longitude').val()+'&checkIn='+$$('#startDate').val()+'&checkOut='+$$('#endDate').val()+'&Cri_currency=USD&Cri_language=en_US&hotelType='+hotelType+'&rooms='+$$('#number_of_rooms').val()+'&adults='+adultsArr+'&childs='+childsArr+'&childAge=';
 	   mainView.router.loadPage(url);
    })
   
@@ -343,6 +357,7 @@ if(page.name=='search-hotels'){
    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
    var destination =page.query.destination;
+   var hotelType =page.query.hotelType;
    var latitude =page.query.latitude;	 
    var longitude =page.query.longitude;	 
    var checkIn =page.query.checkIn;
@@ -392,6 +407,7 @@ if(page.name=='search-hotels'){
 			   var myData =JSON.parse(response);
 			   myApp.formStoreData('HotelLists',myData.HotelListResponse.HotelList.HotelSummary);
 			   var getHotelLists = myApp.formGetData('HotelLists'); 
+			  // alert (getHotelLists);
 			   listHotelResults(getHotelLists);
 			   Upldate_Rates_All();
 			 } 
@@ -400,7 +416,7 @@ if(page.name=='search-hotels'){
     
     function Upldate_Rates_All(){
 		var search_Session_Id = $$('#search_Session_Id').val();
-	    var param ={actionType:'Upldate_Rates_All',search_Session_Id:search_Session_Id,lat:latitude,lon:longitude, checkIn:checkIn,checkOut:checkOut, rooms:rooms,adults:adults,childs:childs,childAge:childAge};
+	    var param ={actionType:'Upldate_Rates_All',search_Session_Id:search_Session_Id,lat:latitude,lon:longitude, checkIn:checkIn,checkOut:checkOut, rooms:rooms,adults:adults,childs:childs,childAge:childAge,hotelType:hotelType};
 		 $$.get(RequestURL+'/update_rates.php',param, function (response,status) {
 		 if(status==200){
 		   	 $$('#totalrecords').val(response);
@@ -415,6 +431,7 @@ if(page.name=='search-hotels'){
 	  
 	  var Cri_destination =$$('input[name=Cri_destination]:checked').val();
 	  var Cri_Rating = [];
+	  
 	  $$("input[name='Cri_Rating[]']:checked").each(function (){
 		Cri_Rating.push($$(this).val());
 	  });
@@ -427,7 +444,8 @@ if(page.name=='search-hotels'){
       var sortField =$$('#sortField').val(sortField);
       var sortby = $$('#sortby').val(sortby);  	  
 	  
-	   var param ={actionType:'Searched_Hotels',search_Session_Id:search_Session_Id,lat:latitude,lon:longitude, checkIn:checkIn,checkOut:checkOut, rooms:rooms,adults:adults,childs:childs,childAge:childAge,page:1,Cri_destination:Cri_destination,Cri_Rating:Cri_Rating,Cri_amenity:Cri_amenity,orderby_fild:sortField,orderby_val:sortby};
+	   var param ={actionType:'Searched_Hotels',search_Session_Id:search_Session_Id,lat:latitude,lon:longitude, checkIn:checkIn,checkOut:checkOut, rooms:rooms,adults:adults,childs:childs,childAge:childAge,hotelType:hotelType,page:1,Cri_destination:Cri_destination,Cri_Rating:Cri_Rating,Cri_amenity:Cri_amenity,orderby_fild:sortField,orderby_val:sortby};
+	   
 	   $$.get(RequestURL+'/update_rates.php',param, function (response,status) {
 		 if(status==200){
 		   var myData =JSON.parse(response);
@@ -470,7 +488,15 @@ if(page.name=='search-hotels'){
 	   }else{
 		loading_Google_Map();   
 	   }
-     });   
+     }); 
+    
+	$$('.starrate').on('click',function(e){
+	   $$('.starrate').removeClass('active');	
+	   $$("input[name='Cri_Rating[]']:checked").each(function (){
+		$$(this).closest('li').addClass('active');
+	   });	
+	})
+	 
    }
    
    
@@ -511,15 +537,14 @@ if(page.name=='search-hotels'){
 						  '<div class="item-inner">'+
 							'<div class="item-subtitle ResultsTetelReviews">'+
 								'<div class="ratings icons_strall str_' + getHotelLists[i].hotelRating +'"></div>'+
-								'<div class="img5"><img src="'+getHotelLists[i].tripAdvisorRatingUrl+'"></div> <div class="sre4pde40" style="display: none;">'+getHotelLists[i].tripAdvisorRating+'</div></div>'+
-							'<div class="boxleftDse">'+
-							  '<a href="#" class="materialicon1"><i class="material-icons material-iconsclear">clear</i>Free Cancellation</a>'+'</div>'+
+								'<div class="img5"><img src="'+getHotelLists[i].tripAdvisorRatingUrl+'"></div>'+
 							'<div class="boxleftDse">'+
 							  '<a href="#" class="materialicon2"><i class="material-icons material-iconsclear">wifi</i>Free Wi-Fi</a>'+'</div>'+
 							  '<div class="boxleftDse">'+
 							  '<a href="#" class="materialicon2"><i class="material-icons material-iconsclear">check</i>All Meals</a>'+'</div>'+
 							  '<div class="boxleftDse">'+
 							  '<a href="#" class="materialicon2"><i class="material-icons material-iconsclear">wifi</i>Half Board</a>'+'</div>'+
+							  '</div>'+
 							'</div>'+'<div class="ribbon"><span>'+getHotelLists[i].currentAllotment+' rooms left</span></div></div>'+
 						 '</div>'+
 						  '</div>'+
@@ -544,7 +569,7 @@ if(page.name=='search-hotels'){
   
    function filtrationHtml(){
 	  var search_Session_Id = $$('#search_Session_Id').val(); 
-	  var param ={actionType:'getControls',search_Session_Id:search_Session_Id};
+	  var param ={actionType:'getControls',search_Session_Id:search_Session_Id,hotelType:hotelType};
 	  $$.get(RequestURL+'/update_rates.php',param, function (response,status) {
 		var myData =JSON.parse(response);
 	    var filter_distanceHtml ='<label class="checkmark-box"><span class="mls">2 Miles</span><span class="starRatHotel">('+myData.distance2+')</span>'+
@@ -568,20 +593,20 @@ if(page.name=='search-hotels'){
 
         /*=== Star Html ===*/
 	 var filter_starHtml ='<ul class="star-ul-li">'+
-		 '<li>'+
+		 '<li class="starrate">'+
 		   '<input type="checkbox" name="Cri_Rating[]" value="1" class="filterResults">'+
-		   '<a href="#">1<i class="fa fa-star" aria-hidden="true"></i><br>('+myData.stars1+')</a></li>'+
-		 '<li><input type="checkbox" name="Cri_Rating[]" value="2" class="filterResults">'+
-		    '<a href="#">2<i class="fa fa-star" aria-hidden="true"></i><br>('+myData.stars2+')</a></li>'+
-		 '<li>'+
+		   '<a href="#"><span>1<i class="fa fa-star" aria-hidden="true"></i></span><span>('+myData.stars1+')</span></a></li>'+
+		 '<li class="starrate"><input type="checkbox" name="Cri_Rating[]" value="2" class="filterResults">'+
+		    '<a href="#"><span>2<i class="fa fa-star" aria-hidden="true"></i></span><span>('+myData.stars2+')</span></a></li>'+
+		 '<li class="starrate">'+
 		   '<input type="checkbox" name="Cri_Rating[]" value="3" class="filterResults">'+
-		   '<a href="#">3<i class="fa fa-star" aria-hidden="true"></i><br>('+myData.stars3+')</a></li>'+
-		 '<li>'+
+		   '<a href="#"><span>3<i class="fa fa-star" aria-hidden="true"></i></span><span>('+myData.stars3+')</span></a></li>'+
+		 '<li class="starrate">'+
 		  '<input type="checkbox" name="Cri_Rating[]" value="4" class="filterResults">'+
-		  '<a href="#">4<i class="fa fa-star" aria-hidden="true"></i><br>('+myData.stars4+')</a></li>'+
-		 '<li>'+
+		  '<a href="#"><span>4<i class="fa fa-star" aria-hidden="true"></i></span><span>('+myData.stars4+')</span></a></li>'+
+		 '<li class="starrate">'+
 		  '<input type="checkbox" name="Cri_Rating[]" value="5" class="filterResults">'+
-		  '<a href="#">5<i class="fa fa-star" aria-hidden="true"></i><br>('+myData.stars5+')</a></li>'+
+		  '<a href="#"><span>5<i class="fa fa-star" aria-hidden="true"></i></span><span>('+myData.stars5+')</span></a></li>'+
 		'</ul>';
 		
 	   $$('#filter_starHtml').html(filter_starHtml); 	
@@ -589,7 +614,7 @@ if(page.name=='search-hotels'){
       });		   
 	   
 	 /*=== Amenity Html ===*/ 
-	  var param ={actionType:'getAmenityControls',search_Session_Id:search_Session_Id};
+	  var param ={actionType:'getAmenityControls',search_Session_Id:search_Session_Id,hotelType:hotelType};
 	  $$.get(RequestURL+'/update_rates.php',param, function (response,status) {
 		var results =JSON.parse(response);
 		var myData =results.aminity;
@@ -612,14 +637,14 @@ if(page.name=='search-hotels'){
       // Exit, if loading in progress
         if (loading) return;
         // Set loading trigger
-        loading = true;
-		
 		var search_Session_Id = $$('#search_Session_Id').val();
 		var totalrecords =$$('#totalrecords').val();
 		var no_of_pages =Math.ceil(totalrecords/15);
 		//alert(no_of_pages+'=>'+page);
-		if(no_of_pages>page){
-		var param ={actionType:'Searched_Hotels',search_Session_Id:search_Session_Id,lat:latitude,lon:longitude, checkIn:checkIn,checkOut:checkOut, rooms:rooms,adults:adults,childs:childs,childAge:childAge,page:page};
+		if(no_of_pages>=page){
+		 loading = true;
+        		
+		var param ={actionType:'Searched_Hotels',search_Session_Id:search_Session_Id,lat:latitude,lon:longitude, checkIn:checkIn,checkOut:checkOut, rooms:rooms,adults:adults,childs:childs,childAge:childAge,hotelType:hotelType,page:page};
         $$.get(RequestURL+'/update_rates.php', param, function (data) {
             loading = false;
             if (data === '') {
@@ -637,12 +662,11 @@ if(page.name=='search-hotels'){
 				page++;
             }
         });
-	  }else{
+	  }else{ 
 		myApp.detachInfiniteScroll($$('.infinite-scroll'));  
+		loading = false;  
 	  }
    });
-   
-   
    
   /*=== Maps ===*/
    var countshowmap =0;
@@ -658,7 +682,7 @@ if(page.name=='search-hotels'){
       $$('#resultsType').val(res_content);	  
 	  if(res_content=='map'){
 		$$(this).attr('rel','hotel'); 
-        $$('.bindHtmlcl').html('<i class="material-icons">location_on</i>List</span>');			
+        $$('.Hotel_Map_LI_Tab').html('<i class="material-icons">list</i>List</span>');			
 	    $$('#hotelResults').hide();	
         $$('#map-canvas').show();	
         if(countshowmap==0){ loading_Google_Map(); }
@@ -667,7 +691,7 @@ if(page.name=='search-hotels'){
 	  }
 	  else{
 		$$(this).attr('rel','map');
-        $$('.bindHtmlcl').html('<i class="material-icons">location_on</i> MAP VIEW</span>');		
+        $$('.Hotel_Map_LI_Tab').html('<i class="material-icons">location_on</i> MAP VIEW</span>');		
 		$$('#map-canvas').hide();	  
 		$$('#hotelResults').show();	
 	  }
@@ -714,7 +738,7 @@ if(page.name=='search-hotels'){
 		 Cri_amenity.push($$(this).val());
 	    });
 		
-		var param ={actionType:'Show_Markers',search_Session_Id:search_Session_Id,lat:latitude,lon:longitude, checkIn:checkIn,checkOut:checkOut, rooms:rooms,adults:adults,childs:childs,childAge:childAge,page:page,Cri_destination:Cri_destination,Cri_Rating:Cri_Rating,Cri_amenity:Cri_amenity};
+		var param ={actionType:'Show_Markers',search_Session_Id:search_Session_Id,lat:latitude,lon:longitude, checkIn:checkIn,checkOut:checkOut, rooms:rooms,adults:adults,childs:childs,childAge:childAge,hotelType:hotelType,page:page,Cri_destination:Cri_destination,Cri_Rating:Cri_Rating,Cri_amenity:Cri_amenity};
 		
 		setAllMap(null);
 		var location_right="";
@@ -959,11 +983,7 @@ if(page.name=='search-hotels'){
 					'<div class="tab" id="tab-2">'+
 						'<div class="mainDivImg">'+
 						'<div class="DivAmen">'+
-						'<div class="form_title">'+
-							   '<h3 class=""><strong><i class="fa fa-check" aria-hidden="true"></i></strong>TripAdvisor Reviews</h3>'+
-							   ' <p class="">TripAdvisor Reviews</p>'+
-						   ' </div>'+
-					'<div class="step">'+
+					'<div class="steppo">'+
 						'<div id="tripAdvisorRating"></div>'+
 					'</div>'+
 					'</div>'+
@@ -1533,7 +1553,7 @@ if(page.name=='online-booking'){
 				  '<p>'+$cancellationPolicy+'</p>'+
 				   
 				'</div>'+
-				'<p class="close-popup-ioncsfa"><a href="#" class="close-popup">Got It</a></p>'+
+				'<p class="close-popup-ioncsfa"><a href="#" class="close-popup"><i class="fa fa-times-circle" aria-hidden="true"></i></a></p>'+
 			  '</div>';	 
 		  
 	  $$('#onlinePageData').html($html);
@@ -1634,8 +1654,7 @@ if(page.name=='confirmation'){
           '</div> ';
 		$$('#confirmationPageData').html(html);
   });
-}	
-
+}
 
 
 function RoomAvailability(data,paramData){ 
@@ -1754,7 +1773,772 @@ function RoomAvailability(data,paramData){
    $html='No rooms';	  
   }   
    $$('#roomLists').html($html);
-} 
+}
+
+/*=== Activity Modules ====*/ 
+if(page.name=='search-activity'){
+    var currDate =new Date();
+ /* ===== Calendar ===== */
+    var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+	var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var today =new Date();
+	var calendarRange = myApp.calendar({
+	input: '#appCalendar',
+	dateFormat: 'M dd yyyy',
+	rangePicker: true,
+	minDate: today,
+	onChange: function (p, values, displayValues){  
+		var start =values[0];
+		var end =values[1];
+		
+		var sMonth =start.getMonth() < 12 ? start.getMonth() + 1 : 1;
+		var eMonth =end.getMonth() < 12 ? start.getMonth() + 1 : 1;
+		
+		var startDate = sMonth+'/'+start.getDate()+'/'+start.getFullYear(); 
+		var endDate =eMonth+'/'+end.getDate()+'/'+end.getFullYear();
+		var startDate_txt = weekday[start.getDay()]+', '+start.getDate()+' '+monthNames[start.getMonth()]+' '+start.getFullYear().toString().substr(-2);
+		var endDate_txt = weekday[end.getDay()]+', '+end.getDate()+' '+monthNames[end.getMonth()]+' '+end.getFullYear().toString().substr(-2);
+		
+		$$('#startDate').val(startDate);
+		$$('#endDate').val(endDate);
+		$$('#startDate_txt').html(startDate_txt);
+		$$('#endDate_txt').html(endDate_txt);
+		
+	   }
+	});
+   /*=== Activity Auto suggetion ===*/	
+   var autocompleteDropdownAjax = myApp.autocomplete({
+	opener: $$('#autocomplete-standalone-popup'),
+	openIn: 'popup',
+	backOnSelect: true,
+	preloader: true, 
+	valueProperty: 'DestinationID', 
+	textProperty: 'DestinationName', 
+	limit: 20, 
+	autoFocus: true,
+	dropdownPlaceholderText: 'Try "JavaScript"',
+	expandInput: true, 
+	source: function (autocomplete, query, render) {
+		var results = [];
+		if (query.length === 0) {
+			render(results);
+			return;
+		}
+		autocomplete.showPreloader();
+		$$.ajax({
+			url: 'https://www.thewebconz.com/webServices/activities/functions.php',
+			method: 'GET',
+			dataType: 'json',
+			data: {
+				term: query,
+				action: "autoActivitySuggetionLookup",
+				lang: 'en_US',
+				limit: 5
+			},
+			success: function (data) {
+				var myData =data.cities; 
+				for (var i = 0; i < myData.length; i++) {
+				   if (myData[i].DestinationName.toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(myData[i]);
+				}
+				autocomplete.hidePreloader();
+				render(results);
+			}
+		});
+	},
+	onChange: function (autocomplete, value) { 
+	 var dataObj =value[0];
+	 $$('#destination').val(dataObj.DestinationName);
+     $$('#selectedDest').html(dataObj.DestinationName);	 
+	 $$('#regionid').val(dataObj.DestinationID);	 	 
+	}
+
+ }); 
+ 
+ $$('.findActivityResults').on('click', function(e){
+   e.preventDefault();	
+   var formData = myApp.formToData('#searchActivity_frm');
+   myApp.formStoreData('ActivityRequestData',formData);
+   
+   var url ='activity-results.html?destination='+$$('#destination').val()+'&regionid='+$$('#regionid').val()+'&checkIn='+$$('#startDate').val()+'&checkOut='+$$('#endDate').val()+'&Cri_currency=USD&Cri_language=en_US';
+    mainView.router.loadPage(url);
+  })
+ 
+}
+/*=== Activity Result page ====*/
+if(page.name=='activity-results')
+ {
+  var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  
+   var destination =page.query.destination;
+   var regionid =page.query.regionid;	 
+   var checkIn =page.query.checkIn;
+   var checkindate =checkIn.split('/');
+   
+   var checkOut =page.query.checkOut;
+   var checkoutdate =checkOut.split('/');
+   
+   var Cri_currency =page.query.Cri_currency;
+   var Cri_language =page.query.Cri_language;
+   $$(".search-resultsPageNavbarTitle").html(destination);
+   $$("#startenddate").html(checkindate[1] + " " + monthNames[(parseInt(checkindate[0])-1)] + " - " + checkoutdate[1] + " " + monthNames[(parseInt(checkoutdate[0])-1)]);
+   
+   var param ={actionType:'FindActivityKey',destination:destination,regionid:regionid, checkIn:checkIn,checkOut:checkOut,Cri_currency:Cri_currency,Cri_language:Cri_language};
+   $$.get(RequestURL+'/activity_update_rates.php',param, function (response,status) {
+	 var myData =JSON.parse(response);
+	 var search_Session_Id =myData.search_session;
+	 var exist =myData.exist;
+	 $$('#search_Session_Id').val(search_Session_Id);
+	 if(exist=='Yes'){
+		Searched_Activity(); 
+	  }
+	 else{
+	  Upldate_Rates_All(); 
+	 }
+	 filtrationHtml(); 
+   });
+  function Upldate_Rates_All(){
+		var search_Session_Id = $$('#search_Session_Id').val();
+	    var param ={actionType:'Upldate_Rates_All',search_Session_Id:search_Session_Id,destination:destination,regionid:regionid, checkIn:checkIn,checkOut:checkOut,Cri_currency:Cri_currency,Cri_language:Cri_language};
+		 $$.get(RequestURL+'/activity_update_rates.php',param, function (response,status) {
+		 if(status==200){
+		   	 $$('#totalrecords').val(response);
+			 $$('#counthotel').html(response);
+			 Searched_Activity();
+		 } 
+	    });
+     }
+  function Searched_Activity(){
+	$$("#hotelResults").css("opacity", "0.5");
+	  var search_Session_Id = $$('#search_Session_Id').val();
+	  
+	  var Cri_destination =$$('input[name=Cri_destination]:checked').val();
+	  var Cri_Rating = [];
+	  $$("input[name='Cri_Rating[]']:checked").each(function (){
+		Cri_Rating.push($$(this).val());
+	  });
+	  
+	  var Cri_Tag = [];
+	      $$("input[name='Cri_Tag[]']:checked").each(function (){
+		  Cri_Tag.push($$(this).val());
+	    });
+	  var Cri_Groups = [];
+	   $$("input[name='Cri_Groups[]']:checked").each(function (){
+	   Cri_Groups.push($$(this).val());
+	  });
+	  
+      var sortField =$$('#sortField').val(sortField);
+      var sortby = $$('#sortby').val(sortby);  	  
+	  
+	   var param ={actionType:'Searched_Activity',search_Session_Id:search_Session_Id,regionid:regionid, checkIn:checkIn,checkOut:checkOut,page:1,Cri_Rating:Cri_Rating,Cri_Tag:Cri_Tag,Cri_Groups:Cri_Groups,orderby_fild:sortField,orderby_val:sortby};
+	   
+	   $$.get(RequestURL+'/activity_update_rates.php',param, function (response,status) {
+		 if(status==200){
+		   var myData =JSON.parse(response);
+		   var totalrecords =myData.totalrecords;
+		   var getActivityLists=myData.result;
+		    $$('#totalrecords').val(totalrecords);
+			$$('#counthotel').html(totalrecords);
+		    listActivityResults(getActivityLists,0);	
+			$$("#hotelResults").css("opacity", "1");
+		 } 
+	    });
+	}
+
+  $$('.sortingHotels').on('click', function (e) {
+	// var getActivityLists = myApp.formGetData('HotelLists');  
+     var sortField = $$(this).attr('sortField');
+	 var rel = $$(this).attr('rel');
+	 if(rel==0){
+	   var sortby ='ASC';	 
+	   $$(this).attr('rel',1);
+	 }
+	 else{
+	   var sortby ='DESC';	 
+	   $$(this).attr('rel',0);	 
+	 }
+	 if(sortField!=''){
+	   $$('#sortField').val(sortField);
+       $$('#sortby').val(sortby);	   
+	   Searched_Activity();
+	 }
+   });	
+	
+  function filterResults(){
+	$$('.filterResults').on('click',function(e){ alert('');
+	   Searched_Activity();
+     }); 
+	$$('.starrate').on('click',function(e){
+	   $$('.starrate').removeClass('active');	
+	   $$("input[name='Cri_Rating[]']:checked").each(function (){
+		$$(this).closest('li').addClass('active');
+	   });	
+	})
+   }	
+	
+  function listActivityResults(getActivityLists,page){
+     if(getActivityLists.length>0){
+		 var html=''; 
+		for (var i = 0; i < getActivityLists.length; i++) {
+		 var thumbNailUrl = getActivityLists[i].thumbNailUrl
+             thumbNailUrl =	thumbNailUrl.replace('_t','_b');	 
+			 
+		var pageLink =getActivityLists[i].pageLink;
+		    pageLink =pageLink.replace('/en/15039/','/en/67645/');
+		
+		 html+='<li><div class="card">'+
+			   '<div class="card-content">'+
+					'<div class="fulldiv_header">'+
+						'<div class="fulldiv_header-left">'+
+							'<div class="item-title ResultsTetelHotel"><a href="'+pageLink+'" class="external">' + getActivityLists[i].name +'</a></div>'+
+							'<div class="item-subtitle ResultsTetelHotell">' + getActivityLists[i].address1 +'</div>'+
+							'</div>'+
+							'<div class="fulldiv_header-right">'+
+							  '<div class="itemTitel24price">$' + getActivityLists[i].lowRate +'</div>'+
+							'</div>'+
+					'</div>'+
+					
+			      '<div class="list-block media-list">'+
+				    '<div>'+
+					'<a href="'+pageLink+'" class="external">'+
+					'<div class="item-content">'+
+					 '<div class="item-media ResultsPagehover">'+
+						'<div class="ResultsPageMaxWidth" style="background: url('+ thumbNailUrl +') no-repeat center;height: 118px; width: 114px;">'+
+								'<i class="material-icons Resultsfavorite" style="display:none;">favorite</i>';
+								if((parseInt(getActivityLists[i].highRate) - parseInt(getActivityLists[i].lowRate)) > 1){
+									html+='<div class="divOff5">Save $' + (parseInt(getActivityLists[i].highRate) - parseInt(getActivityLists[i].lowRate)) + '</div>';
+								}
+				html+='</div>'+
+						    '</div>'+
+						  '<div class="item-inner">'+
+							'<div class="item-subtitle ResultsTetelReviews">'+
+								'<div class="ratings icons_strall str_' + getActivityLists[i].hotelRating +'"></div>'+
+							 '<div>Destinations: '+getActivityLists[i].destinations_covered+'</div>'+	
+							 '<div>Duration: '+getActivityLists[i].duration+'</div>'+
+							 '<div>Rank: '+getActivityLists[i].hotelId+'</div>'+
+							'</div>'+
+						   '</div>'+
+						 '</div>'+
+						  '</div>'+
+						'</div>'+
+						'</a>'+
+					'</div>'+
+					'</div>'+
+				 '</div>'+
+					
+					
+				'</div></li>';	
+		}
+		if(page>1){
+		 $$('#hotelResults ul').append(html);	
+		}
+		else{
+	     $$('#hotelResults ul').html(html);
+		}		 
+	 } 	 
+   }
+   
+  function filtrationHtml(){
+	  var search_Session_Id = $$('#search_Session_Id').val(); 
+	  var param ={actionType:'getActivityControls',search_Session_Id:search_Session_Id};
+	  $$.get(RequestURL+'/activity_update_rates.php',param, function (response,status) {
+		var myData =JSON.parse(response);
+		var tagLists =myData.tagLists;
+		var groupLists =myData.groupLists;
+		
+        /*=== Filter Html ===*/
+		var filter_Html='';
+       filter_Html +='<div>'+ 
+	                  '<h5 class="ng-binding">STAR RATING  <a href="#" class="ng-binding2">Clear</a></h5>'+
+	                  '<ul class="star-ul-li">'+
+						 '<li class="starrate">'+
+						   '<input type="checkbox" name="Cri_Rating[]" value="1" class="filterResults">'+
+						   '<a href="#"><span>1<i class="fa fa-star" aria-hidden="true"></i></span><span>('+myData.stars1+')</span></a></li>'+
+						 '<li class="starrate"><input type="checkbox" name="Cri_Rating[]" value="2" class="filterResults">'+
+							'<a href="#"><span>2<i class="fa fa-star" aria-hidden="true"></i></span><span>('+myData.stars2+')</span></a></li>'+
+						 '<li class="starrate">'+
+						   '<input type="checkbox" name="Cri_Rating[]" value="3" class="filterResults">'+
+						   '<a href="#"><span>3<i class="fa fa-star" aria-hidden="true"></i></span><span>('+myData.stars3+')</span></a></li>'+
+						 '<li class="starrate">'+
+						  '<input type="checkbox" name="Cri_Rating[]" value="4" class="filterResults">'+
+						  '<a href="#"><span>4<i class="fa fa-star" aria-hidden="true"></i></span><span>('+myData.stars4+')</span></a></li>'+
+						 '<li class="starrate">'+
+						  '<input type="checkbox" name="Cri_Rating[]" value="5" class="filterResults">'+
+						  '<a href="#"><span>5<i class="fa fa-star" aria-hidden="true"></i></span><span>('+myData.stars5+')</span></a></li>'+
+						'</ul>'+
+					'</div>';
+					
+	    filter_Html+='<div>'+ 
+	                 '<h5 class="ng-binding">Booking Type</h5>'+
+					 '<div class="checkmarkRadio" id="filter_amenityHtml">';
+		for(var i=0;i<tagLists.length;i++){
+		  filter_Html+='<label class="checkmark-box"><span class="mls">'+tagLists[i].name+'</span><input type="checkbox" name="Cri_Tag[]" value="'+tagLists[i].name+'" class="filterResults"><span class="checkmark"></span><span class="scount">'+tagLists[i].count+'</span></label>';
+	    }
+	   filter_Html +='</div></div>'; 
+      
+	   filter_Html+='<div>'+ 
+	                 '<h5 class="ng-binding">Group Name</h5>'+
+					 '<div class="checkmarkRadio" id="filter_amenityHtml">';
+		for(var i=0;i<groupLists.length;i++){
+		  filter_Html+='<label class="checkmark-box"><span class="mls">'+groupLists[i].name+'</span><input type="checkbox" name="Cri_Groups[]" value="'+groupLists[i].name+'" class="filterResults"><span class="checkmark"></span><span class="scount">'+groupLists[i].count+'</span></label>';
+	    }
+	   filter_Html +='</div></div>'; 
+	   $$('#filter_criteria').html(filter_Html); 
+       
+       filterResults();
+      });		   
+   }
+
+  
+   var loading = false;
+   var lastLoadedIndex =  $$('.list-block li').length;
+   var page =2;
+   $$('.infinite-scroll').on('infinite', function () {
+      // Exit, if loading in progress
+        if (loading) return;
+        // Set loading trigger
+		var search_Session_Id = $$('#search_Session_Id').val();
+		var totalrecords =$$('#totalrecords').val();
+		var no_of_pages =Math.ceil(totalrecords/15);
+		//alert(no_of_pages+'=>'+page);
+		if(no_of_pages>=page){
+		 loading = true;
+        		
+		
+		var Cri_Rating = [];
+	    $$("input[name='Cri_Rating[]']:checked").each(function (){
+			Cri_Rating.push($$(this).val());
+		 });
+		var Cri_Tag = [];
+	      $$("input[name='Cri_Tag[]']:checked").each(function (){
+		  Cri_Tag.push($$(this).val());
+	    });
+	    var Cri_Groups = [];
+	     $$("input[name='Cri_Groups[]']:checked").each(function (){
+		 Cri_Groups.push($$(this).val());
+	    });
+	  
+       var sortField =$$('#sortField').val(sortField);
+       var sortby = $$('#sortby').val(sortby);  	  
+	  
+	   var param ={actionType:'Searched_Activity',search_Session_Id:search_Session_Id,regionid:regionid, checkIn:checkIn,checkOut:checkOut,page:page,Cri_Rating:Cri_Rating,Cri_Tag:Cri_Tag,Cri_Groups:Cri_Groups,orderby_fild:sortField,orderby_val:sortby};
+		
+	
+        $$.get(RequestURL+'/activity_update_rates.php', param, function (data) {
+            loading = false;
+            if (data === '') {
+                // Nothing more to load, detach infinite scroll events to prevent unnecessary loadings
+                myApp.detachInfiniteScroll($$('.infinite-scroll'));
+            }
+            else {
+                // Append loaded elements to list block
+                //$$('#hotelResults').append(data);
+				var myData =JSON.parse(data);
+		        var getActivityLists=myData.result;
+				listActivityResults(getActivityLists,page);
+                // Update last loaded index
+                lastLoadedIndex = $$('.list-block li').length;
+				page++;
+            }
+        });
+	  }else{ 
+		myApp.detachInfiniteScroll($$('.infinite-scroll'));  
+		loading = false;  
+	  }
+   });   
+ }
+/*=== Activity Detail Page ====*/
+if(page.name=='activity-detail'){ 
+  var linkdata =page.query.linkdata;
+ 
+  $$('#activityDetail').html('<iframe src="https://www.partner.viator.com/en/15039/tours/New-Delhi/Private-Tour-Day-Trip-to-Agra-from-Delhi-including-Taj-Mahal-and-Agra-Fort/d804-5588GETSONEPD" style="width:100%; height:100%;"></iframe>');
+
+}
+
+/*=== Car Modules ====*/ 
+if(page.name=='search-car'){
+    var currDate =new Date();
+ /* ===== Calendar ===== */
+    var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+	var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var today =new Date();
+	var calendarRange = myApp.calendar({
+	input: '#appCalendar',
+	dateFormat: 'M dd yyyy',
+	rangePicker: true,
+	minDate: today,
+	onChange: function (p, values, displayValues){  
+		var start =values[0];
+		var end =values[1];
+		
+		var sMonth =start.getMonth() < 12 ? start.getMonth() + 1 : 1;
+		var eMonth =end.getMonth() < 12 ? start.getMonth() + 1 : 1;
+		
+		var startDate = sMonth+'/'+start.getDate()+'/'+start.getFullYear(); 
+		var endDate =eMonth+'/'+end.getDate()+'/'+end.getFullYear();
+		var startDate_txt = weekday[start.getDay()]+', '+start.getDate()+' '+monthNames[start.getMonth()]+' '+start.getFullYear().toString().substr(-2);
+		var endDate_txt = weekday[end.getDay()]+', '+end.getDate()+' '+monthNames[end.getMonth()]+' '+end.getFullYear().toString().substr(-2);
+		
+		$$('#startDate').val(startDate);
+		$$('#endDate').val(endDate);
+		$$('#startDate_txt').html(startDate_txt);
+		$$('#endDate_txt').html(endDate_txt);
+		
+	   }
+	});
+   /*=== Activity Auto suggetion ===*/	
+   var autocompleteDropdownAjax = myApp.autocomplete({
+	opener: $$('#autocomplete-standalone-popup'),
+	openIn: 'popup',
+	backOnSelect: true,
+	preloader: true, 
+	valueProperty: 'regionid', 
+	textProperty: 'latinFullName', 
+	limit: 20, 
+	autoFocus: true,
+	dropdownPlaceholderText: 'Try "JavaScript"',
+	expandInput: true, 
+	source: function (autocomplete, query, render) {
+		var results = [];
+		if (query.length === 0) {
+			render(results);
+			return;
+		}
+		autocomplete.showPreloader();
+		$$.ajax({
+			url: RequestURL+'/update_rates.php',
+			method: 'GET',
+			dataType: 'json',
+			data: {
+				term: query,
+				actionType: "autoCarSuggetionLookup",
+				locale: 'en_US',
+				limit: 5
+			},
+			success: function (data) {
+				var myData =data.cities; 
+				for (var i = 0; i < myData.length; i++) {
+				   if (myData[i].latinFullName.toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(myData[i]);
+				}
+				autocomplete.hidePreloader();
+				render(results);
+			}
+		});
+	},
+	onChange: function (autocomplete, value) { 
+	 var dataObj =value[0];
+	 $$('#car_pickupName').val(dataObj.latinFullName);
+	 $$('#car_pickupID').val(dataObj.regionid);
+     $$('#selectedDest').html(dataObj.latinFullName);	 
+	}
+ }); 
+ 
+  var autocompleteDropdownAjax = myApp.autocomplete({
+	opener: $$('#autocomplete-standalone-popup-to'),
+	openIn: 'popup',
+	backOnSelect: true,
+	preloader: true, 
+	valueProperty: 'regionid', 
+	textProperty: 'latinFullName', 
+	limit: 20, 
+	autoFocus: true,
+	dropdownPlaceholderText: 'Try "JavaScript"',
+	expandInput: true, 
+	source: function (autocomplete, query, render) {
+		var results = [];
+		if (query.length === 0) {
+			render(results);
+			return;
+		}
+		autocomplete.showPreloader();
+		$$.ajax({
+			url: RequestURL+'/update_rates.php',
+			method: 'GET',
+			dataType: 'json',
+			data: {
+				term: query,
+				actionType: "autoCarSuggetionLookup",
+				locale: 'en_US',
+				limit: 5
+			},
+			success: function (data) {
+				var myData =data.cities; 
+				for (var i = 0; i < myData.length; i++) {
+				   if (myData[i].latinFullName.toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(myData[i]);
+				}
+				autocomplete.hidePreloader();
+				render(results);
+			}
+		});
+	},
+	onChange: function (autocomplete, value) { 
+	 var dataObj =value[0];
+	 $$('#car_dropoffName').val(dataObj.latinFullName);
+	 $$('#car_returnID').val(dataObj.regionid);
+     $$('#selectedDestTo').html(dataObj.latinFullName);	 	 
+	}
+ }); 
+ 
+ $$('.findCarResults').on('click', function(e){
+   e.preventDefault();	
+   var dropoff =$$('#dropoff').val();
+   var formData = myApp.formToData('#searchActivity_frm');
+   myApp.formStoreData('ActivityRequestData',formData);
+   
+   var startDate =$$('#startDate').val();
+   var startDateArr =startDate.split('/');
+   var endDate =$$('#endDate').val();
+   var endDateArr =endDate.split('/');
+   var departDate =startDateArr[2]+'-'+startDateArr[0]+'-'+startDateArr[1];
+   var pickupDateTime =departDate+'T'+$$('#pickupTime').val();
+   if(dropoff==true){
+    var returnDate =endDateArr[2]+'-'+endDateArr[0]+'-'+endDateArr[1];
+	var returnDateTime =returnDate+'T'+$$('#dropoffTime').val();;
+   }else{
+	var returnDate =''; 
+    var returnDateTime='';	
+   }
+   
+   var url ='car-results.html?clientID=674902&CT=MP&ln=en&pickupID='+$$('#car_pickupID').val()+'&pickupName='+$$('#car_pickupName').val()+'&returnID='+$$('#car_returnID').val()+'&returnName='+$$('#car_dropoffName').val()+'&pickupDateTime='+pickupDateTime+'&returnDateTime='+returnDateTime+'&age=30&passNum=0&curr=USD&carGroupID=0&residenceID=&countryID=US&elID=631493726382224#/vehicles';
+    mainView.router.loadPage(url);
+  })
+ 
+}
+
+if(page.name=='car-results'){
+	
+}
+
+/*=== Flight Modules ====*/ 
+if(page.name=='search-flights'){ 
+    var strDate =new Date();
+       strDate.setDate(strDate.getDate() + 1);
+    var sDate = (strDate.getMonth()+1) + "/" + strDate.getDate() + "/" +strDate.getFullYear();
+	
+	var enrDate =new Date();
+       enrDate.setDate(enrDate.getDate() + 2);
+    var enDate = (enrDate.getMonth()+1) + "/" + enrDate.getDate() + "/" +enrDate.getFullYear();
+    
+	$$('#startDate').val(sDate);
+	$$('#endDate').val(enDate);
+	
+ 
+   /*===== Calendar ===== */
+    var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+	var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var today =new Date();
+	var calendarRange = myApp.calendar({
+	input: '#appCalendar',
+	dateFormat: 'M dd yyyy',
+	rangePicker: true,
+	minDate: today,
+	onChange: function (p, values, displayValues){  
+		var start =values[0];
+		var end =values[1];
+		
+		var sMonth =start.getMonth() < 12 ? start.getMonth() + 1 : 1;
+		var eMonth =end.getMonth() < 12 ? start.getMonth() + 1 : 1;
+		
+		var startDate = sMonth+'/'+start.getDate()+'/'+start.getFullYear(); 
+		var endDate =eMonth+'/'+end.getDate()+'/'+end.getFullYear();
+		var startDate_txt = weekday[start.getDay()]+', '+start.getDate()+' '+monthNames[start.getMonth()]+' '+start.getFullYear().toString().substr(-2);
+		var endDate_txt = weekday[end.getDay()]+', '+end.getDate()+' '+monthNames[end.getMonth()]+' '+end.getFullYear().toString().substr(-2);
+		
+		$$('#startDate').val(startDate);
+		$$('#endDate').val(endDate);
+		$$('#startDate_txt').html(startDate_txt);
+		$$('#endDate_txt').html(endDate_txt);
+	   }
+	});	
+   /*=== Activity Auto suggetion ===*/	
+   var autocompleteDropdownAjax = myApp.autocomplete({
+	opener: $$('#autocomplete-standalone-popup'),
+	openIn: 'popup',
+	backOnSelect: true,
+	preloader: true, 
+	valueProperty: 'city_code', 
+	textProperty: 'city_fullname', 
+	limit: 20, 
+	autoFocus: true,
+	dropdownPlaceholderText: 'Try "JavaScript"',
+	expandInput: true, 
+	source: function (autocomplete, query, render) {
+		var results = [];
+		if (query.length === 0) {
+			render(results);
+			return;
+		}
+		autocomplete.showPreloader();
+		$$.ajax({
+			url: 'https://www.jetradar.com/autocomplete/places',
+			method: 'GET',
+			dataType: 'json',
+			data: {
+				q: query,
+				with_countries: "false",
+				locale: 'en',
+				limit: 5
+			},
+			success: function (data) {
+				var myData =data; 
+				for (var i = 0; i < myData.length; i++) {
+				   if (myData[i].city_fullname.toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(myData[i]);
+				}
+				autocomplete.hidePreloader();
+				render(results);
+			}
+		});
+	},
+	onChange: function (autocomplete, value) { 
+	 var dataObj =value[0];
+	 $$('#flight_from').val(dataObj.city_fullname);
+	 $$('#flight_locationId').val(dataObj.city_code);
+     $$('#selectedDest').html(dataObj.city_fullname);	 	 
+	}
+  });
+
+  var autocompleteDropdownAjax = myApp.autocomplete({
+	opener: $$('#autocomplete-standalone-popup-to'),
+	openIn: 'popup',
+	backOnSelect: true,
+	preloader: true, 
+	valueProperty: 'city_code', 
+	textProperty: 'city_fullname', 
+	limit: 20, 
+	autoFocus: true,
+	dropdownPlaceholderText: 'Try "JavaScript"',
+	expandInput: true, 
+	source: function (autocomplete, query, render) {
+		var results = [];
+		if (query.length === 0) {
+			render(results);
+			return;
+		}
+		autocomplete.showPreloader();
+		$$.ajax({
+			url: 'https://www.jetradar.com/autocomplete/places',
+			method: 'GET',
+			dataType: 'json',
+			data: {
+				q: query,
+				with_countries: "false",
+				locale: 'en',
+				limit: 5
+			},
+			success: function (data) {
+				var myData =data; 
+				for (var i = 0; i < myData.length; i++) {
+				   if (myData[i].city_fullname.toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(myData[i]);
+				}
+				autocomplete.hidePreloader();
+				render(results);
+			}
+		});
+	},
+	onChange: function (autocomplete, value) { 
+	 var dataObj =value[0];
+	 $$('#flight_to').val(dataObj.city_fullname);
+	 $$('#flight_to_locationId').val(dataObj.city_code);	
+     $$('#selectedToDest').html(dataObj.city_fullname);	 	 
+	}
+  });  
+	
+  $$('.managePassenger').on('click', function () {
+	  var adults =$$('#adults').val();
+	  var childs =$$('#childs').val();
+	  var infants =$$('#infants').val();
+	  var mType =$$(this).attr('mType');
+	  var aType =$$(this).attr('aType');
+	  if(aType=='add'){
+		 if(mType=='adults'){ 
+		   adults =parseInt(adults)+1;
+		   $$('#adults').val(adults);
+		   $$('#countAdults').html(adults);
+		 }
+		 if(mType=='childs'){ 
+		   childs =parseInt(childs)+1;
+		   $$('#childs').val(childs);
+		   $$('#countChilds').html(childs);
+		 }
+		 if(mType=='infants'){ 
+		   infants =parseInt(infants)+1;
+		   $$('#infants').val(infants);
+		   $$('#countInfants').html(infants);
+		 }
+	  }
+	 if(aType=='remove'){
+		 if(mType=='adults'){ 
+		   if(adults>1){
+		   adults =parseInt(adults)-1;
+		   $$('#adults').val(adults);
+		   $$('#countAdults').html(adults);
+		   }
+		 }
+		 if(mType=='childs'){ 
+		   if(childs>0){
+		   childs =parseInt(childs)-1;
+		   $$('#childs').val(childs);
+		   $$('#countChilds').html(childs);
+		   }
+		 }
+		 if(mType=='infants'){ 
+		    if(infants>0){ 
+		    infants =parseInt(infants)-1;
+		    $$('#infants').val(infants);
+		    $$('#countInfants').html(infants);
+			}
+		 }
+	  } 
+	  
+	  var passenger =parseInt(adults)+parseInt(childs)+parseInt(infants);
+	  $$('#roomGuestTxt').html(passenger +' Passengers' );
+	  $$('#selectedPassengers').html(passenger+' Passengers');
+  });
+  
+  $$('.tripType').on('click', function (e) {
+	 $$('.tripType').removeClass('active'); 
+	 $$(this).addClass('active');
+	 var rel =$$(this).attr('rel');
+	 $$('#one_way').val(rel);
+  });
+  
+  $$('.findFlightResults').on('click', function (e) {
+   var result =$$('input[name=result]:checked').val();	 
+   var trip_class =0;
+   if(result=='Business'){ trip_class=1;  }
+   
+   var one_way =$$('#one_way').val();
+   
+   var startDate =$$('#startDate').val();
+   var startDateArr =startDate.split('/');
+   var endDate =$$('#endDate').val();
+   var endDateArr =endDate.split('/');
+   var departDate =startDateArr[2]+'-'+startDateArr[0]+'-'+startDateArr[1];
+   
+   if(one_way==false){
+    var returnDate =endDateArr[2]+'-'+endDateArr[0]+'-'+endDateArr[1];
+   }else{
+	var returnDate ='';   
+   }
+   
+   var adults =$$('#adults').val();
+   var childs =$$('#childs').val();
+   var infants =$$('#infants').val();
+   var passenger =parseInt(adults)+parseInt(childs)+parseInt(infants);
+   
+   var ct_guests =passenger+'passenger';
+   var Flights_Return_direct ='enable';
+   
+   var param ='marker=40247&origin_name='+$$('#flight_from').val()+'&origin_iata='+$$('#flight_locationId').val()+'&destination_name='+$$('#flight_to').val()+'&destination_iata='+$$('#flight_to_locationId').val()+'&depart_date='+departDate+'&return_date='+returnDate+'&Flights_Return_direct='+Flights_Return_direct+'&with_request=true&adults='+$$('#adults').val()+'&children='+$$('#childs').val()+'&infants='+$$('#infants').val()+'&trip_class='+trip_class+'&currency=USD&locale=en&one_way='+one_way+'&ct_guests='+ct_guests+'&ct_rooms=1'; 
+   
+   var url ='http://apptravelpayouts.adivaha.com/flights?'+param;
+   window.location.href=url;
+   // mainView.router.loadPage(url);
+
+  })
+  
+	
+}
+ 
 
  
 });
