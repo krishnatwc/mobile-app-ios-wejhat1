@@ -280,7 +280,7 @@ if(page.name=='search-hotels'){
         }
         autocomplete.showPreloader();
         $$.ajax({
-            url: '//yasen.hotellook.com/autocomplete',
+            url: 'https://yasen.hotellook.com/autocomplete',
             method: 'GET',
             dataType: 'json',
             data: {
