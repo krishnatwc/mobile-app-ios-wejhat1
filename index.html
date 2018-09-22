@@ -75,25 +75,40 @@
                         <div class="content-block panel-background">
                             <p> <a href="#" class="close-panel"><i class="fa fa-times" aria-hidden="true"></i></a>
 							
-							<a href="#" class="mobileLogo"><img src="img/logo_1.png" alt=""></a></p>
+							<a href="#" class="mobileLogo"><img src="img/logo_1.png" alt=""></a>
+						
+							</p>
 							<div class="overlayContent">
 							
 							</div>
                         </div>
                        <div class="list-menu-mobile">
-							<ul>
-								<li><a href="login-screen.html" class="close-panel"><i class="fa fa-home"></i>login</a></li>
-								<li><a href="search-hotels.html" class="close-panel"><i class="fa fa-home"></i>home</a></li>
-								<li><a href="" class="close-panel"><i class="fa fa-bed"></i>Hotel</a></li>
-								<li><a href="" class="close-panel"><i class="fa fa-plane"></i>Flight</a></li>
-								<li><a href="" class="close-panel"><i class="fa fa-coffee"></i>Homestays</a></li>
-								<li><a href="" class="close-panel"><i class="fa fa-home"></i>Resort</a></li>
-								<li><a href="" class="close-panel"><i class="fa fa-street-view"></i>Activity</a></li>
-								<li><a href="" class="close-panel"><i class="fa fa-car"></i>Car</a></li>
+							<ul class="beforeLogin" id="leftMenuBar">
+								<li><a href="" class="close-panel"><i class="fa fa-home"></i>Home</a></li>
+								<li><a href="search-hotels.html?hotelType=1" class="close-panel"><i class="fa fa-bed"></i>Hotel</a></li>
+								
+								<li><a href="search-flights.html" class="close-panel"><i class="fa fa-plane"></i>Flight</a></li>
+								<li><a href="search-hotels.html?hotelType=5" class="close-panel"><i class="fa fa-coffee"></i>BnB</a></li>
+								<li><a href="search-hotels.html?hotelType=3" class="close-panel"><i class="fa fa-home"></i>Resort</a></li>
+								<li><a href="search-activity.html" class="close-panel"><i class="fa fa-street-view"></i>Activity</a></li>
+								<li><a href="contact-us.html" class="close-panel"><i class="fa fa-envelope-o"></i>Contact Us</a></li>
+								<li><a href="login-page.html" class="close-panel"><i class="fa fa-user"></i> My Booking</a></li>
+								<li><a href="login-page.html" class="close-panel"><i class="fa fa-user"></i>Login</a></li>
 							</ul>
+							
+							<ul class="afterLogin" id="leftMenuBar">
+								<li><a href="" class="close-panel"><i class="fa fa-home"></i>Home</a></li>
+								<li><a href="search-hotels.html?hotelType=1" class="close-panel"><i class="fa fa-bed"></i>Hotel</a></li>
+								<li><a href="search-flights.html" class="close-panel"><i class="fa fa-plane"></i>Flight</a></li>
+								<li><a href="search-hotels.html?hotelType=5" class="close-panel"><i class="fa fa-coffee"></i>BnB</a></li>
+								<li><a href="search-hotels.html?hotelType=3" class="close-panel"><i class="fa fa-home"></i>Resort</a></li>
+								<li><a href="search-activity.html" class="close-panel"><i class="fa fa-street-view"></i>Activity</a></li>
+								<li><a href="contact-us.html" class="close-panel"><i class="fa fa-envelope-o"></i>Contact Us</a></li>
+								<li><a href="booking.html" class="close-panel"><i class="fa fa-user"></i> My Booking</a></li>
+								<li><a href="" class="close-panel"><i class="fa fa-user"></i>Logout</a></li>
+							</ul>
+							
 					   </div>
-                       
-                        
                     </div>
                 </div>
             </div>
@@ -105,151 +120,36 @@
                 <div class="page pageBackgroundColor" data-page="index">
                     <div class="navbar theme-red">
                         <div class="navbar-inner">
-                            <div class="left"><a href="#" class="open-panel link icon-only"><i class="icon icon-bars"></i></a></div>
-                            <!-- <div class="buttons-row BottonRowHome">
-                                <a href="#" class="button navbarHome active">Home</a>
-                                <a href="login-screen.html" class="button navbarHome ">My Account</a>
-
-                            </div>
-                            <a href="#" class="button right HomeNotifications"><i class="material-icons">notifications</i></a>-->
+                            <div class="left"><!--<a href="#" class="open-panel link icon-only"><i class="icon icon-bars"></i></a>--></div>
+                           
 
                         </div>
                     </div>
-                    <!-- <div class="toolbar toolbar-bottom">
-                        <div class="toolbar-inner">
-                            <a href="#products" class="link">Products</a>
-                            <a href="search-results.html" class="link">Search Results</a>
-                            <a href="about.html?count=5" class="link">About</a>
-                            <a href="#" class="link">Link 3</a>
-                        </div>
-                    </div>-->
+                    
                     <div class="page-content home-page-padding">
                         <div class="HomeCard">
                             <div class="carBackColor">
                                 <a href="#" class="button buttonspace"><img src="img/logo_1.png"></a>
+									<div class="Searchall">Search all travel deals, in one go</div>
                                 <div class="card-content-inner1">
                                     <div class="" id="chevron">
-                                        <!--<div class="card-content-inner1left">
-
-                            </div>
-							<div class="card-content-inner1right">
-
-                            </div>-->
+                                      
                                     </div>
                                 </div>
                             </div>
 
                             <div class="card homeadCard buttonhomecard">
                                 <div class="card-content">
-                                    <div class="card-content-inner contentblock1">
-                                        <div class="buttons-row buttonrow1">
-                                            <div class="col-sm-6 buttoncol" style="border-right: 1px solid #7ab340;">
-                                                <a href="search-hotels.html?hotelType=1" class="button color-red button-fill with-animation page-on-left"><i class="fa fa-bed"></i><span class="displaysection">Hotels</span></a>
-
-                                            </div>
-                                            <div class="col-sm-6 buttoncol">
-                                                <a href="search-flights.html" class="button color-green button-fill"><i class="fa fa-plane"></i><span class="displaysection"> Flights</span></a>
-
-                                            </div>
-                                            <!--<a href="box.html" class="button color-blue button-fill"><i class="material-icons">directions_bus</i></a>-->
-                                        </div>
-                                        <div class="HomePadding">
-
-                                        </div>
-
-                                        <div class="buttons-row buttonrow1">
-                                            <div class="col-sm-6 buttoncol" style="border-right: 1px solid #7ab340;">
-                                                <a href="search-hotels.html?hotelType=5" class="button color-orange button-fill"><i class="fa fa-coffee"></i><span class="displaysection"> BnB </span></a>
-
-                                            </div>
-                                            <div class="col-sm-6 buttoncol">
-                                                <a href="search-hotels.html?hotelType=3" class="button color-pink button-fill" ><i class="fa fa-home"></i><span class="displaysection"> Resort</span></a>
-
-                                            </div>
-                                            <!--<a href="box.html" class="button color-purple button-fill"><i class="material-icons">home</i></a>-->
-                                        </div>
-                                        <div class="HomePadding">
-
-                                        </div>
-
-                                        <div class="buttons-row">
-                                            <div class="col-sm-6 buttoncol" style="border-right: 1px solid #7ab340;">
-                                                <a href="search-activity.html" class="button color-orange button-fill"><i class="fa fa-street-view"></i><span class="displaysection">  Activity</span></a>
-
-                                            </div>
-                                            <div class="col-sm-6 buttoncol">
-                                                <a href="search-car.html" class="button color-pink button-fill"><i class="fa fa-car"></i><span class="displaysection"> Car</span></a>
-
-                                            </div>
-                                            <!--<a href="box.html" class="button color-purple button-fill"><i class="material-icons">home</i></a>-->
-                                        </div>
-                                    </div>
+                                    <ul class="contentblock1">
+										<li><a href="search-hotels.html?hotelType=1" class=""><i class="fa fa-bed"></i><span class="displaysection">Hotels</span></a></li>
+										<li> <a href="search-flights.html" class=""><i class="fa fa-plane"></i><span class="displaysection"> Flights</span></a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
 
-                        <!--<div class="card cardDiscoverLowest">
-                            <div class="card-content">
-                                <div class="list-block">
-                                    <ul>
-                                        <li>
-                                            <a href="#" class="item-link item-content">
-                                                <div class="item-media"><i class="material-icons">local_hotel</i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title">Xplore - Discover Lowest Fares</div>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#" class="item-link item-content">
-                                                <div class="item-media"><i class="material-icons">train</i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title">Check Flight Status</div>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#" class="item-link item-content">
-                                                <div class="item-media"><i class="material-icons">directions_bus</i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title">Web Check-In</div>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#" class="item-link item-content">
-                                                <div class="item-media"><i class="material-icons">directions_car</i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title">Offers & Discounts</div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>-->
-
-                        <!--<div data-pagination=".swiper-pagination" data-paginationHide="true" class="swiper-container swiper-init ks-demo-slider">
-                            <div class="swiper-pagination"></div>
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide"><img src="img/background.jpg" alt="" style="height: 200px;width: 100%;"></div>
-                                <div class="swiper-slide"> <img src="img/background.jpg" alt="" style="height: 200px;width: 100%;"></div>
-                                <div class="swiper-slide"> <img src="img/background.jpg" alt="" style="height: 200px;width: 100%;"></div>
-                                <div class="swiper-slide"> <img src="img/background.jpg" alt="" style="height: 200px;width: 100%;"></div>
-                                <div class="swiper-slide"> <img src="img/background.jpg" alt="" style="height: 200px;width: 100%;"></div>
-                                <div class="swiper-slide"> <img src="img/background.jpg" alt="" style="height: 200px;width: 100%;"></div>
-                                <div class="swiper-slide"> <img src="img/background.jpg" alt="" style="height: 200px;width: 100%;"></div>
-                                <div class="swiper-slide"> <img src="img/background.jpg" alt="" style="height: 200px;width: 100%;"></div>
-                                <div class="swiper-slide"> <img src="img/background.jpg" alt="" style="height: 200px;width: 100%;"></div>
-                                <div class="swiper-slide"> <img src="img/background.jpg" alt="" style="height: 200px;width: 100%;"></div>
-                            </div>
-                        </div>-->
-
                     </div>
-						<div class="overlayDivhome">					</div>
+					<div class="overlayDivhome"></div>
                 </div>
             </div>
         </div>
