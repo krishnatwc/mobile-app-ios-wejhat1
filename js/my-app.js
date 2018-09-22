@@ -339,7 +339,7 @@ if(page.name=='search-hotels'){
       var checkIn =startDateArr[2]+'-'+startDateArr[0]+'-'+startDateArr[1];
 	  var checkOut =endDateArr[2]+'-'+endDateArr[0]+'-'+endDateArr[1];
 	  var param ='marker=40247&destination='+$$('#destination').val()+'&checkIn='+checkIn+'&checkOut='+checkOut+'&adults='+adults+'&children='+childAgeArr+'&language=en&currency=USD&&cityId='+$$('#region_id').val();
-     var url ='https://apptravelpayouts.adivaha.com/hotels?'+param;
+     var url ='https://whitelabel.travelpayouts.com/hotels?'+param;
      window.location.href=url;
 	  
    })
