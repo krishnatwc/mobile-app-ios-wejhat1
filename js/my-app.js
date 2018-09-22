@@ -2098,7 +2098,7 @@ if(page.name=='search-flights'){
    
    var param ='marker=40247&origin_name='+$$('#flight_from').val()+'&origin_iata='+$$('#flight_locationId').val()+'&destination_name='+$$('#flight_to').val()+'&destination_iata='+$$('#flight_to_locationId').val()+'&depart_date='+departDate+'&return_date='+returnDate+'&Flights_Return_direct='+Flights_Return_direct+'&with_request=true&adults='+$$('#adults').val()+'&children='+$$('#childs').val()+'&infants='+$$('#infants').val()+'&trip_class='+trip_class+'&currency=USD&locale=en&one_way='+one_way+'&ct_guests='+ct_guests+'&ct_rooms=1'; 
    
-   var url ='//apptravelpayouts.adivaha.com/flights?'+param;
+   var url ='https://apptravelpayouts.adivaha.com/flights?'+param;
    window.location.href=url;
    // mainView.router.loadPage(url);
 
