@@ -141,40 +141,15 @@
                             <div class="card homeadCard buttonhomecard">
                                 <div class="card-content">
                                     <ul class="contentblock1">
-									
 										<li><a href="search-hotels.html?hotelType=1" class=""><i class="fa fa-bed"></i><span class="displaysection">Hotels</span></a></li>
-										
 										<li> <a href="search-flights.html" class=""><i class="fa fa-plane"></i><span class="displaysection"> Flights</span></a></li>
-										<!--
-										<li>  <a href="search-hotels.html?hotelType=5" class=""><i class="fa fa-coffee"></i><span class="displaysection"> BnB </span></a></li>
-										
-										<li><a href="search-hotels.html?hotelType=3" class="" ><i class="fa fa-home"></i><span class="displaysection"> Resort</span></a> </li>
-										<li> <a href="search-activity.html" class=""><i class="fa fa-street-view"></i><span class="displaysection">  Activity</span></a></li>
-										
-										<li> <a href="contact-us.html" class=""><i class="fa fa-envelope-o"></i><span class="displaysection">   Contact Us</span></a></li>-->
-                                      
                                     </ul>
                                 </div>
                             </div>
                         </div>
 
-                    <!-- <div class="history-home-page">
-						<div class="history-home-page-main">
-							<div class="history-home-page-main-left">
-								<i class="fa fa-home"></i>
-							</div>
-							<div class="history-home-page-main-right">
-								<div class="history-home-text">New Delhi </div>
-								<div class="history-home-text1">Fir, 25 May - Sat, 26 May </div>
-								<div class="history-home-text2"><i class="fa fa-user"></i> 2 Guests </div>
-								<div class="history-home-text3"><i class="fa fa-bed"></i>1 Room </div>
-							</div>
-						</div>
-						 
-					 </div>-->
-
                     </div>
-						<div class="overlayDivhome">					</div>
+					<div class="overlayDivhome"></div>
                 </div>
             </div>
         </div>
