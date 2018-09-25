@@ -52,7 +52,7 @@ var marker='40247';
 
 myApp.onPageInit('index', function (page) {
 $$('.pageFlashLoaderKK').show();	
-setTimeout(function(){ $$('.pageFlashLoaderKK').hide(); }, 3000);	
+setTimeout(function(){ $$('.pageFlashLoaderKK').hide('slow'); }, 3000);	
 
 
 var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
