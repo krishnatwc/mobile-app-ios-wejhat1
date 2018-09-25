@@ -8,8 +8,16 @@
 .buttoncol{padding:35px;width:50%;height:50%;text-align:center}
 
 
-.contentblock1{margin: 0px;padding: 0px;width: 100%;float: left;    padding-top: 2rem;display: flex;
-    justify-content: center;}
+.contentblock1{
+	    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    float: left;
+    padding-top: 0rem;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 25px;
+}
 .contentblock1 li{float: left;text-align: center;margin-bottom: 20px;}
 .contentblock1 li:first-child{margin-right:12px;}
 .contentblock1 li a{font-size: 20px;color: #fff !important;text-align: center;}
@@ -19,12 +27,12 @@
     border-radius: 15px;
     border: 2px solid #ddd;
     padding: 18px 0px 0px 0px;*/
-    font-size: 30px;    display: inline;}
+    font-size: 40px;    display: inline;}
 .buttonhomecard .card-content{width: 80%;margin: 0 auto;}
 	
 .contentblock1 li a .displaysection {
     display: block;
-    font-size: 14px;   /* margin-top: 10px;*/
+    font-size: 13px;   /* margin-top: 10px;*/
 }
 
 .buttonhomecard{    background-color: transparent;
@@ -33,7 +41,7 @@
     margin: 42px 0px 0px 0px;
     box-shadow: none;
 ;}
-.carBackColor{/*position: relative;top: 8em;*/    margin-top: 57px;}
+.carBackColor{/*position: relative;top: 8em;    margin-top: 57px;*/}
 
 .colorIcons{color:#ddd}.colorIcons i{color:#ddd;background-color:#ddd}
 
@@ -594,7 +602,7 @@ margin-top: 10%;}
 .list-menu-mobile ul li{}
 .list-menu-mobile ul li a{display: inline-block;padding: 8px;border-bottom: 1px solid #f3f3f3;width: 100%;box-sizing: border-box;color: #454545;}
 .list-menu-mobile ul li a .fa{padding: 0px 13px 0px 0px;font-size: 13px;text-transform: capitalize;}
-.overlayDivhome{position: absolute;width: 100%;height: 100%;top: 0;left: 0;right: 0;bottom: 0;    background-color: rgba(0, 0, 0, 0.8);z-index: 0;}
+.overlayDivhome{position: absolute;width: 100%;height: 100%;top: 0;left: 0;right: 0;bottom: 0;    background-color: rgba(0, 0, 0, 0.5);z-index: 0;}
 .home-page-padding{position:relative;z-index: 9;}	
 .login-screen-navbar{box-shadow: 0 2px 12px rgba(0,0,0,.175);}
 .login-screen-content{padding-top: 56px !important;background: url(../img/mobile_back.png) center no-repeat;background-size: cover;margin: 0px;}
@@ -808,7 +816,7 @@ margin-top: 10%;}
 .resultpagetop{}	
 .resultpagehotels{white-space: pre-line ! important; max-width: 284px !important;font-size: 13.5px;overflow: hidden;font-weight: 500;}
 
-.history-home-page{background-color:rgba(0,0,0,0.8);width: 95%;margin: 0 auto;clear: both;border-radius: 2px;overflow: hidden;    padding: 8px;}
+.history-home-page{background-color:rgba(0,0,0,0.8);width: 95%;margin: 0 auto;clear: both;border-radius: 2px;overflow: hidden;    padding: 8px;    margin-top: 10px;}
 .history-home-page-main{}
 .history-home-page-main-left{    float: left;
     width: 17%;
@@ -885,25 +893,39 @@ margin-top: 10%;}
 
 .Searchall{text-align: center;color: #fff;font-size: 17px;}
 .contentblock1 li a{
-	border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 30px;
-    border-top-right-radius: 30px;
-    border-top-left-radius: 30px;
+	
+	    border: 2px solid #ddd;
+    float: left;
+    margin: 0 auto;
+    display: inline-block;
+    padding: 30px 40px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 45px;
+/*
+	
+	border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
     border: 2px solid #ddd;
     float: left;
     margin: 0 auto;
     display: inline-block;
-    padding:20px 40px;background-color: rgba(255, 255, 255, 0.2);
+    padding:20px 40px;background-color: rgba(255, 255, 255, 0.2);*/
 }
 
 .HomeLogoimg{text-align: center;float: left;width: 100%;}
-
-
-
-
-
-
-
+.history-recents{}
+.history-recents-left{float:left;width:100%;}
+.deltopatfri1{float: left;width: 70%;}
+.deltopatfri2{float: right;width: 30%;}
+/*
+.history-recents-right{float:right;width:30%;}*/
+.deltopatfri{float: left;width: 100%;}
+.deltopatfri span{color: #fff;font-size: 12px;}
+.deltopatfri span .fa{    padding: 0px 30px;}
+.economyadlet{padding-left: 30px;}
+.economyadlet .fa{}
 
 
 
