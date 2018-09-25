@@ -46,10 +46,15 @@ var mainView = myApp.addView('.view-main', {
 
 
 var RequestURL ='https://www.adivaha.com/demo/MobAppRequest';
-
+var TPHotelUrl ='https://flight-images.adivaha.com/hotels';
+var TPFlightUrl ='https://apptravelpayouts.adivaha.com/flights';
+var marker='40247';
 
 myApp.onPageInit('index', function (page) {
-	
+$$('.pageFlashLoaderKK').show();	
+setTimeout(function(){ $$('.pageFlashLoaderKK').hide(); }, 3000);	
+
+
 var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];	
 
@@ -70,7 +75,7 @@ var startDate_txt = weekday[strDate.getDay()]+', '+strDate.getDate()+' '+monthNa
 var endDate_txt = weekday[enrDate.getDay()]+', '+enrDate.getDate()+' '+monthNames[(enrDate.getMonth()+1)]+' '+enrDate.getFullYear().toString().substr(-2);
 
 
-var htmlHotel ='<div class="history-home-page-main-left"><i class="fa fa-home"></i></div><a href="https://flight-images.adivaha.com/hotels?marker=40247&destination=New Delhi&checkIn='+checkIn+'&checkOut='+checkOut+'&adults=2&children=&language=en&currency=USD&&cityId=24077" class="link external"><div class="history-home-page-main-right"><div class="history-home-text">New Delhi</div><div class="history-home-text1">'+startDate_txt+' - '+endDate_txt+'</div><div class="history-home-text2"><i class="fa fa-user"></i> 2 Guests </div><div class="history-home-text3"><i class="fa fa-bed"></i>1 Room </div></a></div>';
+var htmlHotel ='<div class="history-home-page-main-left"><i class="fa fa-home"></i></div><a href="'+TPHotelUrl+'?marker='+marker+'&destination=New Delhi&checkIn='+checkIn+'&checkOut='+checkOut+'&adults=2&children=&language=en&currency=USD&&cityId=24077" class="link external"><div class="history-home-page-main-right"><div class="history-home-text">New Delhi</div><div class="history-home-text1">'+startDate_txt+' - '+endDate_txt+'</div><div class="history-home-text2"><i class="fa fa-user"></i> 2 Guests </div><div class="history-home-text3"><i class="fa fa-bed"></i>1 Room </div></a></div>';
 $$('#storeHotelLists').html(htmlHotel);
 
 var htmlFlight ='<div class="history-home-page-main-left">'+
@@ -79,7 +84,7 @@ var htmlFlight ='<div class="history-home-page-main-left">'+
 				'<div class="history-home-page-main-right">'+
 				  '<div class="history-recents">'+
 						'<div class="history-recents-left">'+
-						 '<a href="https://apptravelpayouts.adivaha.com/flights?marker=40247&origin_name=Delhi,%20India&origin_iata=DEL&destination_name=Goa,%20India&destination_iata=GOI&depart_date='+checkIn+'&return_date=&Flights_Return_direct=enable&with_request=true&adults=1&children=0&infants=0&trip_class=0&currency=USD&locale=en&one_way=true&ct_guests=1passenger&ct_rooms=1" class="link external"><div class="deltopatfri">'+
+						 '<a href="'+TPFlightUrl+'?marker='+marker+'&origin_name=Delhi,%20India&origin_iata=DEL&destination_name=Goa,%20India&destination_iata=GOI&depart_date='+checkIn+'&return_date=&Flights_Return_direct=enable&with_request=true&adults=1&children=0&infants=0&trip_class=0&currency=USD&locale=en&one_way=true&ct_guests=1passenger&ct_rooms=1" class="link external"><div class="deltopatfri">'+
 							'<div class="deltopatfri1">'+
 								'<span>DEL</span> <span><i class="fa fa-arrow-right"></i></span> <span>GOI</span>'+
 								'</div>'+
@@ -87,7 +92,7 @@ var htmlFlight ='<div class="history-home-page-main-left">'+
 								'<span>'+startDate_txt+'</span>'+
 							'</div>'+
 							'</div></a>'+
-							'<a href="https://apptravelpayouts.adivaha.com/flights?marker=40247&origin_name=Delhi,%20India&origin_iata=DEL&destination_name=Mumbai,%20India&destination_iata=BOM&depart_date='+checkIn+'&return_date=&Flights_Return_direct=enable&with_request=true&adults=1&children=0&infants=0&trip_class=0&currency=USD&locale=en&one_way=true&ct_guests=1passenger&ct_rooms=1" class="link external"><div class="deltopatfri">'+
+							'<a href="'+TPFlightUrl+'?marker='+marker+'&origin_name=Delhi,%20India&origin_iata=DEL&destination_name=Mumbai,%20India&destination_iata=BOM&depart_date='+checkIn+'&return_date=&Flights_Return_direct=enable&with_request=true&adults=1&children=0&infants=0&trip_class=0&currency=USD&locale=en&one_way=true&ct_guests=1passenger&ct_rooms=1" class="link external"><div class="deltopatfri">'+
 							'<div class="deltopatfri1">'+
 								'<span>DEL</span> <span><i class="fa fa-arrow-right"></i></span> <span>BOM</span>'+
 								'</div>'+
@@ -106,7 +111,7 @@ $$('#storeFlightLists').html(htmlFlight);
 
 $$(document).on('pageInit',function(e){
  var page =e.detail.page;
-
+$$('.pageFlashLoaderKK').hide();
 if(page.name=='search-hotels'){
 	var hotelType =page.query.hotelType;
 	//=== Set default date ===/
@@ -394,8 +399,8 @@ if(page.name=='search-hotels'){
       var checkIn =startDateArr[2]+'-'+startDateArr[0]+'-'+startDateArr[1];
 	  var checkOut =endDateArr[2]+'-'+endDateArr[0]+'-'+endDateArr[1];
 
-	  var param ='marker=40247&destination='+$$('#destination').val()+'&checkIn='+checkIn+'&checkOut='+checkOut+'&adults='+adults+'&children='+childAgeArr+'&language=en&currency=USD&&cityId='+$$('#region_id').val();
-     var url ='https://flight-images.adivaha.com/hotels?'+param;
+	  var param ='marker='+marker+'&destination='+$$('#destination').val()+'&checkIn='+checkIn+'&checkOut='+checkOut+'&adults='+adults+'&children='+childAgeArr+'&language=en&currency=USD&&cityId='+$$('#region_id').val();
+     var url =TPHotelUrl+'?'+param;
      window.location.href=url;
 	  
    })
@@ -634,8 +639,8 @@ if(page.name=='search-flights'){
    var ct_guests =passenger+'passenger';
    var Flights_Return_direct ='enable';
    
-   var param ='marker=40247&origin_name='+$$('#flight_from').val()+'&origin_iata='+$$('#flight_locationId').val()+'&destination_name='+$$('#flight_to').val()+'&destination_iata='+$$('#flight_to_locationId').val()+'&depart_date='+departDate+'&return_date='+returnDate+'&Flights_Return_direct='+Flights_Return_direct+'&with_request=true&adults='+$$('#adults').val()+'&children='+$$('#childs').val()+'&infants='+$$('#infants').val()+'&trip_class='+trip_class+'&currency=USD&locale=en&one_way='+one_way+'&ct_guests='+ct_guests+'&ct_rooms=1'; 
-   var url ='https://apptravelpayouts.adivaha.com/flights?'+param;
+   var param ='marker='+marker+'&origin_name='+$$('#flight_from').val()+'&origin_iata='+$$('#flight_locationId').val()+'&destination_name='+$$('#flight_to').val()+'&destination_iata='+$$('#flight_to_locationId').val()+'&depart_date='+departDate+'&return_date='+returnDate+'&Flights_Return_direct='+Flights_Return_direct+'&with_request=true&adults='+$$('#adults').val()+'&children='+$$('#childs').val()+'&infants='+$$('#infants').val()+'&trip_class='+trip_class+'&currency=USD&locale=en&one_way='+one_way+'&ct_guests='+ct_guests+'&ct_rooms=1'; 
+   var url =TPFlightUrl+'?'+param;
    window.location.href=url;
    // mainView.router.loadPage(url);
 
