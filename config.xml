@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.TADVH.ean" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>TPADVH</name>
+    <name>TRAVELLABS252</name>
     <description> Find your hotels and flights.</description>
-    <author email="support@thewebconz.com" href="http://adivaha.com"> Adivaha Team</author>
+    <author email="support@travellabs252.com" href="http://travellabs252.com/"> Travellabs252 Team</author>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
