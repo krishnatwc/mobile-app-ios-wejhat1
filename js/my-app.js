@@ -66,14 +66,13 @@ strDate.setDate(strDate.getDate() + 1);
 enrDate.setDate(enrDate.getDate() + 2);
 
 
-//var sMonth =start.getMonth() < 12 ? start.getMonth() + 1 : 1;
-//var eMonth =end.getMonth() < 12 ? start.getMonth() + 1 : 1;
-
+var sMonth =strDate.getMonth() < 12 ? strDate.getMonth() + 1 : 1;
+var eMonth =enrDate.getMonth() < 12 ? enrDate.getMonth() + 1 : 1;
 var checkIn = strDate.getFullYear()+"-"+ (strDate.getMonth()+1) + "-" + strDate.getDate();
 var checkOut = enrDate.getFullYear()+"-"+ (enrDate.getMonth()+1) + "-" + enrDate.getDate();
 
-var startDate_txt = weekday[strDate.getDay()]+', '+strDate.getDate()+' '+monthNames[(strDate.getMonth()+1)]+' '+strDate.getFullYear().toString().substr(-2);
-var endDate_txt = weekday[enrDate.getDay()]+', '+enrDate.getDate()+' '+monthNames[(enrDate.getMonth()+1)]+' '+enrDate.getFullYear().toString().substr(-2);
+var startDate_txt = weekday[strDate.getDay()]+', '+strDate.getDate()+' '+monthNames[sMonth-1]+' '+strDate.getFullYear().toString().substr(-2);
+var endDate_txt = weekday[enrDate.getDay()]+', '+enrDate.getDate()+' '+monthNames[eMonth-1]+' '+enrDate.getFullYear().toString().substr(-2);
 
 
 var htmlHotel ='<div class="history-home-page-main-left"><i class="fa fa-home"></i></div><a href="'+TPHotelUrl+'?marker='+marker+'&destination=New Delhi&checkIn='+checkIn+'&checkOut='+checkOut+'&adults=2&children=&language=en&currency=USD&&cityId=24077" class="link external"><div class="history-home-page-main-right"><div class="history-home-text">New Delhi</div><div class="history-home-text1">'+startDate_txt+' - '+endDate_txt+'</div><div class="history-home-text2"><i class="fa fa-user"></i> 2 Guests </div><div class="history-home-text3"><i class="fa fa-bed"></i>1 Room </div></a></div>';
