@@ -52,6 +52,8 @@ var marker='40247';
 
 myApp.onPageInit('index', function (page) {
 $$('.pageFlashLoaderKK').show();	
+
+
 setTimeout(function(){ $$('.pageFlashLoaderKK').hide('slow'); }, 3000);	
 
 
@@ -69,7 +71,6 @@ enrDate.setDate(enrDate.getDate() + 2);
 
 var checkIn = strDate.getFullYear()+"-"+ (strDate.getMonth()+1) + "-" + strDate.getDate();
 var checkOut = enrDate.getFullYear()+"-"+ (enrDate.getMonth()+1) + "-" + enrDate.getDate();
-
 
 var startDate_txt = weekday[strDate.getDay()]+', '+strDate.getDate()+' '+monthNames[(strDate.getMonth()+1)]+' '+strDate.getFullYear().toString().substr(-2);
 var endDate_txt = weekday[enrDate.getDay()]+', '+enrDate.getDate()+' '+monthNames[(enrDate.getMonth()+1)]+' '+enrDate.getFullYear().toString().substr(-2);
@@ -122,10 +123,9 @@ if(page.name=='search-hotels'){
 	
 	var startDate = (strDate.getMonth()+1) + "/" + strDate.getDate() + "/" +strDate.getFullYear();
 	var enDate = (enrDate.getMonth()+1) + "/" + enrDate.getDate() + "/" +enrDate.getFullYear();
-	var startRange =strDate.getFullYear()+', '+(strDate.getMonth()+1)+', '+strDate.getDate();
-	var endRange =enrDate.getFullYear()+', '+(enrDate.getMonth()+1)+', '+enrDate.getDate();
+	//var startRange =strDate.getFullYear()+','+(strDate.getMonth()+1)+','+strDate.getDate();
+	//var endRange =enrDate.getFullYear()+','+(enrDate.getMonth()+1)+','+enrDate.getDate();
 	
-
 	$$('#startDate').val(startDate);
 	$$('#endDate').val(enDate);
   /*===== Calendar =====*/
@@ -138,9 +138,8 @@ if(page.name=='search-hotels'){
     dateFormat: 'M dd yyyy',
     rangePicker: true,
 	minDate: today,
-	//value: [new Date(2018, 5, 11), new Date(2018, 5, 15)],
-	value: [new Date(startRange), new Date(endRange)],
-	onChange: function (p, values, displayValues){  
+	value: [new Date(startDate), new Date(enDate)],
+	onChange: function (p, values, displayValues){
 		var start =values[0];
 		var end =values[1];
 		
@@ -159,8 +158,7 @@ if(page.name=='search-hotels'){
 		
 	   }
     });
-
-   
+ 
    var glob =0;
    $$('.addMoreRooms').on('click', function () {
 	  var numRooms = $$('.roomListcls').length;
@@ -418,8 +416,8 @@ if(page.name=='search-flights'){
 	
 	var startDate = (strDate.getMonth()+1) + "/" + strDate.getDate() + "/" +strDate.getFullYear();
 	var enDate = (enrDate.getMonth()+1) + "/" + enrDate.getDate() + "/" +enrDate.getFullYear();
-	var startRange =strDate.getFullYear()+', '+(strDate.getMonth()+1)+', '+strDate.getDate();
-	var endRange =enrDate.getFullYear()+', '+(enrDate.getMonth()+1)+', '+enrDate.getDate();
+	//var startRange =strDate.getFullYear()+', '+(strDate.getMonth()+1)+', '+strDate.getDate();
+	//var endRange =enrDate.getFullYear()+', '+(enrDate.getMonth()+1)+', '+enrDate.getDate();
 	
 	$$('#startDate').val(startDate);
 	$$('#endDate').val(enDate);
@@ -435,7 +433,7 @@ if(page.name=='search-flights'){
 	dateFormat: 'M dd yyyy',
 	rangePicker: true,
 	minDate: today,
-	value: [new Date(startRange), new Date(endRange)],
+	value: [new Date(startDate), new Date(enDate)],
 	onChange: function (p, values, displayValues){  
 		var start =values[0];
 		var end =values[1];
